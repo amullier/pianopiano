@@ -1,25 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="relaxing_quotes">
-        <item>Respire profondément, tout va bien.</item>
-        <item>Chaque moment de pause est un cadeau.</item>
-        <item>Prends le temps de savourer l\'instant présent.</item>
-        <item>La patience est la clé de la sérénité.</item>
-        <item>Un moment de calme vaut mille distractions.</item>
-        <item>Laisse tes pensées s\'apaiser comme l\'eau d\'un lac.</item>
-        <item>Le repos de l\'esprit nourrit l\'âme.</item>
-        <item>Chaque seconde de pause renforce ta concentration.</item>
-        <item>La tranquillité commence par une respiration.</item>
-        <item>Offre-toi ce moment de paix.</item>
-        <item>Le silence est parfois la plus belle des musiques.</item>
-        <item>Ton bien-être mérite cette pause.</item>
-        <item>Ralentir, c\'est avancer différemment.</item>
-        <item>L\'instant présent est le seul qui compte vraiment.</item>
-        <item>Une pause consciente vaut mille actions précipitées.</item>
-        <item>Respire, observe, apprécie.</item>
-        <item>La sérénité se cultive seconde après seconde.</item>
-        <item>Ce moment de calme te rend plus fort.</item>
-        <item>Prends soin de ton esprit, il te le rendra.</item>
-        <item>Le temps de pause n\'est jamais du temps perdu.</item>
+        <item>« Il faut prendre le temps comme il vient. »</item>
+        <item>« Mon passe‑temps favori, c’est laisser passer le temps… » — Françoise Sagan</item>
+        <item>« Il faut savoir prendre son temps, ralentir… » — Pierre Desproges</item>
+        <item>« Ceux qui font mauvais usage de leur temps sont les premiers à se plaindre de sa brièveté. » — Jean de La Bruyère</item>
+        <item>« Le temps est un grand maître… » — Honoré de Balzac</item>
+        <item>« Nous ne manquons pas de temps… » — Sénèque</item>
+        <item>« La perte du temps est la plus irréparable. » — Axel Oxenstierna</item>
+        <item>« Le temps est le meilleur des remèdes. »</item>
+        <item>« Chaque chose en son temps. »</item>
+        <item>« Le temps passe et emporte tout. » — Virgile</item>
+        <item>« Le temps révèle tout : c’est un bavard… » — Euripide</item>
+        <item>« Le temps guérit toutes les blessures. »</item>
+        <item>« Des millions de fleurs s’ouvrent… toutes choses arrivent au bon moment. »</item>
+        <item>« Le temps d’apprendre à vivre, il est déjà trop tard. » — Louis Aragon</item>
+        <item>« Tu ne meurs pas de ce que tu es malade, tu meurs de ce que tu es vivant. » — Michel de Montaigne</item>
+        <item>« Le meilleur moment pour planter un arbre était il y a 40 ans. » — Proverbe chinois</item>
+        <item>« Il est temps de vivre la vie que tu t’es imaginée. » — Henry James</item>
+        <item>« Nous avons tous deux vies… » — Confucius</item>
+        <item>« Petit à petit, l’oiseau fait son nid. »</item>
+        <item>« N’oublie pas de vivre. »</item>
+        <item>« Une heure de lecture est le souverain remède… » — Montesquieu</item>
+        <item>« Il faut laisser chaque chose prendre sa place… » — Benjamin Franklin</item>
+        <item>« La vérité est la fille du temps. »</item>
+        <item>« Le temps est la seule chose qu’on ne peut ni acheter ni rattraper. »</item>
+        <item>« Quand on n’attend rien, c’est alors que le temps passe. » — Charles Soucy</item>
+        <item>« Ce n’est pas tant l’intelligence… que le temps passé à réfléchir. » — Philippe Bartherotte</item>
+        <item>« La vie serait une comédie bien agréable si l’on n’y jouait pas un rôle. » — Diderot</item>
+        <item>« Si la vie n’est qu’un passage… semons au moins des fleurs. » — Montaigne</item>
+        <item>« L’homme qui a le plus vécu… est celui qui a le plus senti la vie. » — Jean‑Jacques Rousseau</item>
+        <item>« Une heure, une minute suffit pour que le destin agisse… » — Émile Zola</item>
+        <item>« Le bonheur lui aussi est une longue patience. » — Albert Camus</item>
+        <item>« Prendre du temps pour soi, c’est prendre la vie. »</item>
+        <item>« Chaque instant que nous vivons est un trésor. »</item>
+        <item>« Le moment présent est tout ce dont nous disposons. »</item>
+        <item>« Plus le silence est profond, plus l’écoute est vraie. »</item>
+        <item>« Ce que nous pensons, nous le devenons. » — Bouddha</item>
+        <item>« Respirer profondément, c’est vivre pleinement. »</item>
+        <item>« Donnez‑vous des rendez‑vous dans le silence. »</item>
+        <item>« Quand la tête se tait, le cœur entend. »</item>
+        <item>« Apprends à écouter ton souffle. »</item>
+        <item>« L’essentiel est invisible pour les yeux. » — Antoine de Saint‑Exupéry</item>
+        <item>« Le présent est un cadeau, c’est pour cela qu’on l’appelle le présent. »</item>
+        <item>« Trop de hâte empêche de voir la beauté du monde. »</item>
+        <item>« Il faut savoir s’arrêter pour aller plus loin. »</item>
+        <item>« La lenteur est la clé de la méditation. »</item>
+        <item>« La patience est amère, mais son fruit est doux. » — Jean‑Jacques Rousseau</item>
+        <item>« Vivre, ce n’est pas attendre que les orages passent… »</item>
+        <item>« Le calme est la plus haute forme de sagesse. »</item>
+        <item>« Savoir attendre, c’est savoir vivre. »</item>
+        <item>« L’instant présent est le seul vrai moment de vie. »</item>
     </string-array>
 </resources>

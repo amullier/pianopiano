@@ -26,7 +26,8 @@
     <!-- Accents -->
     <color name="accent_primary">#EE6A1B</color>
     <color name="accent_secondary">#A78BFA</color>
-    <color name="accent_success">#34D399</color>
+    <color name="bg_success">#009b60</color>
+    <color name="accent_success">#006c45</color>
     <color name="accent_peanut">#FFB61B</color>
     <color name="status_active">#10B981</color>
     <color name="status_inactive">#EF4444</color>

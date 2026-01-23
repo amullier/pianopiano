@@ -25,7 +25,7 @@
     <!-- Main circle -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/glass_surface" />
+            <solid android:color="@color/status_active" />
             <size
                 android:width="@dimen/toggle_thumb_size"
                 android:height="@dimen/toggle_thumb_size" />
