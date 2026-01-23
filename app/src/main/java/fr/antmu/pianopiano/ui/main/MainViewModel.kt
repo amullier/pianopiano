@@ -62,4 +62,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun openAccessibilitySettings() {
         PermissionHelper.openAccessibilitySettings(getApplication())
     }
+
+    fun getAppPeriodicTimer(packageName: String): Int {
+        return appRepository.getAppPeriodicTimer(packageName)
+    }
+
+    fun setAppPeriodicTimer(packageName: String, seconds: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            appRepository.setAppPeriodicTimer(packageName, seconds)
+        }
+    }
 }

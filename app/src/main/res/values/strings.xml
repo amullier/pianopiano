@@ -58,6 +58,16 @@
     <!-- Accessibility service -->
     <string name="accessibility_service_description">PianoPiano utilise ce service pour détecter quand vous ouvrez certaines applications et afficher un écran de pause relaxant.</string>
 
+    <!-- Timer configuration -->
+    <string name="timer_config_title">Rappel périodique</string>
+    <string name="timer_config_description">Recevez une pause à intervalles réguliers tant que vous utilisez cette application</string>
+    <string name="timer_disabled">Désactivé</string>
+    <string name="timer_30sec">30 secondes</string>
+    <string name="timer_5min">5 minutes</string>
+    <string name="timer_15min">15 minutes</string>
+    <string name="timer_30min">30 minutes</string>
+    <string name="timer_1h">1 heure</string>
+
     <!-- Content descriptions -->
     <string name="cd_settings">Paramètres</string>
     <string name="cd_back">Retour</string>

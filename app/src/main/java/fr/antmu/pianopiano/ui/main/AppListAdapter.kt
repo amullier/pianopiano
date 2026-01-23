@@ -1,6 +1,7 @@
 package fr.antmu.pianopiano.ui.main
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,7 +10,8 @@ import fr.antmu.pianopiano.data.repository.AppRepository
 import fr.antmu.pianopiano.databinding.ItemAppBinding
 
 class AppListAdapter(
-    private val onToggleChanged: (AppRepository.InstalledApp, Boolean) -> Unit
+    private val onToggleChanged: (AppRepository.InstalledApp, Boolean) -> Unit,
+    private val onSettingsClicked: (AppRepository.InstalledApp) -> Unit
 ) : ListAdapter<AppRepository.InstalledApp, AppListAdapter.AppViewHolder>(AppDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
@@ -34,8 +36,17 @@ class AppListAdapter(
             binding.textName.text = app.appName
             binding.toggle.setChecked(app.isConfigured, animate = false)
 
+            // Afficher l'icône settings seulement si l'app est configurée
+            binding.buttonSettings.visibility = if (app.isConfigured) View.VISIBLE else View.GONE
+
             binding.toggle.setOnCheckedChangeListener { isChecked ->
+                // Mettre à jour la visibilité de l'icône settings
+                binding.buttonSettings.visibility = if (isChecked) View.VISIBLE else View.GONE
                 onToggleChanged(app, isChecked)
+            }
+
+            binding.buttonSettings.setOnClickListener {
+                onSettingsClicked(app)
             }
         }
     }

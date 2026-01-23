@@ -10,7 +10,7 @@ object ServiceHelper {
     private val exemptedPackages = mutableMapOf<String, Long>()
     private const val EXEMPTION_DURATION_MS = 10000L // 10 secondes
 
-    fun startPauseOverlay(context: Context, targetPackageName: String) {
+    fun startPauseOverlay(context: Context, targetPackageName: String, isPeriodic: Boolean = false) {
         if (!PermissionHelper.hasOverlayPermission(context)) {
             return
         }
@@ -18,6 +18,7 @@ object ServiceHelper {
         val intent = Intent(context, PauseOverlayService::class.java).apply {
             action = PauseOverlayService.ACTION_SHOW
             putExtra(PauseOverlayService.EXTRA_PACKAGE_NAME, targetPackageName)
+            putExtra(PauseOverlayService.EXTRA_IS_PERIODIC, isPeriodic)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -25,6 +26,10 @@ object ServiceHelper {
         } else {
             context.startService(intent)
         }
+    }
+
+    fun startPeriodicPause(context: Context, targetPackageName: String) {
+        startPauseOverlay(context, targetPackageName, isPeriodic = true)
     }
 
     fun stopPauseOverlay(context: Context) {

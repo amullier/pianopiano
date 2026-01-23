@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.antmu.pianopiano.R
+import fr.antmu.pianopiano.data.repository.AppRepository
 import fr.antmu.pianopiano.databinding.FragmentMainBinding
 import fr.antmu.pianopiano.databinding.ViewHeaderBinding
 import fr.antmu.pianopiano.util.setVisible
@@ -57,12 +60,54 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = AppListAdapter { app, enabled ->
-            viewModel.setAppConfigured(app, enabled)
-        }
+        adapter = AppListAdapter(
+            onToggleChanged = { app, enabled ->
+                viewModel.setAppConfigured(app, enabled)
+            },
+            onSettingsClicked = { app ->
+                showTimerConfigDialog(app)
+            }
+        )
 
         binding.recyclerApps.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerApps.adapter = adapter
+    }
+
+    private fun showTimerConfigDialog(app: AppRepository.InstalledApp) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_timer_config, null)
+        val radioGroup = dialogView.findViewById<RadioGroup>(R.id.radioGroupTimer)
+
+        // Récupérer la valeur actuelle du timer
+        val currentTimer = viewModel.getAppPeriodicTimer(app.packageName)
+
+        // Sélectionner le bon radio button
+        val radioId = when (currentTimer) {
+            0 -> R.id.radioDisabled
+            30 -> R.id.radio30sec
+            300 -> R.id.radio5min
+            900 -> R.id.radio15min
+            1800 -> R.id.radio30min
+            3600 -> R.id.radio1h
+            else -> R.id.radioDisabled
+        }
+        radioGroup.check(radioId)
+
+        AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+            .setView(dialogView)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val selectedTimer = when (radioGroup.checkedRadioButtonId) {
+                    R.id.radioDisabled -> 0
+                    R.id.radio30sec -> 30
+                    R.id.radio5min -> 300
+                    R.id.radio15min -> 900
+                    R.id.radio30min -> 1800
+                    R.id.radio1h -> 3600
+                    else -> 0
+                }
+                viewModel.setAppPeriodicTimer(app.packageName, selectedTimer)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun setupActivationButton() {

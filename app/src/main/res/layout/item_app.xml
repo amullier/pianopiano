@@ -27,6 +27,19 @@
         android:textSize="@dimen/text_size_body"
         tools:text="Application Name" />
 
+    <ImageView
+        android:id="@+id/buttonSettings"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_settings"
+        android:padding="4dp"
+        android:src="@drawable/ic_settings"
+        android:tint="@color/text_secondary"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <fr.antmu.pianopiano.ui.components.NeumorphicToggle
         android:id="@+id/toggle"
         android:layout_width="@dimen/toggle_width"

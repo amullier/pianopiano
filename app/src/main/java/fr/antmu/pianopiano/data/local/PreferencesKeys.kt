@@ -11,6 +11,10 @@ object PreferencesKeys {
     // Configured apps (stored as JSON)
     const val KEY_CONFIGURED_APPS = "configured_apps"
 
+    // Periodic timer
+    const val KEY_LAST_ACTIVE_TIMESTAMPS = "last_active_timestamps"
+    const val EXIT_THRESHOLD_MS = 300000L  // 5 minutes
+
     // Default values
     const val DEFAULT_PAUSE_DURATION = 12
     const val DEFAULT_PEANUT_COUNT = 0

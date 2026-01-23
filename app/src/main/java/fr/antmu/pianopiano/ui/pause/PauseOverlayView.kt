@@ -26,8 +26,8 @@ class PauseOverlayView(
         observeViewModel()
     }
 
-    fun show(packageName: String) {
-        viewModel.initialize(packageName)
+    fun show(packageName: String, isPeriodic: Boolean = false) {
+        viewModel.initialize(packageName, isPeriodic)
         binding.buttonContinue.setVisible(false)
     }
 

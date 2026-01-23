@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.antmu.pianopiano.data.repository.SettingsRepository
+import fr.antmu.pianopiano.service.PeriodicTimerManager
 import fr.antmu.pianopiano.util.PackageHelper
 import fr.antmu.pianopiano.util.PermissionHelper
 import fr.antmu.pianopiano.util.QuotesProvider
@@ -35,9 +36,11 @@ class PauseViewModel(context: Context) {
 
     private var countDownTimer: CountDownTimer? = null
     private var targetPackageName: String = ""
+    private var isPeriodic: Boolean = false
 
-    fun initialize(packageName: String) {
+    fun initialize(packageName: String, periodic: Boolean = false) {
         targetPackageName = packageName
+        isPeriodic = periodic
         _appName.value = PackageHelper.getAppName(appContext, packageName)
         _quote.value = QuotesProvider.getRandomQuote(appContext)
         _isCountdownFinished.value = false
@@ -50,6 +53,8 @@ class PauseViewModel(context: Context) {
 
         startCountdown()
     }
+
+    fun isPeriodic(): Boolean = isPeriodic
 
     private fun startCountdown() {
         val duration = settingsRepository.pauseDuration
@@ -74,6 +79,14 @@ class PauseViewModel(context: Context) {
     }
 
     fun onContinueClicked(): Boolean {
+        // Gérer le timer périodique
+        if (isPeriodic) {
+            // Après une pause périodique, mettre à jour le timestamp
+            PeriodicTimerManager.onPeriodicPauseFinished(appContext, targetPackageName)
+        } else {
+            // Après la pause initiale, démarrer le timer périodique si configuré
+            PeriodicTimerManager.onInitialPauseFinished(appContext, targetPackageName)
+        }
         return PackageHelper.launchApp(appContext, targetPackageName)
     }
 

@@ -64,4 +64,51 @@ class PreferencesManager(context: Context) {
     fun incrementPeanuts() {
         peanutCount++
     }
+
+    // --- Periodic Timer Methods ---
+
+    private fun getLastActiveTimestamps(): MutableMap<String, Long> {
+        val json = prefs.getString(PreferencesKeys.KEY_LAST_ACTIVE_TIMESTAMPS, null) ?: return mutableMapOf()
+        val type = object : TypeToken<MutableMap<String, Long>>() {}.type
+        return try {
+            gson.fromJson(json, type) ?: mutableMapOf()
+        } catch (e: Exception) {
+            mutableMapOf()
+        }
+    }
+
+    private fun saveLastActiveTimestamps(timestamps: Map<String, Long>) {
+        val json = gson.toJson(timestamps)
+        prefs.edit().putString(PreferencesKeys.KEY_LAST_ACTIVE_TIMESTAMPS, json).apply()
+    }
+
+    fun getLastActiveTimestamp(packageName: String): Long {
+        return getLastActiveTimestamps()[packageName] ?: 0L
+    }
+
+    fun setLastActiveTimestamp(packageName: String, timestamp: Long) {
+        val timestamps = getLastActiveTimestamps()
+        timestamps[packageName] = timestamp
+        saveLastActiveTimestamps(timestamps)
+    }
+
+    fun shouldResetTimer(packageName: String): Boolean {
+        val lastActive = getLastActiveTimestamp(packageName)
+        if (lastActive == 0L) return true
+        return System.currentTimeMillis() - lastActive > PreferencesKeys.EXIT_THRESHOLD_MS
+    }
+
+    fun getAppPeriodicTimer(packageName: String): Int {
+        val apps = getConfiguredApps()
+        return apps.find { it.packageName == packageName }?.periodicTimerSeconds ?: 0
+    }
+
+    fun setAppPeriodicTimer(packageName: String, seconds: Int) {
+        val apps = getConfiguredApps().toMutableList()
+        val index = apps.indexOfFirst { it.packageName == packageName }
+        if (index >= 0) {
+            apps[index] = apps[index].copy(periodicTimerSeconds = seconds)
+            saveConfiguredApps(apps)
+        }
+    }
 }

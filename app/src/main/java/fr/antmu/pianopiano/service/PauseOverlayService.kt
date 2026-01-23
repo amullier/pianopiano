@@ -28,6 +28,7 @@ class PauseOverlayService : Service(), LifecycleOwner {
         const val ACTION_SHOW = "fr.antmu.pianopiano.action.SHOW"
         const val ACTION_HIDE = "fr.antmu.pianopiano.action.HIDE"
         const val EXTRA_PACKAGE_NAME = "extra_package_name"
+        const val EXTRA_IS_PERIODIC = "extra_is_periodic"
 
         @Volatile
         var isShowing = false
@@ -47,8 +48,9 @@ class PauseOverlayService : Service(), LifecycleOwner {
         when (intent?.action) {
             ACTION_SHOW -> {
                 val packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: return START_NOT_STICKY
+                val isPeriodic = intent.getBooleanExtra(EXTRA_IS_PERIODIC, false)
                 startForeground(PianoPianoApp.NOTIFICATION_ID, createNotification())
-                showOverlay(packageName)
+                showOverlay(packageName, isPeriodic)
             }
             ACTION_HIDE -> {
                 hideOverlay()
@@ -59,7 +61,7 @@ class PauseOverlayService : Service(), LifecycleOwner {
         return START_NOT_STICKY
     }
 
-    private fun showOverlay(packageName: String) {
+    private fun showOverlay(packageName: String, isPeriodic: Boolean = false) {
         if (isShowing) return
 
         lifecycleRegistry.currentState = Lifecycle.State.STARTED
@@ -88,7 +90,7 @@ class PauseOverlayService : Service(), LifecycleOwner {
         }
 
         windowManager?.addView(overlayView, layoutParams)
-        overlayView?.show(packageName)
+        overlayView?.show(packageName, isPeriodic)
         isShowing = true
     }
 
