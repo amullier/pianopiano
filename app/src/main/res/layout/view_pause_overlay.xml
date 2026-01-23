@@ -28,15 +28,15 @@
         <!-- Sinusoid Animation -->
         <fr.antmu.pianopiano.ui.pause.SinusoidAnimationView
             android:id="@+id/sinusoidView"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="@dimen/overlay_sinusoid_height"
             android:layout_marginTop="@dimen/spacing_xl"
-            app:sinusoidColor="@color/accent_primary"
             app:circleColor="@color/accent_peanut"
             app:sinusoidAmplitude="40dp"
-            app:sinusoidWavelength="200dp"
-            app:sinusoidStrokeWidth="3dp"
-            app:sinusoidSpeed="0.3" />
+            app:sinusoidColor="@color/accent_primary"
+            app:sinusoidSpeed="0.3"
+            app:sinusoidStrokeWidth="1dp"
+            app:sinusoidWavelength="180dp" />
 
         <!-- Countdown -->
 

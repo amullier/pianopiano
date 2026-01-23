@@ -38,7 +38,7 @@ class SinusoidAnimationView @JvmOverloads constructor(
     private var amplitude: Float = 30f * resources.displayMetrics.density
     private var wavelength: Float = 200f * resources.displayMetrics.density
     private var speed: Float = 0.3f
-    private var circleRadius: Float = 8f * resources.displayMetrics.density
+    private var circleRadius: Float = 5f * resources.displayMetrics.density
 
     init {
         context.theme.obtainStyledAttributes(
@@ -105,18 +105,18 @@ class SinusoidAnimationView @JvmOverloads constructor(
         var x = startX
         val step = 5f
 
-        path.moveTo(x, centerY + amplitude * sin(phase).toFloat())
+        path.moveTo(x, centerY + amplitude * sin(phase))
 
         while (x < endX) {
             x += step
-            val y = centerY + amplitude * sin((x / wavelength * 2 * Math.PI + phase).toDouble()).toFloat()
+            val y = centerY + amplitude * sin((x / wavelength * 2 * Math.PI + phase)).toFloat()
             path.lineTo(x, y)
         }
 
         canvas.drawPath(path, linePaint)
 
         // Dessiner la boule au centre
-        val ballY = centerY + amplitude * sin((centerX / wavelength * 2 * Math.PI + phase).toDouble()).toFloat()
+        val ballY = centerY + amplitude * sin((centerX / wavelength * 2 * Math.PI + phase)).toFloat() + 2
         canvas.drawCircle(centerX, ballY, circleRadius, circlePaint)
     }
 }

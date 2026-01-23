@@ -33,7 +33,7 @@
     <!-- Pause overlay -->
     <string name="pause_title">Respire un instant…</string>
     <string name="pause_countdown_format">%d</string>
-    <string name="pause_cancel">Annuler</string>
+    <string name="pause_cancel">Annuler (+1🥜)</string>
     <string name="pause_continue">Continuer vers %s</string>
     <string name="default_quote">Prends le temps de respirer.</string>
 
