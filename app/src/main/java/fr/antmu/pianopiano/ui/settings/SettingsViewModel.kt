@@ -17,6 +17,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val _hasAccessibilityPermission = MutableLiveData<Boolean>()
     val hasAccessibilityPermission: LiveData<Boolean> = _hasAccessibilityPermission
 
+    private val _hasUsageStatsPermission = MutableLiveData<Boolean>()
+    val hasUsageStatsPermission: LiveData<Boolean> = _hasUsageStatsPermission
+
     private val _pauseDuration = MutableLiveData<Int>()
     val pauseDuration: LiveData<Int> = _pauseDuration
 
@@ -28,6 +31,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         val context = getApplication<Application>()
         _hasOverlayPermission.value = PermissionHelper.hasOverlayPermission(context)
         _hasAccessibilityPermission.value = PermissionHelper.isAccessibilityServiceEnabled(context)
+        _hasUsageStatsPermission.value = PermissionHelper.hasUsageStatsPermission(context)
     }
 
     fun setPauseDuration(duration: Int) {
@@ -41,5 +45,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun openAccessibilitySettings() {
         PermissionHelper.openAccessibilitySettings(getApplication())
+    }
+
+    fun openUsageAccessSettings() {
+        PermissionHelper.openUsageAccessSettings(getApplication())
     }
 }

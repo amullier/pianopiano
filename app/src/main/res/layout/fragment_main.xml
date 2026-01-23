@@ -58,6 +58,22 @@
             </LinearLayout>
 
         </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+        <!-- Compact Service Status Card (shown when active/partial) -->
+        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:id="@+id/serviceStatusCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:padding="@dimen/spacing_md"
+            android:visibility="gone">
+
+            <fr.antmu.pianopiano.ui.components.ServiceStatusView
+                android:id="@+id/serviceStatusCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
     </LinearLayout>
 
     <LinearLayout

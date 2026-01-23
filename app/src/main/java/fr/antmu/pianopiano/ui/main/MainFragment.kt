@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -67,6 +68,11 @@ class MainFragment : Fragment() {
     private fun setupActivationButton() {
         binding.buttonActivateService.setOnClickListener {
             viewModel.openAccessibilitySettings()
+            Toast.makeText(
+                requireContext(),
+                R.string.hint_enable_accessibility,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -76,10 +82,20 @@ class MainFragment : Fragment() {
 //            binding.textNoApps.setVisible(apps.isEmpty())
         }
 
-        viewModel.isServiceActive.observe(viewLifecycleOwner) { isActive ->
-            binding.serviceStatus.setActive(isActive)
-            if (isActive) {
-                binding.mainServiceEnabler.visibility = View.GONE
+        viewModel.serviceStatus.observe(viewLifecycleOwner) { status ->
+            binding.serviceStatus.setStatus(status)
+
+            when (status) {
+                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.INACTIVE -> {
+                    binding.mainServiceEnabler.visibility = View.VISIBLE
+                    binding.serviceStatusCard.visibility = View.GONE
+                }
+                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.PARTIAL,
+                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.ACTIVE -> {
+                    binding.mainServiceEnabler.visibility = View.GONE
+                    binding.serviceStatusCard.visibility = View.VISIBLE
+                    binding.serviceStatusCardView.setStatus(status)
+                }
             }
         }
 

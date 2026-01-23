@@ -11,8 +11,10 @@
     <string name="section_apps">Applications</string>
     <string name="service_active">Service actif</string>
     <string name="service_inactive">Service inactif</string>
+    <string name="service_partial">Service partiellement activé</string>
     <string name="service_description_active"></string>
     <string name="service_description_inactive">Activez le service pour commencer</string>
+    <string name="service_description_partial">Veuillez consulter les paramètres</string>
     <string name="activate_service">Activer le service</string>
     <string name="no_apps_found">Aucune application trouvée</string>
     <string name="apps_subtitle">Sélectionnez les applications à surveiller</string>
@@ -26,9 +28,14 @@
     <string name="settings_overlay_description">Permet d\'afficher l\'écran de pause</string>
     <string name="settings_accessibility_permission">Service d\'accessibilité</string>
     <string name="settings_accessibility_description">Permet de détecter l\'ouverture des apps</string>
+    <string name="settings_usage_stats_permission">Accès aux statistiques d\'utilisation</string>
+    <string name="settings_usage_stats_description">Permet d\'accéder aux statistiques des apps</string>
     <string name="permission_granted">Accordée</string>
     <string name="permission_not_granted">Non accordée</string>
     <string name="tap_to_grant">Appuyez pour accorder</string>
+    <string name="hint_select_pianopiano">Sélectionnez PianoPiano dans la liste</string>
+    <string name="hint_enable_accessibility">Sélectionnez PianoPiano et activez le service</string>
+    <string name="hint_enable_overlay">Autorisez la superposition pour PianoPiano</string>
 
     <!-- Pause overlay -->
     <string name="pause_title">Respire un instant…</string>
@@ -36,6 +43,11 @@
     <string name="pause_cancel">Annuler (+1🥜)</string>
     <string name="pause_continue">Continuer vers %s</string>
     <string name="default_quote">Prends le temps de respirer.</string>
+    <string name="stats_title">Aujourd\'hui</string>
+    <string name="stats_total_time">Temps total</string>
+    <string name="stats_launch_count">Ouvertures</string>
+    <string name="stats_average_session">Durée moyenne</string>
+    <string name="stats_launch_count_format">%d fois</string>
 
     <!-- Notification -->
     <string name="notification_channel_name">Pause PianoPiano</string>

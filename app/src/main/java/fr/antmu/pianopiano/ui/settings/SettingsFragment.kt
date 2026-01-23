@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,10 +47,17 @@ class SettingsFragment : Fragment() {
 
         binding.cardOverlay.setOnClickListener {
             viewModel.requestOverlayPermission()
+            showPermissionHint(R.string.hint_enable_overlay)
         }
 
         binding.cardAccessibility.setOnClickListener {
             viewModel.openAccessibilitySettings()
+            showPermissionHint(R.string.hint_enable_accessibility)
+        }
+
+        binding.cardUsageStats.setOnClickListener {
+            viewModel.openUsageAccessSettings()
+            showPermissionHint(R.string.hint_select_pianopiano)
         }
 
         binding.sliderDuration.setRange(6, 30, 6)
@@ -74,6 +82,13 @@ class SettingsFragment : Fragment() {
             )
         }
 
+        viewModel.hasUsageStatsPermission.observe(viewLifecycleOwner) { hasPermission ->
+            updatePermissionStatus(
+                binding.textUsageStatsStatus,
+                hasPermission
+            )
+        }
+
         viewModel.pauseDuration.observe(viewLifecycleOwner) { duration ->
             binding.sliderDuration.setValue(duration)
         }
@@ -87,6 +102,14 @@ class SettingsFragment : Fragment() {
             textView.text = getString(R.string.permission_not_granted)
             textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_inactive))
         }
+    }
+
+    private fun showPermissionHint(messageResId: Int) {
+        Toast.makeText(
+            requireContext(),
+            messageResId,
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun onDestroyView() {

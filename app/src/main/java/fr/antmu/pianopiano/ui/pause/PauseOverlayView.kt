@@ -68,6 +68,18 @@ class PauseOverlayView(
         viewModel.quote.observe(lifecycleOwner) { quote ->
             binding.textQuote.text = quote
         }
+
+        viewModel.hasUsageStatsPermission.observe(lifecycleOwner) { hasPermission ->
+            binding.statsCard.setVisible(hasPermission)
+        }
+
+        viewModel.usageStats.observe(lifecycleOwner) { stats ->
+            stats?.let {
+                binding.textTotalTime.text = fr.antmu.pianopiano.util.UsageStatsHelper.formatShortDuration(it.totalTimeToday)
+                binding.textLaunchCount.text = it.launchCountToday.toString()
+                binding.textAverageSession.text = fr.antmu.pianopiano.util.UsageStatsHelper.formatShortDuration(it.averageSessionTime)
+            }
+        }
     }
 
     fun cleanup() {

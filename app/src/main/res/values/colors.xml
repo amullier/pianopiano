@@ -31,6 +31,7 @@
     <color name="accent_peanut">#FFB61B</color>
     <color name="status_active">#10B981</color>
     <color name="status_inactive">#EF4444</color>
+    <color name="status_partial">#F59E0B</color>
 
     <!-- Neumorphism (for custom components) -->
     <color name="neumorphic_surface">#1A1F3A</color>

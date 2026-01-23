@@ -13,6 +13,12 @@ class ServiceStatusView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    enum class ServiceStatus {
+        INACTIVE,
+        PARTIAL,
+        ACTIVE
+    }
+
     private val binding: ViewServiceStatusBinding
 
     init {
@@ -37,18 +43,35 @@ class ServiceStatusView @JvmOverloads constructor(
     }
 
     fun setActive(active: Boolean) {
-        binding.indicator.setImageResource(
-            if (active) R.drawable.indicator_active else R.drawable.indicator_inactive
-        )
-        binding.textTitle.text = if (active) {
-            context.getString(R.string.service_active)
-        } else {
-            context.getString(R.string.service_inactive)
+        setStatus(if (active) ServiceStatus.ACTIVE else ServiceStatus.INACTIVE)
+    }
+
+    fun setStatus(status: ServiceStatus) {
+        when (status) {
+            ServiceStatus.INACTIVE -> {
+                binding.indicator.setImageResource(R.drawable.indicator_inactive)
+                binding.textTitle.text = context.getString(R.string.service_inactive)
+                setDescription(context.getString(R.string.service_description_inactive))
+            }
+            ServiceStatus.PARTIAL -> {
+                binding.indicator.setImageResource(R.drawable.indicator_partial)
+                binding.textTitle.text = context.getString(R.string.service_partial)
+                setDescription(context.getString(R.string.service_description_partial))
+            }
+            ServiceStatus.ACTIVE -> {
+                binding.indicator.setImageResource(R.drawable.indicator_active)
+                binding.textTitle.text = context.getString(R.string.service_active)
+                setDescription(context.getString(R.string.service_description_active))
+            }
         }
-        binding.textDescription.text = if (active) {
-            context.getString(R.string.service_description_active)
+    }
+
+    private fun setDescription(description: String) {
+        if (description.isEmpty()) {
+            binding.textDescription.visibility = GONE
         } else {
-            context.getString(R.string.service_description_inactive)
+            binding.textDescription.visibility = VISIBLE
+            binding.textDescription.text = description
         }
     }
 }

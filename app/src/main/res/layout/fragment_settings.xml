@@ -161,6 +161,55 @@
 
             </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
+            <!-- Usage Stats Permission -->
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/cardUsageStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_usage_stats_permission"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_size_body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="@string/settings_usage_stats_description"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="@dimen/text_size_small" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textUsageStatsStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_caption"
+                        tools:text="Non accordée"
+                        tools:textColor="@color/status_inactive" />
+
+                </LinearLayout>
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
             <!-- Pause Duration Section -->
             <TextView
                 android:layout_width="wrap_content"

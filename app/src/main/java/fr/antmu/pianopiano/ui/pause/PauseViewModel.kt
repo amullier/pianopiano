@@ -6,7 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.antmu.pianopiano.data.repository.SettingsRepository
 import fr.antmu.pianopiano.util.PackageHelper
+import fr.antmu.pianopiano.util.PermissionHelper
 import fr.antmu.pianopiano.util.QuotesProvider
+import fr.antmu.pianopiano.util.UsageStatsHelper
 
 class PauseViewModel(context: Context) {
 
@@ -25,6 +27,12 @@ class PauseViewModel(context: Context) {
     private val _appName = MutableLiveData<String>()
     val appName: LiveData<String> = _appName
 
+    private val _usageStats = MutableLiveData<UsageStatsHelper.AppUsageStats?>()
+    val usageStats: LiveData<UsageStatsHelper.AppUsageStats?> = _usageStats
+
+    private val _hasUsageStatsPermission = MutableLiveData<Boolean>()
+    val hasUsageStatsPermission: LiveData<Boolean> = _hasUsageStatsPermission
+
     private var countDownTimer: CountDownTimer? = null
     private var targetPackageName: String = ""
 
@@ -33,6 +41,12 @@ class PauseViewModel(context: Context) {
         _appName.value = PackageHelper.getAppName(appContext, packageName)
         _quote.value = QuotesProvider.getRandomQuote(appContext)
         _isCountdownFinished.value = false
+
+        // Check permission and load usage stats
+        _hasUsageStatsPermission.value = PermissionHelper.hasUsageStatsPermission(appContext)
+        if (_hasUsageStatsPermission.value == true) {
+            _usageStats.value = UsageStatsHelper.getAppUsageStats(appContext, packageName)
+        }
 
         startCountdown()
     }
