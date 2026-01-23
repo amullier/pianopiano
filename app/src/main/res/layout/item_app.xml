@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_sm">
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="@dimen/app_icon_size"
+        android:layout_height="@dimen/app_icon_size"
+        android:contentDescription="@string/cd_app_icon"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_md"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_size_body"
+        tools:text="Application Name" />
+
+    <fr.antmu.pianopiano.ui.components.NeumorphicToggle
+        android:id="@+id/toggle"
+        android:layout_width="@dimen/toggle_width"
+        android:layout_height="@dimen/toggle_height"
+        android:layout_marginStart="@dimen/spacing_md" />
+
+</LinearLayout>

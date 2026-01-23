@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/glass_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/view_header" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/glass_card_border" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_md">
+
+        <!-- Service Status Section -->
+
+        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:id="@+id/mainServiceEnabler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:padding="@dimen/spacing_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Activation Button -->
+                <fr.antmu.pianopiano.ui.components.ServiceStatusView
+                    android:id="@+id/serviceStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/buttonActivateService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:background="@drawable/bg_button_gradient"
+                    android:elevation="4dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingVertical="14dp"
+                    android:text="@string/activate_service"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_body" />
+
+            </LinearLayout>
+
+        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_md">
+
+
+        <!-- Apps Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:letterSpacing="0.1"
+            android:text="@string/section_apps"
+            android:textAllCaps="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_caption" />
+
+        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:overScrollMode="always">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerApps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingVertical="@dimen/spacing_sm"
+                tools:listitem="@layout/item_app" />
+
+        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+    </LinearLayout>
+</LinearLayout>
+
+

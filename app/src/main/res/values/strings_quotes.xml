@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relaxing_quotes">
+        <item>Respire profondément, tout va bien.</item>
+        <item>Chaque moment de pause est un cadeau.</item>
+        <item>Prends le temps de savourer l\'instant présent.</item>
+        <item>La patience est la clé de la sérénité.</item>
+        <item>Un moment de calme vaut mille distractions.</item>
+        <item>Laisse tes pensées s\'apaiser comme l\'eau d\'un lac.</item>
+        <item>Le repos de l\'esprit nourrit l\'âme.</item>
+        <item>Chaque seconde de pause renforce ta concentration.</item>
+        <item>La tranquillité commence par une respiration.</item>
+        <item>Offre-toi ce moment de paix.</item>
+        <item>Le silence est parfois la plus belle des musiques.</item>
+        <item>Ton bien-être mérite cette pause.</item>
+        <item>Ralentir, c\'est avancer différemment.</item>
+        <item>L\'instant présent est le seul qui compte vraiment.</item>
+        <item>Une pause consciente vaut mille actions précipitées.</item>
+        <item>Respire, observe, apprécie.</item>
+        <item>La sérénité se cultive seconde après seconde.</item>
+        <item>Ce moment de calme te rend plus fort.</item>
+        <item>Prends soin de ton esprit, il te le rendra.</item>
+        <item>Le temps de pause n\'est jamais du temps perdu.</item>
+    </string-array>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PianoPiano" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimaryVariant">@color/accent_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/accent_peanut</item>
+        <item name="colorSecondaryVariant">@color/accent_peanut</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/glass_background</item>
+        <item name="colorSurface">@color/glass_surface</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/glass_background</item>
+        <item name="android:navigationBarColor">@color/glass_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+    </style>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background with subtle gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="#1A6366F1"
+                android:centerColor="@color/glass_card"
+                android:endColor="#1A8B5CF6"
+                android:type="linear" />
+            <corners android:radius="@dimen/radius_lg" />
+        </shape>
+    </item>
+
+    <!-- Border -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/card_border_width"
+                android:color="@color/glass_card_border" />
+            <corners android:radius="@dimen/radius_lg" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Barre gauche avec coins arrondis -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M5,4 L5,20 C5,21.1 5.9,22 7,22 L9,22 C10.1,22 11,21.1 11,20 L11,4 C11,2.9 10.1,2 9,2 L7,2 C5.9,2 5,2.9 5,4 Z" />
+
+    <!-- Barre droite avec coins arrondis (plus espacée) -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M13,4 L13,20 C13,21.1 13.9,22 15,22 L17,22 C18.1,22 19,21.1 19,20 L19,4 C19,2.9 18.1,2 17,2 L15,2 C13.9,2 13,2.9 13,4 Z" />
+</vector>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow -->
+    <item
+        android:left="1dp"
+        android:top="1dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/neumorphic_shadow_dark" />
+            <size
+                android:width="@dimen/toggle_thumb_size"
+                android:height="@dimen/toggle_thumb_size" />
+        </shape>
+    </item>
+    <!-- Light -->
+    <item
+        android:bottom="1dp"
+        android:right="1dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/neumorphic_shadow_light" />
+            <size
+                android:width="@dimen/toggle_thumb_size"
+                android:height="@dimen/toggle_thumb_size" />
+        </shape>
+    </item>
+    <!-- Main circle -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/glass_surface" />
+            <size
+                android:width="@dimen/toggle_thumb_size"
+                android:height="@dimen/toggle_thumb_size" />
+        </shape>
+    </item>
+</layer-list>

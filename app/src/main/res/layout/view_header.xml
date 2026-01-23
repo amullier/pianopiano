@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_md">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="0"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/black_han_sans"
+        android:text="P"
+        android:textColor="@color/accent_peanut"
+        android:textSize="@dimen/text_size_title" />
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/black_han_sans"
+        android:text="iano"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_size_title" />
+
+    <TextView
+        android:id="@+id/textPeanuts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_md"
+        android:textColor="@color/accent_peanut"
+        android:textSize="@dimen/text_size_subtitle"
+        tools:text="42 🥜" />
+
+    <ImageButton
+        android:id="@+id/buttonSettings"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_settings"
+        android:padding="@dimen/spacing_sm"
+        android:src="@drawable/ic_settings" />
+
+</LinearLayout>

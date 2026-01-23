@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+
+    <!-- Corner radius -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_xl">24dp</dimen>
+
+    <!-- Card -->
+    <dimen name="card_elevation">0dp</dimen>
+    <dimen name="card_border_width">1dp</dimen>
+
+    <!-- Button -->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_min_width">120dp</dimen>
+
+    <!-- Toggle -->
+    <dimen name="toggle_width">52dp</dimen>
+    <dimen name="toggle_height">28dp</dimen>
+    <dimen name="toggle_thumb_size">22dp</dimen>
+    <dimen name="toggle_thumb_margin">3dp</dimen>
+
+    <!-- Status indicator -->
+    <dimen name="indicator_size">12dp</dimen>
+
+    <!-- App icon in list -->
+    <dimen name="app_icon_size">48dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="text_size_title">24sp</dimen>
+    <dimen name="text_size_subtitle">18sp</dimen>
+    <dimen name="text_size_body">16sp</dimen>
+    <dimen name="text_size_caption">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+
+    <!-- Overlay -->
+    <dimen name="overlay_sinusoid_height">100dp</dimen>
+    <dimen name="overlay_countdown_size">80sp</dimen>
+
+    <!-- Slider -->
+    <dimen name="slider_height">40dp</dimen>
+    <dimen name="slider_track_height">6dp</dimen>
+    <dimen name="slider_thumb_size">20dp</dimen>
+</resources>

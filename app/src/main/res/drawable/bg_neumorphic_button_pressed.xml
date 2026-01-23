@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Inverted: Light shadow on bottom-right -->
+    <item
+        android:left="4dp"
+        android:top="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/neumorphic_shadow_light" />
+            <corners android:radius="@dimen/radius_md" />
+        </shape>
+    </item>
+    <!-- Inverted: Dark shadow on top-left -->
+    <item
+        android:bottom="4dp"
+        android:right="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/neumorphic_shadow_dark" />
+            <corners android:radius="@dimen/radius_md" />
+        </shape>
+    </item>
+    <!-- Main surface -->
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/neumorphic_surface" />
+            <corners android:radius="@dimen/radius_md" />
+        </shape>
+    </item>
+</layer-list>

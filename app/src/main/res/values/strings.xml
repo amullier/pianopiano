@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">%d 🥜</string>
+
+    <!-- Main screen -->
+    <string name="section_service_status">Statut du service</string>
+    <string name="section_apps">Applications</string>
+    <string name="service_active">Service actif</string>
+    <string name="service_inactive">Service inactif</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">Activez le service pour commencer</string>
+    <string name="activate_service">Activer le service</string>
+    <string name="no_apps_found">Aucune application trouvée</string>
+    <string name="apps_subtitle">Sélectionnez les applications à surveiller</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_permissions">Permissions</string>
+    <string name="settings_pause_duration">Durée de pause</string>
+    <string name="settings_pause_duration_format">%d secondes</string>
+    <string name="settings_overlay_permission">Superposition d\'écran</string>
+    <string name="settings_overlay_description">Permet d\'afficher l\'écran de pause</string>
+    <string name="settings_accessibility_permission">Service d\'accessibilité</string>
+    <string name="settings_accessibility_description">Permet de détecter l\'ouverture des apps</string>
+    <string name="permission_granted">Accordée</string>
+    <string name="permission_not_granted">Non accordée</string>
+    <string name="tap_to_grant">Appuyez pour accorder</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">Respire un instant…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">Annuler</string>
+    <string name="pause_continue">Continuer vers %s</string>
+    <string name="default_quote">Prends le temps de respirer.</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">Pause PianoPiano</string>
+    <string name="notification_channel_description">Notifications lors de l\'écran de pause</string>
+    <string name="notification_title">PianoPiano actif</string>
+    <string name="notification_text">Pause en cours…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPiano utilise ce service pour détecter quand vous ouvrez certaines applications et afficher un écran de pause relaxant.</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">Paramètres</string>
+    <string name="cd_back">Retour</string>
+    <string name="cd_app_icon">Icône de l\'application</string>
+    <string name="cd_status_indicator">Indicateur de statut</string>
+</resources>

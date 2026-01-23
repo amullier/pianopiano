@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Modern Glassmorphism Dark Theme -->
+    <color name="glass_background">#0A0E27</color>
+    <color name="glass_surface">#1F6B80</color>
+    <color name="glass_card">#1A1F3A</color>
+    <color name="glass_card_border">#144654</color>
+    <color name="glass_tint">#1AFFFFFF</color>
+
+    <!-- Gradients -->
+    <color name="gradient_start">#6366F1</color>
+    <color name="gradient_end">#1F6B80</color>
+    <color name="gradient_accent_start">#3B82F6</color>
+    <color name="gradient_accent_end">#06B6D4</color>
+
+    <!-- Text -->
+    <color name="text_primary">#F1F5F9</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_tertiary">#64748B</color>
+
+    <!-- Accents -->
+    <color name="accent_primary">#818CF8</color>
+    <color name="accent_secondary">#A78BFA</color>
+    <color name="accent_success">#34D399</color>
+    <color name="accent_peanut">#F59E0B</color>
+    <color name="status_active">#10B981</color>
+    <color name="status_inactive">#EF4444</color>
+
+    <!-- Neumorphism (for custom components) -->
+    <color name="neumorphic_surface">#1A1F3A</color>
+    <color name="neumorphic_shadow_dark">#0A0E27</color>
+    <color name="neumorphic_shadow_light">#252B47</color>
+</resources>

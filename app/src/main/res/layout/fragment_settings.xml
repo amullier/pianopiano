@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/glass_background"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_md">
+
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_back"
+            android:padding="@dimen/spacing_sm"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_weight="1"
+            android:text="@string/settings_title"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_title"
+            android:fontFamily="sans-serif-medium" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/glass_card_border" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="@dimen/spacing_md">
+
+            <!-- Permissions Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_permissions"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_size_caption"
+                android:textAllCaps="true"
+                android:letterSpacing="0.1" />
+
+            <!-- Overlay Permission -->
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/cardOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_overlay_permission"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_size_body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="@string/settings_overlay_description"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="@dimen/text_size_small" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textOverlayStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_caption"
+                        tools:text="Accordée"
+                        tools:textColor="@color/status_active" />
+
+                </LinearLayout>
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+            <!-- Accessibility Permission -->
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/cardAccessibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_accessibility_permission"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_size_body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="@string/settings_accessibility_description"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="@dimen/text_size_small" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textAccessibilityStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_caption"
+                        tools:text="Non accordée"
+                        tools:textColor="@color/status_inactive" />
+
+                </LinearLayout>
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+            <!-- Pause Duration Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/settings_pause_duration"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_size_caption"
+                android:textAllCaps="true"
+                android:letterSpacing="0.1" />
+
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md">
+
+                <fr.antmu.pianopiano.ui.components.DiscreteSlider
+                    android:id="@+id/sliderDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

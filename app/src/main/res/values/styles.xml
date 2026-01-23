@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base text style -->
+    <style name="TextStyle">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Text styles -->
+    <style name="TextStyle.Title">
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextStyle.Subtitle">
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextStyle.Body">
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="TextStyle.Caption">
+        <item name="android:textSize">@dimen/text_size_caption</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="TextStyle.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/text_tertiary</item>
+    </style>
+
+    <!-- Peanut counter style -->
+    <style name="TextStyle.PeanutCounter">
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+        <item name="android:textColor">@color/accent_peanut</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Countdown style -->
+    <style name="TextStyle.Countdown">
+        <item name="android:textSize">@dimen/overlay_countdown_size</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <!-- Quote style -->
+    <style name="TextStyle.Quote">
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

@@ -1,0 +1,40 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1024dp"
+    android:height="1024dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <!-- Dégradé de fond -->
+    <gradient
+        android:type="linear"
+        android:startX="0"
+        android:startY="512"
+        android:endX="1024"
+        android:endY="716"
+        android:startColor="#0A0E27"
+        android:endColor="#175667" />
+
+    <!-- Fond -->
+    <path
+        android:fillColor="#0A0E27"
+        android:pathData="M0,0h1024v1024h-1024z" />
+
+    <!-- Cadre blanc -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="20"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M20,20h984v984h-984z" />
+
+    <!-- Rectangle orange gauche -->
+    <path
+        android:fillColor="#FFB61B"
+        android:pathData="M312,283h149v459h-149z"
+        android:strokeWidth="0" />
+
+    <!-- Rectangle orange droite -->
+    <path
+        android:fillColor="#FFB61B"
+        android:pathData="M537,283h149v459h-149z"
+        android:strokeWidth="0" />
+</vector>

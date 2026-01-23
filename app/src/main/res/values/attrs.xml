@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Neumorphic Button -->
+    <declare-styleable name="NeumorphicButton">
+        <attr name="neumorphicText" format="string" />
+        <attr name="neumorphicEnabled" format="boolean" />
+    </declare-styleable>
+
+    <!-- Neumorphic Toggle -->
+    <declare-styleable name="NeumorphicToggle">
+        <attr name="toggleChecked" format="boolean" />
+    </declare-styleable>
+
+    <!-- Glassmorphic Card -->
+    <declare-styleable name="GlassmorphicCard">
+        <attr name="glassCornerRadius" format="dimension" />
+        <attr name="glassBorderWidth" format="dimension" />
+    </declare-styleable>
+
+    <!-- Service Status View -->
+    <declare-styleable name="ServiceStatusView">
+        <attr name="statusTitle" format="string" />
+        <attr name="statusActive" format="boolean" />
+    </declare-styleable>
+
+    <!-- Discrete Slider -->
+    <declare-styleable name="DiscreteSlider">
+        <attr name="sliderMinValue" format="integer" />
+        <attr name="sliderMaxValue" format="integer" />
+        <attr name="sliderStep" format="integer" />
+        <attr name="sliderValue" format="integer" />
+    </declare-styleable>
+
+    <!-- Sinusoid Animation -->
+    <declare-styleable name="SinusoidAnimationView">
+        <attr name="sinusoidColor" format="color" />
+        <attr name="circleColor" format="color" />
+        <attr name="sinusoidStrokeWidth" format="dimension" />
+        <attr name="sinusoidAmplitude" format="dimension" />
+        <attr name="sinusoidWavelength" format="dimension" />
+        <attr name="sinusoidSpeed" format="float" />
+    </declare-styleable>
+</resources>
