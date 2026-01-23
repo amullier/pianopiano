@@ -1,6 +1,9 @@
 package fr.antmu.pianopiano
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import fr.antmu.pianopiano.databinding.ActivityMainBinding

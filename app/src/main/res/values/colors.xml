@@ -6,16 +6,17 @@
 
     <!-- Modern Glassmorphism Dark Theme -->
     <color name="glass_background">#0A0E27</color>
-    <color name="glass_surface">#1F6B80</color>
-    <color name="glass_card">#1A1F3A</color>
-    <color name="glass_card_border">#144654</color>
-    <color name="glass_tint">#1AFFFFFF</color>
+    <color name="glass_surface">#072d36</color>
+    <color name="glass_card">#0f323b</color>
+    <color name="glass_card_effect_color">#072d36f1</color>
+    <color name="glass_card_effect_color_end">#072d36f6</color>
+    <color name="glass_card_border">#072d36</color>
 
     <!-- Gradients -->
-    <color name="gradient_start">#6366F1</color>
-    <color name="gradient_end">#1F6B80</color>
-    <color name="gradient_accent_start">#3B82F6</color>
-    <color name="gradient_accent_end">#06B6D4</color>
+    <color name="gradient_start">#0A0E27</color>
+    <color name="gradient_end">#175667</color>
+    <color name="gradient_accent_start">#EE6A1B</color>
+    <color name="gradient_accent_end">#FFB61B</color>
 
     <!-- Text -->
     <color name="text_primary">#F1F5F9</color>
@@ -23,10 +24,10 @@
     <color name="text_tertiary">#64748B</color>
 
     <!-- Accents -->
-    <color name="accent_primary">#818CF8</color>
+    <color name="accent_primary">#EE6A1B</color>
     <color name="accent_secondary">#A78BFA</color>
     <color name="accent_success">#34D399</color>
-    <color name="accent_peanut">#F59E0B</color>
+    <color name="accent_peanut">#FFB61B</color>
     <color name="status_active">#10B981</color>
     <color name="status_inactive">#EF4444</color>
 

@@ -10,22 +10,14 @@
 
     <TextView
         android:id="@+id/textTitle"
-        android:layout_width="0"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/black_han_sans"
-        android:text="P"
-        android:textColor="@color/accent_peanut"
-        android:textSize="@dimen/text_size_title" />
-    <TextView
-        android:id="@+id/textTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/black_han_sans"
-        android:text="iano"
+        android:text="@string/app_name"
         android:textColor="@color/text_primary"
         android:textSize="@dimen/text_size_title" />
+
 
     <TextView
         android:id="@+id/textPeanuts"

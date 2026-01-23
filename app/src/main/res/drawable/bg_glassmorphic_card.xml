@@ -5,9 +5,9 @@
         <shape android:shape="rectangle">
             <gradient
                 android:angle="135"
-                android:startColor="#1A6366F1"
-                android:centerColor="@color/glass_card"
-                android:endColor="#1A8B5CF6"
+                android:startColor="@color/glass_card_effect_color"
+                android:centerColor="@color/glass_surface"
+                android:endColor="@color/glass_card_effect_color_end"
                 android:type="linear" />
             <corners android:radius="@dimen/radius_lg" />
         </shape>
