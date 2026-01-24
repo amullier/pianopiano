@@ -9,6 +9,8 @@
     <!-- Main screen -->
     <string name="section_service_status">Statut du service</string>
     <string name="section_apps">Applications</string>
+    <string name="search_hint">Rechercher une application…</string>
+    <string name="search_no_results">Aucune application trouvée</string>
     <string name="service_active">Service actif</string>
     <string name="service_inactive">Service inactif</string>
     <string name="service_partial">Service partiellement activé</string>
@@ -48,6 +50,10 @@
     <string name="stats_launch_count">Ouvertures</string>
     <string name="stats_average_session">Durée moyenne</string>
     <string name="stats_launch_count_format">%d fois</string>
+    <string name="stats_screen_time">Temps d\'écran aujourd\'hui</string>
+    <string name="stats_time_saved_total">Temps gagné (total)</string>
+    <string name="stats_time_saved_today">Temps gagné (aujourd\'hui)</string>
+    <string name="stats_no_data">-</string>
 
     <!-- Notification -->
     <string name="notification_channel_name">Pause PianoPiano</string>
@@ -77,6 +83,7 @@
     <!-- Content descriptions -->
     <string name="cd_settings">Paramètres</string>
     <string name="cd_back">Retour</string>
+    <string name="cd_search">Rechercher</string>
     <string name="cd_app_icon">Icône de l\'application</string>
     <string name="cd_status_indicator">Indicateur de statut</string>
 </resources>

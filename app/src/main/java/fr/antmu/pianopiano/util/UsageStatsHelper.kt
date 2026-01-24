@@ -95,4 +95,54 @@ object UsageStatsHelper {
             }
         }
     }
+
+    data class AggregatedStats(
+        val totalScreenTimeToday: Long,      // Temps d'écran total aujourd'hui (ms)
+        val totalLaunchCount: Int,           // Nombre total d'ouvertures
+        val averageSessionTime: Long,        // Temps moyen par session (ms)
+        val timeSavedTotal: Long,            // Temps gagné total = peanuts * averageSessionTime (ms)
+        val timeSavedToday: Long             // Temps gagné aujourd'hui = peanutsToday * averageSessionTime (ms)
+    )
+
+    /**
+     * Calcule les statistiques agrégées pour toutes les apps configurées
+     */
+    fun getAggregatedStats(
+        context: Context,
+        configuredPackages: List<String>,
+        peanutCount: Int,
+        peanutsToday: Int
+    ): AggregatedStats {
+        if (!PermissionHelper.hasUsageStatsPermission(context) || configuredPackages.isEmpty()) {
+            return AggregatedStats(0, 0, 0, 0, 0)
+        }
+
+        var totalTime = 0L
+        var totalLaunches = 0
+
+        for (packageName in configuredPackages) {
+            val stats = getAppUsageStats(context, packageName)
+            if (stats != null) {
+                totalTime += stats.totalTimeToday
+                totalLaunches += stats.launchCountToday
+            }
+        }
+
+        val averageSession = if (totalLaunches > 0) {
+            totalTime / totalLaunches
+        } else {
+            0L
+        }
+
+        val timeSavedTotal = peanutCount * averageSession
+        val timeSavedToday = peanutsToday * averageSession
+
+        return AggregatedStats(
+            totalScreenTimeToday = totalTime,
+            totalLaunchCount = totalLaunches,
+            averageSessionTime = averageSession,
+            timeSavedTotal = timeSavedTotal,
+            timeSavedToday = timeSavedToday
+        )
+    }
 }

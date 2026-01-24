@@ -9,6 +9,7 @@ import fr.antmu.pianopiano.data.repository.AppRepository
 import fr.antmu.pianopiano.data.repository.SettingsRepository
 import fr.antmu.pianopiano.ui.components.ServiceStatusView
 import fr.antmu.pianopiano.util.PermissionHelper
+import fr.antmu.pianopiano.util.UsageStatsHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,6 +18,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val appRepository = AppRepository(application)
     private val settingsRepository = SettingsRepository(application)
+
+    private var allApps: List<AppRepository.InstalledApp> = emptyList()
+    private var currentSearchQuery: String = ""
 
     private val _apps = MutableLiveData<List<AppRepository.InstalledApp>>()
     val apps: LiveData<List<AppRepository.InstalledApp>> = _apps
@@ -27,13 +31,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _peanutCount = MutableLiveData<Int>()
     val peanutCount: LiveData<Int> = _peanutCount
 
+    private val _aggregatedStats = MutableLiveData<UsageStatsHelper.AggregatedStats>()
+    val aggregatedStats: LiveData<UsageStatsHelper.AggregatedStats> = _aggregatedStats
+
     fun loadApps() {
         viewModelScope.launch {
             val installedApps = withContext(Dispatchers.IO) {
                 appRepository.getInstalledUserApps()
             }
-            _apps.value = installedApps
+            allApps = installedApps
+            filterApps(currentSearchQuery)
         }
+    }
+
+    fun searchApps(query: String) {
+        currentSearchQuery = query
+        filterApps(query)
+    }
+
+    private fun filterApps(query: String) {
+        val filtered = if (query.isBlank()) {
+            allApps
+        } else {
+            allApps.filter { app ->
+                app.appName.contains(query, ignoreCase = true)
+            }
+        }
+        _apps.value = filtered
     }
 
     fun refreshServiceStatus() {
@@ -51,6 +75,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun refreshPeanutCount() {
         _peanutCount.value = settingsRepository.peanutCount
+    }
+
+    fun refreshStats() {
+        viewModelScope.launch {
+            val stats = withContext(Dispatchers.IO) {
+                val context = getApplication<Application>()
+                val configuredPackages = appRepository.getConfiguredAppPackages()
+                val peanuts = settingsRepository.peanutCount
+                val peanutsToday = settingsRepository.peanutsToday
+                UsageStatsHelper.getAggregatedStats(context, configuredPackages, peanuts, peanutsToday)
+            }
+            _aggregatedStats.value = stats
+        }
     }
 
     fun setAppConfigured(app: AppRepository.InstalledApp, enabled: Boolean) {

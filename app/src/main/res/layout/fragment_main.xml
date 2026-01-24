@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +16,114 @@
         android:layout_height="1dp"
         android:background="@color/glass_card_border" />
 
+    <!-- Stats Section -->
     <LinearLayout
+        android:id="@+id/statsSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_md">
+
+        <!-- Temps d'écran -->
+        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:layout_width="0dp"
+            android:layout_height="95dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_md"
+            android:padding="@dimen/spacing_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_screen_time"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_size_small" />
+
+                <TextView
+                    android:id="@+id/textScreenTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_size_title"
+                    android:fontFamily="sans-serif-medium"
+                    tools:text="2h 30min" />
+
+            </LinearLayout>
+
+        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+        <!-- Temps gagné -->
+        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:id="@+id/cardTimeSaved"
+            android:layout_width="0dp"
+            android:layout_height="95dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:padding="@dimen/spacing_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textTimeSavedLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_time_saved_total"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_size_small" />
+
+                <TextView
+                    android:id="@+id/textTimeSaved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:textColor="@color/status_active"
+                    android:textSize="@dimen/text_size_title"
+                    android:fontFamily="sans-serif-medium"
+                    tools:text="45min" />
+
+                <!-- Indicateur discret -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <View
+                        android:id="@+id/dotTotal"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/indicator_active" />
+
+                    <View
+                        android:id="@+id/dotToday"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/indicator_inactive" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mainServiceEnabler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -25,7 +133,6 @@
         <!-- Service Status Section -->
 
         <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-            android:id="@+id/mainServiceEnabler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_sm"
@@ -83,16 +190,63 @@
         android:paddingHorizontal="@dimen/spacing_md">
 
 
-        <!-- Apps Section -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Apps Section Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xs"
-            android:letterSpacing="0.1"
-            android:text="@string/section_apps"
-            android:textAllCaps="true"
-            android:textColor="@color/text_secondary"
-            android:textSize="@dimen/text_size_caption" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:letterSpacing="0.1"
+                android:text="@string/section_apps"
+                android:textAllCaps="true"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_size_caption" />
+
+            <ImageButton
+                android:id="@+id/buttonSearch"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_search"
+                android:src="@drawable/ic_search"
+                android:padding="0dp"
+                app:tint="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- Search Bar (hidden by default) -->
+        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:id="@+id/cardSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:padding="@dimen/spacing_sm"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/editSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="@dimen/spacing_sm"
+                android:drawableTint="@color/text_tertiary"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="@dimen/spacing_xs"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_tertiary"
+                android:textSize="@dimen/text_size_body" />
+
+        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
         <fr.antmu.pianopiano.ui.components.GlassmorphicCard
             android:layout_width="match_parent"
@@ -101,13 +255,30 @@
             android:layout_marginBottom="@dimen/spacing_sm"
             android:overScrollMode="always">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerApps"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:paddingVertical="@dimen/spacing_sm"
-                tools:listitem="@layout/item_app" />
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerApps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingVertical="@dimen/spacing_sm"
+                    tools:listitem="@layout/item_app" />
+
+                <TextView
+                    android:id="@+id/textNoResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_lg"
+                    android:text="@string/search_no_results"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="@dimen/text_size_body"
+                    android:visibility="gone" />
+
+            </FrameLayout>
 
         </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
     </LinearLayout>

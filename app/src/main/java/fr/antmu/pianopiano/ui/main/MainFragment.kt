@@ -1,8 +1,10 @@
 package fr.antmu.pianopiano.ui.main
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,7 @@ import fr.antmu.pianopiano.R
 import fr.antmu.pianopiano.data.repository.AppRepository
 import fr.antmu.pianopiano.databinding.FragmentMainBinding
 import fr.antmu.pianopiano.databinding.ViewHeaderBinding
+import fr.antmu.pianopiano.util.UsageStatsHelper
 import fr.antmu.pianopiano.util.setVisible
 
 class MainFragment : Fragment() {
@@ -28,6 +31,9 @@ class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var adapter: AppListAdapter
+
+    private var showTotalTimeSaved = true // true = total, false = aujourd'hui
+    private var isSearchVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +48,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupHeader()
+        setupSearch()
         setupRecyclerView()
         setupActivationButton()
         observeViewModel()
@@ -49,10 +56,33 @@ class MainFragment : Fragment() {
         viewModel.loadApps()
     }
 
+    private fun setupSearch() {
+        // Toggle search bar visibility
+        binding.buttonSearch.setOnClickListener {
+            isSearchVisible = !isSearchVisible
+            binding.cardSearch.visibility = if (isSearchVisible) View.VISIBLE else View.GONE
+            if (isSearchVisible) {
+                binding.editSearch.requestFocus()
+            } else {
+                binding.editSearch.text?.clear()
+                viewModel.searchApps("")
+            }
+        }
+
+        binding.editSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.searchApps(s?.toString() ?: "")
+            }
+        })
+    }
+
     override fun onResume() {
         super.onResume()
         viewModel.refreshServiceStatus()
         viewModel.refreshPeanutCount()
+        viewModel.refreshStats()
     }
 
     private fun setupHeader() {
@@ -147,7 +177,9 @@ class MainFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.apps.observe(viewLifecycleOwner) { apps ->
             adapter.submitList(apps)
-//            binding.textNoApps.setVisible(apps.isEmpty())
+            val hasResults = apps.isNotEmpty()
+            binding.recyclerApps.visibility = if (hasResults) View.VISIBLE else View.GONE
+            binding.textNoResults.visibility = if (hasResults) View.GONE else View.VISIBLE
         }
 
         viewModel.serviceStatus.observe(viewLifecycleOwner) { status ->
@@ -158,11 +190,15 @@ class MainFragment : Fragment() {
                     binding.mainServiceEnabler.visibility = View.VISIBLE
                     binding.serviceStatusCard.visibility = View.GONE
                 }
-                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.PARTIAL,
-                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.ACTIVE -> {
+                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.PARTIAL -> {
                     binding.mainServiceEnabler.visibility = View.GONE
                     binding.serviceStatusCard.visibility = View.VISIBLE
                     binding.serviceStatusCardView.setStatus(status)
+                }
+                fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.ACTIVE -> {
+                    // Masquer les deux cartes quand le service est actif
+                    binding.mainServiceEnabler.visibility = View.GONE
+                    binding.serviceStatusCard.visibility = View.GONE
                 }
             }
         }
@@ -171,6 +207,43 @@ class MainFragment : Fragment() {
             val headerBinding = ViewHeaderBinding.bind(binding.header.root)
             headerBinding.textPeanuts.text = getString(R.string.peanut_count_format, count)
         }
+
+        viewModel.aggregatedStats.observe(viewLifecycleOwner) { stats ->
+            if (stats.totalScreenTimeToday > 0) {
+                binding.textScreenTime.text = UsageStatsHelper.formatShortDuration(stats.totalScreenTimeToday)
+            } else {
+                binding.textScreenTime.text = getString(R.string.stats_no_data)
+            }
+
+            updateTimeSavedDisplay(stats)
+        }
+
+        // Click listener pour basculer entre total et aujourd'hui
+        binding.cardTimeSaved.setOnClickListener {
+            showTotalTimeSaved = !showTotalTimeSaved
+            viewModel.aggregatedStats.value?.let { updateTimeSavedDisplay(it) }
+        }
+    }
+
+    private fun updateTimeSavedDisplay(stats: UsageStatsHelper.AggregatedStats) {
+        val timeSaved = if (showTotalTimeSaved) stats.timeSavedTotal else stats.timeSavedToday
+        val labelRes = if (showTotalTimeSaved) R.string.stats_time_saved_total else R.string.stats_time_saved_today
+
+        binding.textTimeSavedLabel.text = getString(labelRes)
+
+        if (timeSaved > 0) {
+            binding.textTimeSaved.text = UsageStatsHelper.formatShortDuration(timeSaved)
+        } else {
+            binding.textTimeSaved.text = getString(R.string.stats_no_data)
+        }
+
+        // Mettre à jour les indicateurs
+        binding.dotTotal.setBackgroundResource(
+            if (showTotalTimeSaved) R.drawable.indicator_active else R.drawable.indicator_inactive
+        )
+        binding.dotToday.setBackgroundResource(
+            if (showTotalTimeSaved) R.drawable.indicator_inactive else R.drawable.indicator_active
+        )
     }
 
     override fun onDestroyView() {

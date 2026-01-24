@@ -20,18 +20,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Vérifier si l'onboarding doit être affiché
         val preferencesManager = PreferencesManager(this)
+        val currentVersionCode = packageManager.getPackageInfo(packageName, 0).longVersionCode.toInt()
+
         val allPermissionsGranted = PermissionHelper.hasOverlayPermission(this) &&
                 PermissionHelper.isAccessibilityServiceEnabled(this) &&
                 PermissionHelper.hasUsageStatsPermission(this)
 
-        if (preferencesManager.onboardingCompleted || allPermissionsGranted) {
-            // Marquer l'onboarding comme complété si toutes les permissions sont accordées
+        val isNewVersion = preferencesManager.lastOnboardingVersion < currentVersionCode
+        val shouldShowOnboarding = isNewVersion && !allPermissionsGranted
+
+        if (shouldShowOnboarding) {
+            // Afficher l'onboarding (startDestination par défaut)
+            // La version sera sauvegardée quand l'onboarding sera complété
+        } else {
+            // Mettre à jour la version et naviguer vers l'écran principal
             if (allPermissionsGranted) {
+                preferencesManager.lastOnboardingVersion = currentVersionCode
                 preferencesManager.onboardingCompleted = true
             }
-            // Naviguer directement vers l'écran principal
             val navHostFragment = supportFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             val navController = navHostFragment.navController

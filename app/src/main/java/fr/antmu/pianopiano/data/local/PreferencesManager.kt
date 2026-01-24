@@ -30,6 +30,10 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(PreferencesKeys.KEY_ONBOARDING_COMPLETED, false)
         set(value) = prefs.edit().putBoolean(PreferencesKeys.KEY_ONBOARDING_COMPLETED, value).apply()
 
+    var lastOnboardingVersion: Int
+        get() = prefs.getInt(PreferencesKeys.KEY_LAST_ONBOARDING_VERSION, 0)
+        set(value) = prefs.edit().putInt(PreferencesKeys.KEY_LAST_ONBOARDING_VERSION, value).apply()
+
     fun getConfiguredApps(): List<ConfiguredApp> {
         val json = prefs.getString(PreferencesKeys.KEY_CONFIGURED_APPS, null) ?: return emptyList()
         val type = object : TypeToken<List<ConfiguredApp>>() {}.type
@@ -67,6 +71,41 @@ class PreferencesManager(context: Context) {
 
     fun incrementPeanuts() {
         peanutCount++
+        incrementPeanutsToday()
+    }
+
+    // --- Daily Peanuts Tracking ---
+
+    private fun getTodayDateString(): String {
+        val calendar = java.util.Calendar.getInstance()
+        return "${calendar.get(java.util.Calendar.YEAR)}-${calendar.get(java.util.Calendar.MONTH)}-${calendar.get(java.util.Calendar.DAY_OF_MONTH)}"
+    }
+
+    val peanutsToday: Int
+        get() {
+            val savedDate = prefs.getString(PreferencesKeys.KEY_PEANUTS_TODAY_DATE, null)
+            val today = getTodayDateString()
+            return if (savedDate == today) {
+                prefs.getInt(PreferencesKeys.KEY_PEANUTS_TODAY, 0)
+            } else {
+                0
+            }
+        }
+
+    private fun incrementPeanutsToday() {
+        val today = getTodayDateString()
+        val savedDate = prefs.getString(PreferencesKeys.KEY_PEANUTS_TODAY_DATE, null)
+
+        val currentCount = if (savedDate == today) {
+            prefs.getInt(PreferencesKeys.KEY_PEANUTS_TODAY, 0)
+        } else {
+            0
+        }
+
+        prefs.edit()
+            .putString(PreferencesKeys.KEY_PEANUTS_TODAY_DATE, today)
+            .putInt(PreferencesKeys.KEY_PEANUTS_TODAY, currentCount + 1)
+            .apply()
     }
 
     // --- Periodic Timer Methods ---

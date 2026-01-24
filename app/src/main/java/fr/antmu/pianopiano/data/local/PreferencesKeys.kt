@@ -18,6 +18,11 @@ object PreferencesKeys {
 
     // Onboarding
     const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
+    const val KEY_LAST_ONBOARDING_VERSION = "last_onboarding_version"
+
+    // Daily peanuts tracking
+    const val KEY_PEANUTS_TODAY = "peanuts_today"
+    const val KEY_PEANUTS_TODAY_DATE = "peanuts_today_date"
 
     // Default values
     const val DEFAULT_PAUSE_DURATION = 12

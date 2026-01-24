@@ -1,10 +1,14 @@
 package fr.antmu.pianopiano.ui.onboarding
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import fr.antmu.pianopiano.R
@@ -33,8 +37,29 @@ class OnboardingFragment : Fragment() {
 
         preferencesManager = PreferencesManager(requireContext())
 
+        setupTitle()
         setupClickListeners()
         updatePermissionStatus()
+    }
+
+    private fun setupTitle() {
+        val title = getString(R.string.app_name) // "PianoPiano"
+        val spannable = SpannableString(title)
+        val accentColor = ContextCompat.getColor(requireContext(), R.color.accent_primary)
+
+        // Premier "P" (index 0)
+        spannable.setSpan(
+            ForegroundColorSpan(accentColor),
+            0, 1,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        // Deuxième "P" (index 5 dans "PianoPiano")
+        spannable.setSpan(
+            ForegroundColorSpan(accentColor),
+            5, 6,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.textTitle.text = spannable
     }
 
     override fun onResume() {
@@ -71,6 +96,10 @@ class OnboardingFragment : Fragment() {
         }
 
         binding.buttonContinue.setOnClickListener {
+            // Sauvegarder la version et marquer l'onboarding comme complété
+            val currentVersionCode = requireContext().packageManager
+                .getPackageInfo(requireContext().packageName, 0).longVersionCode.toInt()
+            preferencesManager.lastOnboardingVersion = currentVersionCode
             preferencesManager.onboardingCompleted = true
             findNavController().navigate(R.id.action_onboarding_to_main)
         }

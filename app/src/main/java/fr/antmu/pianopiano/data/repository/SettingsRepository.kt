@@ -19,6 +19,9 @@ class SettingsRepository(context: Context) {
             preferencesManager.peanutCount = value
         }
 
+    val peanutsToday: Int
+        get() = preferencesManager.peanutsToday
+
     var serviceEnabled: Boolean
         get() = preferencesManager.serviceEnabled
         set(value) {
