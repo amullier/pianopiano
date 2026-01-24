@@ -3,6 +3,7 @@ package fr.antmu.pianopiano.ui.pause
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import fr.antmu.pianopiano.R
+import kotlin.math.cos
 import kotlin.math.sin
 
 class SinusoidAnimationView @JvmOverloads constructor(
@@ -28,8 +30,14 @@ class SinusoidAnimationView @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
+    private val rotationIndicatorPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = Color.argb(100, 255, 255, 255) // Petit point noir pour montrer la rotation
+    }
+
     private val path = Path()
     private var phase = 0f
+    private var rotationAngle = 0f
     private var animator: ValueAnimator? = null
 
     private var sinusoidColor: Int = ContextCompat.getColor(context, R.color.accent_primary)
@@ -81,6 +89,8 @@ class SinusoidAnimationView @JvmOverloads constructor(
             interpolator = LinearInterpolator()
             addUpdateListener { animation ->
                 phase = animation.animatedValue as Float
+                // Calculer l'angle de rotation (effet de roulement)
+                rotationAngle = phase * 10f // 10x plus vite pour effet visible
                 invalidate()
             }
             start()
@@ -115,8 +125,23 @@ class SinusoidAnimationView @JvmOverloads constructor(
 
         canvas.drawPath(path, linePaint)
 
-        // Dessiner la boule au centre
+        // Calculer la position de la boule au centre
         val ballY = centerY + amplitude * sin((centerX / wavelength * 2 * Math.PI + phase)).toFloat() - 12
+
+        // Dessiner la boule principale (couleur unie)
         canvas.drawCircle(centerX, ballY, circleRadius, circlePaint)
+
+        // Dessiner le petit point indicateur de rotation
+        // Le point tourne autour du centre de la boule
+        val indicatorDistance = circleRadius * 0.5f
+        val indicatorX = centerX + cos(rotationAngle.toDouble()).toFloat() * indicatorDistance
+        val indicatorY = ballY + sin(rotationAngle.toDouble()).toFloat() * indicatorDistance
+
+        canvas.drawCircle(
+            indicatorX,
+            indicatorY,
+            circleRadius * 0.25f,
+            rotationIndicatorPaint
+        )
     }
 }
