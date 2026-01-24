@@ -234,6 +234,17 @@
 
             </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
+            <!-- Version -->
+            <TextView
+                android:id="@+id/textVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:gravity="center"
+                android:textColor="@color/text_tertiary"
+                android:textSize="@dimen/text_size_caption"
+                tools:text="Version 0.2" />
+
         </LinearLayout>
 
     </ScrollView>

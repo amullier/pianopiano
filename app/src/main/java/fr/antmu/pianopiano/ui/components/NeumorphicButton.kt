@@ -14,7 +14,7 @@ class NeumorphicButton @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
-    private var isPressed = false
+    private var isButtonPressed = false
 
     init {
         setBackgroundResource(R.drawable.bg_neumorphic_button)
@@ -45,14 +45,21 @@ class NeumorphicButton @JvmOverloads constructor(
         isFocusable = true
     }
 
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        alpha = if (enabled) 1.0f else 0.5f
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (!isEnabled) return false
+
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                isPressed = true
+                isButtonPressed = true
                 setBackgroundResource(R.drawable.bg_neumorphic_button_pressed)
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                isPressed = false
+                isButtonPressed = false
                 setBackgroundResource(R.drawable.bg_neumorphic_button)
             }
         }

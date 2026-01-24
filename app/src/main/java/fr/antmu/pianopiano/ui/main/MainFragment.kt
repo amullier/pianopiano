@@ -1,12 +1,16 @@
 package fr.antmu.pianopiano.ui.main
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -53,6 +57,25 @@ class MainFragment : Fragment() {
 
     private fun setupHeader() {
         val headerBinding = ViewHeaderBinding.bind(binding.header.root)
+
+        // Styliser les deux "P" de PianoPiano en accent_primary
+        val title = getString(R.string.app_name) // "PianoPiano"
+        val spannable = SpannableString(title)
+        val accentColor = ContextCompat.getColor(requireContext(), R.color.accent_primary)
+
+        // Premier "P" (index 0)
+        spannable.setSpan(
+            ForegroundColorSpan(accentColor),
+            0, 1,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        // Deuxième "P" (index 5 dans "PianoPiano")
+        spannable.setSpan(
+            ForegroundColorSpan(accentColor),
+            5, 6,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        headerBinding.textTitle.text = spannable
 
         headerBinding.buttonSettings.setOnClickListener {
             findNavController().navigate(R.id.action_main_to_settings)

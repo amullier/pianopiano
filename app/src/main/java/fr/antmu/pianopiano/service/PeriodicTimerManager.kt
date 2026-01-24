@@ -3,6 +3,7 @@ package fr.antmu.pianopiano.service
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.repository.AppRepository
 
 object PeriodicTimerManager {
@@ -13,9 +14,13 @@ object PeriodicTimerManager {
 
     fun startTimer(context: Context, packageName: String, intervalSeconds: Int) {
         // Arrêter le timer existant s'il y en a un
-        stopTimer(packageName)
+        stopTimer(context, packageName)
 
         if (intervalSeconds <= 0) return
+
+        // Sauvegarder le package avec timer actif
+        val preferencesManager = PreferencesManager(context)
+        preferencesManager.activeTimerPackage = packageName
 
         val runnable = object : Runnable {
             override fun run() {
@@ -33,18 +38,26 @@ object PeriodicTimerManager {
         handler.postDelayed(runnable, intervalSeconds * 1000L)
     }
 
-    fun stopTimer(packageName: String) {
+    fun stopTimer(context: Context, packageName: String) {
         activeTimers[packageName]?.let { runnable ->
             handler.removeCallbacks(runnable)
             activeTimers.remove(packageName)
         }
+        // Effacer le package actif si c'est celui qu'on arrête
+        val preferencesManager = PreferencesManager(context)
+        if (preferencesManager.activeTimerPackage == packageName) {
+            preferencesManager.activeTimerPackage = null
+        }
     }
 
-    fun stopAllTimers() {
+    fun stopAllTimers(context: Context) {
         activeTimers.forEach { (_, runnable) ->
             handler.removeCallbacks(runnable)
         }
         activeTimers.clear()
+        // Effacer le package actif
+        val preferencesManager = PreferencesManager(context)
+        preferencesManager.activeTimerPackage = null
     }
 
     fun isTimerActive(packageName: String): Boolean {
@@ -68,10 +81,38 @@ object PeriodicTimerManager {
         ServiceHelper.startPeriodicPause(context, packageName)
     }
 
-    fun onAppLeft(packageName: String) {
+    fun onAppLeft(context: Context, packageName: String) {
         // Quand l'utilisateur quitte l'app, on arrête le timer
         // Il sera relancé si l'utilisateur revient avant 5 minutes
-        stopTimer(packageName)
+        stopTimer(context, packageName)
+    }
+
+    /**
+     * Restaure le timer si l'app a été tuée et redémarrée.
+     * À appeler dans onServiceConnected() du service d'accessibilité.
+     */
+    fun restoreTimerIfNeeded(context: Context) {
+        val preferencesManager = PreferencesManager(context)
+        val activePackage = preferencesManager.activeTimerPackage ?: return
+
+        // Vérifier si l'app est toujours configurée et a un timer
+        val appRepository = AppRepository(context)
+        val timerSeconds = appRepository.getAppPeriodicTimer(activePackage)
+        if (timerSeconds <= 0) {
+            preferencesManager.activeTimerPackage = null
+            return
+        }
+
+        // Vérifier si on est dans la fenêtre de 5 minutes
+        if (appRepository.shouldResetTimer(activePackage)) {
+            // Plus de 5 minutes, on ne restaure pas
+            preferencesManager.activeTimerPackage = null
+            return
+        }
+
+        // Restaurer le timer - on suppose que l'utilisateur est toujours sur cette app
+        currentForegroundPackage = activePackage
+        startTimer(context, activePackage, timerSeconds)
     }
 
     fun onInitialPauseFinished(context: Context, packageName: String) {

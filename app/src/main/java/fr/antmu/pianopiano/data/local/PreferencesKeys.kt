@@ -13,7 +13,11 @@ object PreferencesKeys {
 
     // Periodic timer
     const val KEY_LAST_ACTIVE_TIMESTAMPS = "last_active_timestamps"
-    const val EXIT_THRESHOLD_MS = 300000L  // 5 minutes
+    const val KEY_ACTIVE_TIMER_PACKAGE = "active_timer_package"
+    const val EXIT_THRESHOLD_MS = 10000L  // 10s
+
+    // Onboarding
+    const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
 
     // Default values
     const val DEFAULT_PAUSE_DURATION = 12

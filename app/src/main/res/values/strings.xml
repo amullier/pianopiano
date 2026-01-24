@@ -68,6 +68,12 @@
     <string name="timer_30min">30 minutes</string>
     <string name="timer_1h">1 heure</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_title">Bienvenue</string>
+    <string name="onboarding_subtitle">Prenez le contrôle de votre temps d\'écran</string>
+    <string name="onboarding_permissions_needed">Permissions requises</string>
+    <string name="onboarding_continue">Continuer</string>
+
     <!-- Content descriptions -->
     <string name="cd_settings">Paramètres</string>
     <string name="cd_back">Retour</string>

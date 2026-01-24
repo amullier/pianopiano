@@ -32,6 +32,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
+        setupVersion()
         observeViewModel()
     }
 
@@ -110,6 +111,18 @@ class SettingsFragment : Fragment() {
             messageResId,
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    private fun setupVersion() {
+        try {
+            val packageInfo = requireContext().packageManager.getPackageInfo(
+                requireContext().packageName,
+                0
+            )
+            binding.textVersion.text = "Version ${packageInfo.versionName}"
+        } catch (e: Exception) {
+            binding.textVersion.text = "Version inconnue"
+        }
     }
 
     override fun onDestroyView() {

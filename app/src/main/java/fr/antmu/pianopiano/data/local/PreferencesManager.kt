@@ -26,6 +26,10 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(PreferencesKeys.KEY_SERVICE_ENABLED, PreferencesKeys.DEFAULT_SERVICE_ENABLED)
         set(value) = prefs.edit().putBoolean(PreferencesKeys.KEY_SERVICE_ENABLED, value).apply()
 
+    var onboardingCompleted: Boolean
+        get() = prefs.getBoolean(PreferencesKeys.KEY_ONBOARDING_COMPLETED, false)
+        set(value) = prefs.edit().putBoolean(PreferencesKeys.KEY_ONBOARDING_COMPLETED, value).apply()
+
     fun getConfiguredApps(): List<ConfiguredApp> {
         val json = prefs.getString(PreferencesKeys.KEY_CONFIGURED_APPS, null) ?: return emptyList()
         val type = object : TypeToken<List<ConfiguredApp>>() {}.type
@@ -111,4 +115,16 @@ class PreferencesManager(context: Context) {
             saveConfiguredApps(apps)
         }
     }
+
+    // --- Active Timer Persistence ---
+
+    var activeTimerPackage: String?
+        get() = prefs.getString(PreferencesKeys.KEY_ACTIVE_TIMER_PACKAGE, null)
+        set(value) {
+            if (value == null) {
+                prefs.edit().remove(PreferencesKeys.KEY_ACTIVE_TIMER_PACKAGE).apply()
+            } else {
+                prefs.edit().putString(PreferencesKeys.KEY_ACTIVE_TIMER_PACKAGE, value).apply()
+            }
+        }
 }

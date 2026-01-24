@@ -21,6 +21,8 @@ class AppLaunchDetectorService : AccessibilityService() {
         super.onServiceConnected()
         preferencesManager = PreferencesManager(applicationContext)
         appRepository = AppRepository(applicationContext)
+        // Restaurer le timer périodique si l'app a été tuée
+        PeriodicTimerManager.restoreTimerIfNeeded(applicationContext)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -102,7 +104,7 @@ class AppLaunchDetectorService : AccessibilityService() {
         if (preferencesManager.isAppConfigured(packageName)) {
             // Mettre à jour le timestamp quand l'utilisateur quitte
             PeriodicTimerManager.updateLastActiveTime(applicationContext, packageName)
-            PeriodicTimerManager.onAppLeft(packageName)
+            PeriodicTimerManager.onAppLeft(applicationContext, packageName)
         }
     }
 
@@ -112,7 +114,7 @@ class AppLaunchDetectorService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        PeriodicTimerManager.stopAllTimers()
+        PeriodicTimerManager.stopAllTimers(applicationContext)
         ServiceHelper.stopPauseOverlay(applicationContext)
     }
 }
