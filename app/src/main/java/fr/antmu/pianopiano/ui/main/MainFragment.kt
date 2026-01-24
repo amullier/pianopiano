@@ -57,15 +57,13 @@ class MainFragment : Fragment() {
     }
 
     private fun setupSearch() {
-        // Toggle search bar visibility
+        // Toggle search bar visibility with animation
         binding.buttonSearch.setOnClickListener {
             isSearchVisible = !isSearchVisible
-            binding.cardSearch.visibility = if (isSearchVisible) View.VISIBLE else View.GONE
             if (isSearchVisible) {
-                binding.editSearch.requestFocus()
+                showSearchBar()
             } else {
-                binding.editSearch.text?.clear()
-                viewModel.searchApps("")
+                hideSearchBar()
             }
         }
 
@@ -76,6 +74,39 @@ class MainFragment : Fragment() {
                 viewModel.searchApps(s?.toString() ?: "")
             }
         })
+    }
+
+    private fun showSearchBar() {
+        binding.cardSearch.apply {
+            visibility = View.VISIBLE
+            alpha = 0f
+            translationY = -height.toFloat().coerceAtLeast(40f)
+            animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(300)
+                .setInterpolator(android.view.animation.DecelerateInterpolator())
+                .withEndAction {
+                    binding.editSearch.requestFocus()
+                }
+                .start()
+        }
+    }
+
+    private fun hideSearchBar() {
+        binding.cardSearch.animate()
+            .alpha(0f)
+            .translationY(-binding.cardSearch.height.toFloat().coerceAtLeast(40f))
+            .setDuration(250)
+            .setInterpolator(android.view.animation.AccelerateInterpolator())
+            .withEndAction {
+                binding.cardSearch.visibility = View.GONE
+                binding.cardSearch.alpha = 1f
+                binding.cardSearch.translationY = 0f
+                binding.editSearch.text?.clear()
+                viewModel.searchApps("")
+            }
+            .start()
     }
 
     override fun onResume() {
