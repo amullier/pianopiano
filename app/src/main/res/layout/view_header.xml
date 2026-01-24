@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:layout_marginTop="@dimen/spacing_md"
+    android:layout_marginTop="@dimen/spacing_lg"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/spacing_md"
     android:paddingVertical="@dimen/spacing_md">

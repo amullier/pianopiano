@@ -16,7 +16,7 @@
     <color name="gradient_start">#0A0E27</color>
     <color name="gradient_end">#175667</color>
     <color name="gradient_accent_start">#EE6A1B</color>
-    <color name="gradient_accent_end">#FFB61B</color>
+    <color name="gradient_accent_end">#F2AD37</color>
 
     <!-- Text -->
     <color name="text_primary">#F1F5F9</color>
@@ -28,7 +28,7 @@
     <color name="accent_secondary">#A78BFA</color>
     <color name="bg_success">#009b60</color>
     <color name="accent_success">#006c45</color>
-    <color name="accent_peanut">#FFB61B</color>
+    <color name="accent_peanut">#F2AD37</color>
     <color name="status_active">#10B981</color>
     <color name="status_inactive">#EF4444</color>
     <color name="status_partial">#F59E0B</color>

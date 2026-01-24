@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,8 +37,8 @@
         android:contentDescription="@string/cd_settings"
         android:padding="4dp"
         android:src="@drawable/ic_settings"
-        android:tint="@color/text_secondary"
         android:visibility="gone"
+        app:tint="@color/text_secondary"
         tools:visibility="visible" />
 
     <fr.antmu.pianopiano.ui.components.NeumorphicToggle

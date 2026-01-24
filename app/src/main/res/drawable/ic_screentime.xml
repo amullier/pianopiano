@@ -1,0 +1,42 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Smartphone -->
+    <path
+        android:pathData="M8,2 h8 a2,2 0 0 1 2,2 v16 a2,2 0 0 1 -2,2 h-8 a2,2 0 0 1 -2,-2 v-16 a2,2 0 0 1 2,-2 z"
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/text_secondary"
+        android:strokeWidth="1.5"/>
+
+    <!-- Haut-parleur -->
+    <path
+        android:pathData="M10,4 h4"
+        android:strokeColor="@color/text_secondary"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"/>
+
+    <!-- Horloge (accent) -->
+    <path
+        android:pathData="M16.5,12.5 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0"
+        android:fillColor="@color/glass_background"
+        android:strokeColor="@color/text_secondary"
+        android:strokeWidth="0.6"/>
+
+    <!-- Aiguille heure -->
+    <path
+        android:pathData="M16.5,12.5 V10.5"
+        android:strokeColor="@color/text_secondary"
+        android:strokeWidth="0.7"
+        android:strokeLineCap="round"/>
+
+    <!-- Aiguille minute -->
+    <path
+        android:pathData="M16.5,12.5 L18,13.5"
+        android:strokeColor="@color/text_secondary"
+        android:strokeWidth="0.7"
+        android:strokeLineCap="round"/>
+
+</vector>

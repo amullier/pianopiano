@@ -18,12 +18,12 @@
         <!-- Pause Icon -->
         <ImageView
             android:id="@+id/imagePauseIcon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="@dimen/spacing_lg"
             android:src="@drawable/ic_pause_large"
             android:contentDescription="@string/app_name"
-            android:tint="@color/accent_primary" />
+            app:tint="@color/accent_peanut" />
 
         <!-- Usage Stats Card -->
         <fr.antmu.pianopiano.ui.components.GlassmorphicCard
@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_md"
-            android:layout_marginHorizontal="@dimen/spacing_lg"
             android:padding="@dimen/spacing_md"
             android:visibility="gone"
             tools:visibility="visible">
@@ -145,24 +144,21 @@
         <fr.antmu.pianopiano.ui.pause.SinusoidAnimationView
             android:id="@+id/sinusoidView"
             android:layout_width="400dp"
-            android:layout_height="@dimen/overlay_sinusoid_height"
+            android:layout_height="120dp"
             android:layout_marginTop="@dimen/spacing_xl"
             app:circleColor="@color/accent_peanut"
             app:sinusoidAmplitude="40dp"
-            app:sinusoidColor="@color/accent_primary"
+            app:sinusoidColor="@color/accent_peanut"
             app:sinusoidSpeed="0.3"
             app:sinusoidStrokeWidth="1dp"
             app:sinusoidWavelength="180dp" />
-
-        <!-- Countdown -->
 
         <!-- Quote -->
         <TextView
             android:id="@+id/textQuote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
-            android:layout_marginHorizontal="@dimen/spacing_lg"
+            android:layout_marginTop="@dimen/spacing_md"
             style="@style/TextStyle.Quote"
             tools:text="Respire profondément, tout va bien." />
 
@@ -170,12 +166,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginTop="@dimen/spacing_md"
             android:gravity="center"
             android:orientation="vertical">
 
             <!-- Cancel button (always visible) - Prominent with gradient -->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

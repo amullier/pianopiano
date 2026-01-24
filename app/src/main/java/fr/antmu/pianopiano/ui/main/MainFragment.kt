@@ -122,7 +122,7 @@ class MainFragment : Fragment() {
         // Styliser les deux "P" de PianoPiano en accent_primary
         val title = getString(R.string.app_name) // "PianoPiano"
         val spannable = SpannableString(title)
-        val accentColor = ContextCompat.getColor(requireContext(), R.color.accent_primary)
+        val accentColor = ContextCompat.getColor(requireContext(), R.color.accent_peanut)
 
         // Premier "P" (index 0)
         spannable.setSpan(

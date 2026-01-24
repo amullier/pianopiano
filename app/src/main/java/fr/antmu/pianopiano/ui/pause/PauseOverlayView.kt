@@ -35,8 +35,9 @@ class PauseOverlayView(
         binding.buttonCancel.setOnClickListener {
             viewModel.onCancelClicked()
 
-            // Exempter l'app pour éviter la réapparition du pause
-            ServiceHelper.exemptPackage(viewModel.getTargetPackageName())
+            // Exemption courte de 500ms pour le bouton Annuler
+            // Si l'utilisateur rouvre l'app immédiatement, il retombe sur l'écran de pause
+            ServiceHelper.exemptPackageShort(viewModel.getTargetPackageName())
 
             // Retour à l'écran d'accueil
             val homeIntent = android.content.Intent(android.content.Intent.ACTION_MAIN).apply {
@@ -48,7 +49,7 @@ class PauseOverlayView(
         }
 
         binding.buttonContinue.setOnClickListener {
-            // Exempter l'app pour permettre l'ouverture sans pause
+            // Exempter l'app pour permettre l'ouverture sans pause (1 seconde)
             ServiceHelper.exemptPackage(viewModel.getTargetPackageName())
 
             viewModel.onContinueClicked()

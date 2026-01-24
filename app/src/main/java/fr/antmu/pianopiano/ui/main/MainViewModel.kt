@@ -92,7 +92,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setAppConfigured(app: AppRepository.InstalledApp, enabled: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
+            // Sauvegarder la configuration
             appRepository.setAppConfigured(app.packageName, app.appName, enabled)
+
+            // Mettre à jour le cache en mémoire
+            allApps = allApps.map { installedApp ->
+                if (installedApp.packageName == app.packageName) {
+                    installedApp.copy(isConfigured = enabled)
+                } else {
+                    installedApp
+                }
+            }
+
+            // Rafraîchir la liste filtrée sur le thread principal
+            withContext(Dispatchers.Main) {
+                filterApps(currentSearchQuery)
+            }
         }
     }
 

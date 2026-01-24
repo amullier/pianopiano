@@ -57,11 +57,13 @@ class NeumorphicToggle @JvmOverloads constructor(
         }
     }
 
-    fun setChecked(checked: Boolean, animate: Boolean = true) {
+    fun setChecked(checked: Boolean, animate: Boolean = true, notifyListener: Boolean = true) {
         if (isChecked != checked) {
             isChecked = checked
             updateUI(animate)
-            onCheckedChangeListener?.invoke(isChecked)
+            if (notifyListener) {
+                onCheckedChangeListener?.invoke(isChecked)
+            }
         }
     }
 
@@ -87,22 +89,9 @@ class NeumorphicToggle @JvmOverloads constructor(
             else R.drawable.bg_neumorphic_toggle_off
         )
 
-        if (animate) {
-            val currentMargin = (thumb.layoutParams as LayoutParams).leftMargin
-            ValueAnimator.ofInt(currentMargin, targetMargin).apply {
-                duration = 200
-                interpolator = DecelerateInterpolator()
-                addUpdateListener { animator ->
-                    val params = thumb.layoutParams as LayoutParams
-                    params.leftMargin = animator.animatedValue as Int
-                    thumb.layoutParams = params
-                }
-                start()
-            }
-        } else {
-            val params = thumb.layoutParams as LayoutParams
-            params.leftMargin = targetMargin
-            thumb.layoutParams = params
-        }
+        // Pas d'animation, changement instantané
+        val params = thumb.layoutParams as LayoutParams
+        params.leftMargin = targetMargin
+        thumb.layoutParams = params
     }
 }

@@ -67,6 +67,11 @@
                 android:value="display_overlay" />
         </service>
 
+        <!-- Boot Initialization Service -->
+        <service
+            android:name=".service.BootInitService"
+            android:exported="false" />
+
         <!-- Boot Receiver -->
         <receiver
             android:name=".receiver.BootReceiver"

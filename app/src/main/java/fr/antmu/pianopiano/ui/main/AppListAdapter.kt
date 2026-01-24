@@ -31,23 +31,34 @@ class AppListAdapter(
         private val binding: ItemAppBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(app: AppRepository.InstalledApp) {
-            binding.imageIcon.setImageDrawable(app.icon)
-            binding.textName.text = app.appName
-            binding.toggle.setChecked(app.isConfigured, animate = false)
-
-            // Afficher l'icône settings seulement si l'app est configurée
-            binding.buttonSettings.visibility = if (app.isConfigured) View.VISIBLE else View.GONE
-
+        init {
+            // Définir le listener UNE SEULE FOIS lors de la création du ViewHolder
             binding.toggle.setOnCheckedChangeListener { isChecked ->
-                // Mettre à jour la visibilité de l'icône settings
-                binding.buttonSettings.visibility = if (isChecked) View.VISIBLE else View.GONE
-                onToggleChanged(app, isChecked)
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val app = getItem(position)
+                    binding.buttonSettings.visibility = if (isChecked) View.VISIBLE else View.GONE
+                    onToggleChanged(app, isChecked)
+                }
             }
 
             binding.buttonSettings.setOnClickListener {
-                onSettingsClicked(app)
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val app = getItem(position)
+                    onSettingsClicked(app)
+                }
             }
+        }
+
+        fun bind(app: AppRepository.InstalledApp) {
+            binding.imageIcon.setImageDrawable(app.icon)
+            binding.textName.text = app.appName
+            // Ne pas notifier le listener lors du bind initial
+            binding.toggle.setChecked(app.isConfigured, animate = false, notifyListener = false)
+
+            // Afficher l'icône settings seulement si l'app est configurée
+            binding.buttonSettings.visibility = if (app.isConfigured) View.VISIBLE else View.GONE
         }
     }
 
