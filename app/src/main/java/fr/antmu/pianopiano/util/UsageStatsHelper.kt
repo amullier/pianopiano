@@ -12,7 +12,9 @@ object UsageStatsHelper {
         val totalTimeToday: Long,          // en millisecondes
         val launchCountToday: Int,
         val averageSessionTime: Long,      // en millisecondes
-        val lastUsedTime: Long             // timestamp
+        val lastUsedTime: Long,            // timestamp
+        val totalTimeLast7Days: Long = 0L, // en millisecondes
+        val launchCountLast7Days: Int = 0
     )
 
     fun getAppUsageStats(context: Context, packageName: String): AppUsageStats? {
@@ -29,19 +31,19 @@ object UsageStatsHelper {
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
-        val startTime = calendar.timeInMillis
+        val startTimeToday = calendar.timeInMillis
         val endTime = System.currentTimeMillis()
 
         val usageStatsList = usageStatsManager.queryUsageStats(
             UsageStatsManager.INTERVAL_DAILY,
-            startTime,
+            startTimeToday,
             endTime
         )
 
         val appStats = usageStatsList.find { it.packageName == packageName } ?: return null
 
         // Get events to count sessions and calculate average
-        val events = usageStatsManager.queryEvents(startTime, endTime)
+        val events = usageStatsManager.queryEvents(startTimeToday, endTime)
         var sessionCount = 0
 
         while (events.hasNextEvent()) {
@@ -62,11 +64,44 @@ object UsageStatsHelper {
             0L
         }
 
+        // Get stats for last 7 days
+        val startTime7Days = endTime - TimeUnit.DAYS.toMillis(7)
+        val usageStatsList7Days = usageStatsManager.queryUsageStats(
+            UsageStatsManager.INTERVAL_DAILY,
+            startTime7Days,
+            endTime
+        )
+
+        var totalTime7Days = 0L
+        var launchCount7Days = 0
+
+        // Aggregate stats for the last 7 days
+        for (stats in usageStatsList7Days) {
+            if (stats.packageName == packageName) {
+                totalTime7Days += stats.totalTimeInForeground
+            }
+        }
+
+        // Count launches for last 7 days
+        val events7Days = usageStatsManager.queryEvents(startTime7Days, endTime)
+        while (events7Days.hasNextEvent()) {
+            val event = android.app.usage.UsageEvents.Event()
+            events7Days.getNextEvent(event)
+
+            if (event.packageName == packageName) {
+                if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
+                    launchCount7Days++
+                }
+            }
+        }
+
         return AppUsageStats(
             totalTimeToday = appStats.totalTimeInForeground,
             launchCountToday = sessionCount,
             averageSessionTime = averageSessionTime,
-            lastUsedTime = appStats.lastTimeUsed
+            lastUsedTime = appStats.lastTimeUsed,
+            totalTimeLast7Days = totalTime7Days,
+            launchCountLast7Days = launchCount7Days
         )
     }
 
@@ -98,10 +133,12 @@ object UsageStatsHelper {
 
     data class AggregatedStats(
         val totalScreenTimeToday: Long,      // Temps d'écran total aujourd'hui (ms)
+        val totalScreenTime7Days: Long,      // Temps d'écran sur 7 derniers jours (ms)
         val totalLaunchCount: Int,           // Nombre total d'ouvertures
         val averageSessionTime: Long,        // Temps moyen par session (ms)
         val timeSavedTotal: Long,            // Temps gagné total = peanuts * averageSessionTime (ms)
-        val timeSavedToday: Long             // Temps gagné aujourd'hui = peanutsToday * averageSessionTime (ms)
+        val timeSavedToday: Long,            // Temps gagné aujourd'hui = peanutsToday * averageSessionTime (ms)
+        val timeSaved7Days: Long             // Temps gagné sur 7 jours (ms)
     )
 
     /**
@@ -114,17 +151,21 @@ object UsageStatsHelper {
         peanutsToday: Int
     ): AggregatedStats {
         if (!PermissionHelper.hasUsageStatsPermission(context) || configuredPackages.isEmpty()) {
-            return AggregatedStats(0, 0, 0, 0, 0)
+            return AggregatedStats(0, 0, 0, 0, 0, 0, 0)
         }
 
         var totalTime = 0L
         var totalLaunches = 0
+        var totalTime7Days = 0L
+        var totalLaunches7Days = 0
 
         for (packageName in configuredPackages) {
             val stats = getAppUsageStats(context, packageName)
             if (stats != null) {
                 totalTime += stats.totalTimeToday
                 totalLaunches += stats.launchCountToday
+                totalTime7Days += stats.totalTimeLast7Days
+                totalLaunches7Days += stats.launchCountLast7Days
             }
         }
 
@@ -134,15 +175,24 @@ object UsageStatsHelper {
             0L
         }
 
+        val averageSession7Days = if (totalLaunches7Days > 0) {
+            totalTime7Days / totalLaunches7Days
+        } else {
+            0L
+        }
+
         val timeSavedTotal = peanutCount * averageSession
         val timeSavedToday = peanutsToday * averageSession
+        val timeSaved7Days = peanutCount * averageSession7Days
 
         return AggregatedStats(
             totalScreenTimeToday = totalTime,
+            totalScreenTime7Days = totalTime7Days,
             totalLaunchCount = totalLaunches,
             averageSessionTime = averageSession,
             timeSavedTotal = timeSavedTotal,
-            timeSavedToday = timeSavedToday
+            timeSavedToday = timeSavedToday,
+            timeSaved7Days = timeSaved7Days
         )
     }
 }

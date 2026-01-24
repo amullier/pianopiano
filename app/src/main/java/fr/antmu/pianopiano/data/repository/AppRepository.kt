@@ -72,7 +72,30 @@ class AppRepository(private val context: Context) {
             "com.google.android.backuptransport",
             "com.google.android.configupdater",
             "com.google.android.feedback",
-            "com.google.android.setupwizard"
+            "com.google.android.setupwizard",
+            "com.google.android.apps.wellbeing",     // Bien-être numérique
+            "com.android.managedprovisioning",       // Provisioning
+            "com.android.simappdialog",              // Gestionnaire de SIM
+            "com.google.android.as",                 // Android System Intelligence
+            "com.google.android.privatecomputeservices", // Private Compute Services
+            "com.android.networkstack.tethering",    // Network Stack
+            "com.google.mainline.telemetry",         // Main Components
+            "com.android.systemui.plugin",
+            "com.android.keychain",                  // Android System Key Verifier
+            "com.google.android.modulemetadata",     // Support Components
+            "com.google.android.networkstack",       // Gestionnaire de réseau
+            "com.google.android.adservices.api",
+            "com.google.android.captiveportallogin",
+            "com.google.android.cellbroadcastservice",
+            "com.google.android.permissioncontroller",
+            "com.android.safetycenter.resources",    // System Safety Core
+            "com.google.android.inputmethod.latin",  // Gboard
+            "com.android.ons",                       // Android Switch
+            "com.google.android.overlay",
+            "com.google.android.documentsui",
+            "com.android.carrierdefaultapp",
+            "com.android.traceur",
+            "com.google.android.apps.restore"
         )
 
         // Préfixes de packages système à exclure
@@ -84,7 +107,10 @@ class AppRepository(private val context: Context) {
             "com.sec.android.providers.",
             "com.qualcomm.",
             "com.qti.",
-            "com.mediatek."
+            "com.mediatek.",
+            "com.google.mainline.",
+            "com.android.systemui.",
+            "com.google.android.ext."
         )
 
         // Apps système populaires à toujours inclure (même si pré-installées)

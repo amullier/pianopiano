@@ -1,5 +1,6 @@
 package fr.antmu.pianopiano.ui.main
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
@@ -32,7 +33,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var adapter: AppListAdapter
 
-    private var showTotalTimeSaved = true // true = total, false = aujourd'hui
+    private var showToday = true // true = aujourd'hui, false = total
     private var isSearchVisible = false
 
     override fun onCreateView(
@@ -51,7 +52,13 @@ class MainFragment : Fragment() {
         setupSearch()
         setupRecyclerView()
         setupActivationButton()
+        setupStatsToggle()
         observeViewModel()
+
+        // Afficher le loader au début
+        binding.progressBar.visibility = View.VISIBLE
+        binding.recyclerApps.visibility = View.GONE
+        binding.textNoResults.visibility = View.GONE
 
         viewModel.loadApps()
     }
@@ -71,6 +78,8 @@ class MainFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
+                // Ne pas afficher le loader lors de la recherche
+                binding.progressBar.visibility = View.GONE
                 viewModel.searchApps(s?.toString() ?: "")
             }
         })
@@ -114,6 +123,7 @@ class MainFragment : Fragment() {
         viewModel.refreshServiceStatus()
         viewModel.refreshPeanutCount()
         viewModel.refreshStats()
+        // Ne pas réafficher le loader si on a déjà des données
     }
 
     private fun setupHeader() {
@@ -207,6 +217,7 @@ class MainFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.apps.observe(viewLifecycleOwner) { apps ->
+            binding.progressBar.visibility = View.GONE
             adapter.submitList(apps)
             val hasResults = apps.isNotEmpty()
             binding.recyclerApps.visibility = if (hasResults) View.VISIBLE else View.GONE
@@ -240,41 +251,70 @@ class MainFragment : Fragment() {
         }
 
         viewModel.aggregatedStats.observe(viewLifecycleOwner) { stats ->
-            if (stats.totalScreenTimeToday > 0) {
-                binding.textScreenTime.text = UsageStatsHelper.formatShortDuration(stats.totalScreenTimeToday)
-            } else {
-                binding.textScreenTime.text = getString(R.string.stats_no_data)
-            }
-
-            updateTimeSavedDisplay(stats)
-        }
-
-        // Click listener pour basculer entre total et aujourd'hui
-        binding.cardTimeSaved.setOnClickListener {
-            showTotalTimeSaved = !showTotalTimeSaved
-            viewModel.aggregatedStats.value?.let { updateTimeSavedDisplay(it) }
+            updateStatsDisplay(stats)
         }
     }
 
-    private fun updateTimeSavedDisplay(stats: UsageStatsHelper.AggregatedStats) {
-        val timeSaved = if (showTotalTimeSaved) stats.timeSavedTotal else stats.timeSavedToday
-        val labelRes = if (showTotalTimeSaved) R.string.stats_time_saved_total else R.string.stats_time_saved_today
+    private fun setupStatsToggle() {
+        binding.toggleToday.setOnClickListener {
+            if (!showToday) {
+                showToday = true
+                updateToggleUI()
+                viewModel.aggregatedStats.value?.let { updateStatsDisplay(it) }
+            }
+        }
 
-        binding.textTimeSavedLabel.text = getString(labelRes)
+        binding.toggleTotal.setOnClickListener {
+            if (showToday) {
+                showToday = false
+                updateToggleUI()
+                viewModel.aggregatedStats.value?.let { updateStatsDisplay(it) }
+            }
+        }
+    }
+
+    private fun updateToggleUI() {
+        if (showToday) {
+            // Style "Aujourd'hui" sélectionné
+            binding.toggleToday.setBackgroundResource(R.drawable.bg_toggle_selected)
+            binding.toggleToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.toggleToday.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+
+            // Style "Total" non sélectionné
+            binding.toggleTotal.background = null
+            binding.toggleTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_tertiary))
+            binding.toggleTotal.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+        } else {
+            // Style "Total" sélectionné
+            binding.toggleTotal.setBackgroundResource(R.drawable.bg_toggle_selected)
+            binding.toggleTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.toggleTotal.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+
+            // Style "Aujourd'hui" non sélectionné
+            binding.toggleToday.background = null
+            binding.toggleToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_tertiary))
+            binding.toggleToday.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+        }
+    }
+
+    private fun updateStatsDisplay(stats: UsageStatsHelper.AggregatedStats) {
+        // Temps d'écran (selon le toggle)
+        val screenTime = if (showToday) stats.totalScreenTimeToday else stats.totalScreenTime7Days
+
+        if (screenTime > 0) {
+            binding.textScreenTime.text = UsageStatsHelper.formatShortDuration(screenTime)
+        } else {
+            binding.textScreenTime.text = getString(R.string.stats_no_data)
+        }
+
+        // Temps gagné (selon le toggle)
+        val timeSaved = if (showToday) stats.timeSavedToday else stats.timeSaved7Days
 
         if (timeSaved > 0) {
             binding.textTimeSaved.text = UsageStatsHelper.formatShortDuration(timeSaved)
         } else {
             binding.textTimeSaved.text = getString(R.string.stats_no_data)
         }
-
-        // Mettre à jour les indicateurs
-        binding.dotTotal.setBackgroundResource(
-            if (showTotalTimeSaved) R.drawable.indicator_active else R.drawable.indicator_inactive
-        )
-        binding.dotToday.setBackgroundResource(
-            if (showTotalTimeSaved) R.drawable.indicator_inactive else R.drawable.indicator_active
-        )
     }
 
     override fun onDestroyView() {

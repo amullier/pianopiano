@@ -54,6 +54,10 @@
     <string name="stats_time_saved_total">Temps gagné (total)</string>
     <string name="stats_time_saved_today">Temps gagné (aujourd\'hui)</string>
     <string name="stats_no_data">-</string>
+    <string name="stats_today">Aujourd\'hui</string>
+    <string name="stats_total">7 derniers jours</string>
+    <string name="stats_screen_time_label">Temps d\'écran</string>
+    <string name="stats_time_saved_label">Temps gagné</string>
 
     <!-- Notification -->
     <string name="notification_channel_name">Pause PianoPiano</string>

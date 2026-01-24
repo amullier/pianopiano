@@ -14,7 +14,7 @@ object PreferencesKeys {
     // Periodic timer
     const val KEY_LAST_ACTIVE_TIMESTAMPS = "last_active_timestamps"
     const val KEY_ACTIVE_TIMER_PACKAGE = "active_timer_package"
-    const val EXIT_THRESHOLD_MS = 500L  // 500ms
+    const val EXIT_THRESHOLD_MS = 2000L  // 2 secondes - seuil pour éviter les transitions internes
 
     // Onboarding
     const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"

@@ -68,6 +68,21 @@ class AppLaunchDetectorService : AccessibilityService() {
             return
         }
 
+        // Check if this app is configured for pause
+        if (!preferencesManager.isAppConfigured(packageName)) {
+            return
+        }
+
+        // Si on est déjà dans cette app (transition interne), mettre à jour le timestamp et ignorer
+        if (packageName == previousForegroundPackage) {
+            // Transition interne (feed -> messages dans Instagram, etc.)
+            // On met à jour le timestamp pour éviter que l'app soit considérée comme "quittée"
+            appRepository.setLastActiveTimestamp(packageName, System.currentTimeMillis())
+            return
+        }
+
+        // À partir d'ici, c'est un vrai lancement d'app (pas une transition interne)
+
         // Apply cooldown to prevent multiple triggers
         val currentTime = System.currentTimeMillis()
         if (packageName == lastDetectedPackage &&
@@ -76,25 +91,22 @@ class AppLaunchDetectorService : AccessibilityService() {
             return
         }
 
-        // Check if this app is configured for pause
-        if (preferencesManager.isAppConfigured(packageName)) {
-            lastDetectedPackage = packageName
-            lastDetectionTime = currentTime
+        lastDetectedPackage = packageName
+        lastDetectionTime = currentTime
 
-            // Vérifier si on doit réinitialiser le timer (absent > 5 min)
-            val shouldReset = appRepository.shouldResetTimer(packageName)
+        // Vérifier si on doit réinitialiser le timer (absent > 2 secondes)
+        val shouldReset = appRepository.shouldResetTimer(packageName)
 
-            if (shouldReset) {
-                // Première visite ou retour après > 5 min : pause initiale
-                ServiceHelper.startPauseOverlay(applicationContext, packageName)
-            } else {
-                // Retour dans les 5 min : reprendre le timer si configuré
-                val timerSeconds = appRepository.getAppPeriodicTimer(packageName)
-                if (timerSeconds > 0 && !PeriodicTimerManager.isTimerActive(packageName)) {
-                    // Relancer le timer périodique
-                    PeriodicTimerManager.startTimer(applicationContext, packageName, timerSeconds)
-                    PeriodicTimerManager.updateLastActiveTime(applicationContext, packageName)
-                }
+        if (shouldReset) {
+            // Première visite ou retour après > 2 secondes : pause initiale
+            ServiceHelper.startPauseOverlay(applicationContext, packageName)
+        } else {
+            // Retour dans les 2 secondes : reprendre le timer si configuré
+            val timerSeconds = appRepository.getAppPeriodicTimer(packageName)
+            if (timerSeconds > 0 && !PeriodicTimerManager.isTimerActive(packageName)) {
+                // Relancer le timer périodique
+                PeriodicTimerManager.startTimer(applicationContext, packageName, timerSeconds)
+                PeriodicTimerManager.updateLastActiveTime(applicationContext, packageName)
             }
         }
     }

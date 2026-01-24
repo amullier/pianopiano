@@ -16,111 +16,121 @@
         android:layout_height="1dp"
         android:background="@color/glass_card_border" />
 
-    <!-- Stats Section -->
-    <LinearLayout
-        android:id="@+id/statsSection"
+    <!-- Stats Section (nouvelle version unifiée) -->
+    <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+        android:id="@+id/statsCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/spacing_md"
-        android:paddingVertical="@dimen/spacing_md">
+        android:layout_marginHorizontal="@dimen/spacing_md"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:padding="@dimen/spacing_md">
 
-        <!-- Temps d'écran -->
-        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-            android:layout_width="0dp"
-            android:layout_height="95dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/spacing_md"
-            android:padding="@dimen/spacing_md">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!-- Toggle Aujourd'hui / Total -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/spacing_xs"
+                android:background="@drawable/bg_stats_toggle"
+                android:padding="4dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/toggleToday"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_screen_time"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_weight="1"
+                    android:text="@string/stats_today"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_toggle_selected"
+                    android:paddingVertical="8dp"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/toggleTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/stats_total"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/text_tertiary"
+                    android:paddingVertical="8dp"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- Ligne Temps d'écran -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_sm">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_screentime"
+                    android:layout_marginEnd="@dimen/spacing_sm" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/stats_screen_time_label"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@color/text_secondary" />
 
                 <TextView
                     android:id="@+id/textScreenTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/text_size_title"
+                    android:textColor="@color/text_primary"
                     android:fontFamily="sans-serif-medium"
                     tools:text="2h 30min" />
-
             </LinearLayout>
 
-        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
-
-        <!-- Temps gagné -->
-        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-            android:id="@+id/cardTimeSaved"
-            android:layout_width="0dp"
-            android:layout_height="95dp"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/spacing_xs"
-            android:padding="@dimen/spacing_md">
-
+            <!-- Ligne Temps gagné -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_trophy"
+                    android:layout_marginEnd="@dimen/spacing_sm" />
 
                 <TextView
-                    android:id="@+id/textTimeSavedLabel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_time_saved_total"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/text_size_small" />
+                    android:layout_weight="1"
+                    android:text="@string/stats_time_saved_label"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@color/text_secondary" />
 
                 <TextView
                     android:id="@+id/textTimeSaved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:textColor="@color/status_active"
                     android:textSize="@dimen/text_size_title"
+                    android:textColor="@color/status_active"
                     android:fontFamily="sans-serif-medium"
                     tools:text="45min" />
-
-                <!-- Indicateur discret -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <View
-                        android:id="@+id/dotTotal"
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
-                        android:background="@drawable/indicator_active" />
-
-                    <View
-                        android:id="@+id/dotToday"
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/indicator_inactive" />
-
-                </LinearLayout>
-
             </LinearLayout>
+        </LinearLayout>
 
-        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
-
-    </LinearLayout>
+    </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
     <LinearLayout
         android:id="@+id/mainServiceEnabler"
@@ -256,7 +266,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:minHeight="200dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerApps"
@@ -265,6 +276,13 @@
                     android:nestedScrollingEnabled="false"
                     android:paddingVertical="@dimen/spacing_sm"
                     tools:listitem="@layout/item_app" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/textNoResults"
