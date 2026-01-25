@@ -75,6 +75,7 @@
     <string name="timer_disabled">Désactivé</string>
     <string name="timer_30sec">30 secondes</string>
     <string name="timer_5min">5 minutes</string>
+    <string name="timer_10min">10 minutes</string>
     <string name="timer_15min">15 minutes</string>
     <string name="timer_30min">30 minutes</string>
     <string name="timer_1h">1 heure</string>

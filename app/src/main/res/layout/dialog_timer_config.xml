@@ -55,6 +55,15 @@
             android:textSize="@dimen/text_size_body" />
 
         <RadioButton
+            android:id="@+id/radio10min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_sm"
+            android:text="@string/timer_10min"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body" />
+
+        <RadioButton
             android:id="@+id/radio15min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

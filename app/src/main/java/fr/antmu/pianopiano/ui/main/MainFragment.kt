@@ -24,6 +24,7 @@ import fr.antmu.pianopiano.databinding.FragmentMainBinding
 import fr.antmu.pianopiano.databinding.ViewHeaderBinding
 import fr.antmu.pianopiano.util.UsageStatsHelper
 import fr.antmu.pianopiano.util.setVisible
+import java.text.Normalizer
 
 class MainFragment : Fragment() {
 
@@ -183,6 +184,7 @@ class MainFragment : Fragment() {
             0 -> R.id.radioDisabled
             30 -> R.id.radio30sec
             300 -> R.id.radio5min
+            600 -> R.id.radio10min
             900 -> R.id.radio15min
             1800 -> R.id.radio30min
             3600 -> R.id.radio1h
@@ -197,6 +199,7 @@ class MainFragment : Fragment() {
                     R.id.radioDisabled -> 0
                     R.id.radio30sec -> 30
                     R.id.radio5min -> 300
+                    R.id.radio10min -> 600
                     R.id.radio15min -> 900
                     R.id.radio30min -> 1800
                     R.id.radio1h -> 3600
@@ -207,6 +210,14 @@ class MainFragment : Fragment() {
             .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
+
+    private fun removeAccents(input: String): String {
+        // Normalise la chaîne (décompose les caractères accentués)
+        val normalized = Normalizer.normalize(input, Normalizer.Form.NFD)
+        // Supprime les diacritiques (accents)
+        return normalized.replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
+    }
+
 
     private fun showAppStatsDialog(app: AppRepository.InstalledApp) {
         // Récupérer les stats
@@ -220,7 +231,7 @@ class MainFragment : Fragment() {
         // Inflater et remplir la dialog
         val dialogView = layoutInflater.inflate(R.layout.dialog_app_stats, null)
 
-        dialogView.findViewById<android.widget.TextView>(R.id.textAppName).text = app.appName
+        dialogView.findViewById<android.widget.TextView>(R.id.textAppName).text = removeAccents(app.appName)
 
         // Aujourd'hui
         dialogView.findViewById<android.widget.TextView>(R.id.textScreenTimeToday).text =
