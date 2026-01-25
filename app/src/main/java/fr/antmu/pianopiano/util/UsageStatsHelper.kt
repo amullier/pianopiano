@@ -14,7 +14,9 @@ object UsageStatsHelper {
         val averageSessionTime: Long,      // en millisecondes
         val lastUsedTime: Long,            // timestamp
         val totalTimeLast7Days: Long = 0L, // en millisecondes
-        val launchCountLast7Days: Int = 0
+        val launchCountLast7Days: Int = 0,
+        val totalTimeLast30Days: Long = 0L, // en millisecondes
+        val launchCountLast30Days: Int = 0
     )
 
     fun getAppUsageStats(context: Context, packageName: String): AppUsageStats? {
@@ -45,6 +47,7 @@ object UsageStatsHelper {
         // Get events to count sessions and calculate average
         val events = usageStatsManager.queryEvents(startTimeToday, endTime)
         var sessionCount = 0
+        var lastForegroundPackage: String? = null
 
         while (events.hasNextEvent()) {
             val event = android.app.usage.UsageEvents.Event()
@@ -52,8 +55,14 @@ object UsageStatsHelper {
 
             if (event.packageName == packageName) {
                 if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                    sessionCount++
+                    if (lastForegroundPackage != event.packageName) {
+                        sessionCount++
+                        lastForegroundPackage = event.packageName
+                    }
                 }
+            } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
+                // Suivre les autres apps pour détecter les changements
+                lastForegroundPackage = event.packageName
             }
         }
 
@@ -84,14 +93,59 @@ object UsageStatsHelper {
 
         // Count launches for last 7 days
         val events7Days = usageStatsManager.queryEvents(startTime7Days, endTime)
+        var lastForegroundPackage7Days: String? = null
         while (events7Days.hasNextEvent()) {
             val event = android.app.usage.UsageEvents.Event()
             events7Days.getNextEvent(event)
 
             if (event.packageName == packageName) {
                 if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                    launchCount7Days++
+                    if (lastForegroundPackage7Days != event.packageName) {
+                        launchCount7Days++
+                        lastForegroundPackage7Days = event.packageName
+                    }
                 }
+            } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
+                // Suivre les autres apps pour détecter les changements
+                lastForegroundPackage7Days = event.packageName
+            }
+        }
+
+        // Get stats for last 30 days
+        val startTime30Days = endTime - TimeUnit.DAYS.toMillis(30)
+        val usageStatsList30Days = usageStatsManager.queryUsageStats(
+            UsageStatsManager.INTERVAL_DAILY,
+            startTime30Days,
+            endTime
+        )
+
+        var totalTime30Days = 0L
+
+        // Aggregate stats for the last 30 days
+        for (stats in usageStatsList30Days) {
+            if (stats.packageName == packageName) {
+                totalTime30Days += stats.totalTimeInForeground
+            }
+        }
+
+        // Count launches for last 30 days
+        val events30Days = usageStatsManager.queryEvents(startTime30Days, endTime)
+        var launchCount30Days = 0
+        var lastForegroundPackage30Days: String? = null
+        while (events30Days.hasNextEvent()) {
+            val event = android.app.usage.UsageEvents.Event()
+            events30Days.getNextEvent(event)
+
+            if (event.packageName == packageName) {
+                if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
+                    if (lastForegroundPackage30Days != event.packageName) {
+                        launchCount30Days++
+                        lastForegroundPackage30Days = event.packageName
+                    }
+                }
+            } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
+                // Suivre les autres apps pour détecter les changements
+                lastForegroundPackage30Days = event.packageName
             }
         }
 
@@ -101,7 +155,9 @@ object UsageStatsHelper {
             averageSessionTime = averageSessionTime,
             lastUsedTime = appStats.lastTimeUsed,
             totalTimeLast7Days = totalTime7Days,
-            launchCountLast7Days = launchCount7Days
+            launchCountLast7Days = launchCount7Days,
+            totalTimeLast30Days = totalTime30Days,
+            launchCountLast30Days = launchCount30Days
         )
     }
 

@@ -85,10 +85,20 @@
     <string name="onboarding_permissions_needed">Permissions requises</string>
     <string name="onboarding_continue">Continuer</string>
 
+    <!-- App stats dialog -->
+    <string name="app_stats_title">Statistiques d\'utilisation</string>
+    <string name="app_stats_today_title">Aujourd\'hui</string>
+    <string name="app_stats_7days_title">7 derniers jours</string>
+    <string name="app_stats_30days_title">30 derniers jours</string>
+    <string name="app_stats_screen_time">Temps d\'écran</string>
+    <string name="app_stats_launch_count">Ouvertures</string>
+    <string name="app_stats_no_data">Aucune donnée disponible</string>
+
     <!-- Content descriptions -->
     <string name="cd_settings">Paramètres</string>
     <string name="cd_back">Retour</string>
     <string name="cd_search">Rechercher</string>
     <string name="cd_app_icon">Icône de l\'application</string>
     <string name="cd_status_indicator">Indicateur de statut</string>
+    <string name="cd_info">Informations</string>
 </resources>

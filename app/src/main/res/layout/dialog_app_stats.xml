@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_lg">
+
+    <TextView
+        android:id="@+id/textAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/spacing_md" />
+
+    <!-- Section: Aujourd'hui -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_stats_today_title"
+        android:textColor="@color/accent_primary"
+        android:textSize="@dimen/text_size_body"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginBottom="@dimen/spacing_sm" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_xs">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_stats_screen_time"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/textScreenTimeToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_stats_launch_count"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/textLaunchCountToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Section: 7 derniers jours -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_stats_7days_title"
+        android:textColor="@color/accent_primary"
+        android:textSize="@dimen/text_size_body"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginBottom="@dimen/spacing_sm" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_xs">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_stats_screen_time"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/textScreenTime7Days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_stats_launch_count"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/textLaunchCount7Days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Section: 30 derniers jours -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_stats_30days_title"
+        android:textColor="@color/accent_primary"
+        android:textSize="@dimen/text_size_body"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginBottom="@dimen/spacing_sm" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_xs">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_stats_screen_time"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/textScreenTime30Days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_stats_launch_count"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/textLaunchCount30Days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

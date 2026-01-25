@@ -41,6 +41,18 @@
         app:tint="@color/text_secondary"
         tools:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/buttonInfo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_info"
+        android:padding="4dp"
+        android:src="@drawable/ic_info"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <fr.antmu.pianopiano.ui.components.NeumorphicToggle
         android:id="@+id/toggle"
         android:layout_width="@dimen/toggle_width"

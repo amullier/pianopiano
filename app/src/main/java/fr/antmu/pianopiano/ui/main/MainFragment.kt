@@ -160,7 +160,11 @@ class MainFragment : Fragment() {
             },
             onSettingsClicked = { app ->
                 showTimerConfigDialog(app)
-            }
+            },
+            onInfoClicked = { app ->
+                showAppStatsDialog(app)
+            },
+            hasUsageStatsPermission = fr.antmu.pianopiano.util.PermissionHelper.hasUsageStatsPermission(requireContext())
         )
 
         binding.recyclerApps.layoutManager = LinearLayoutManager(requireContext())
@@ -201,6 +205,51 @@ class MainFragment : Fragment() {
                 viewModel.setAppPeriodicTimer(app.packageName, selectedTimer)
             }
             .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun showAppStatsDialog(app: AppRepository.InstalledApp) {
+        // Récupérer les stats
+        val stats = UsageStatsHelper.getAppUsageStats(requireContext(), app.packageName)
+
+        if (stats == null) {
+            Toast.makeText(requireContext(), R.string.app_stats_no_data, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Inflater et remplir la dialog
+        val dialogView = layoutInflater.inflate(R.layout.dialog_app_stats, null)
+
+        dialogView.findViewById<android.widget.TextView>(R.id.textAppName).text = app.appName
+
+        // Aujourd'hui
+        dialogView.findViewById<android.widget.TextView>(R.id.textScreenTimeToday).text =
+            if (stats.totalTimeToday > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeToday)
+            else getString(R.string.stats_no_data)
+        dialogView.findViewById<android.widget.TextView>(R.id.textLaunchCountToday).text =
+            if (stats.launchCountToday > 0) stats.launchCountToday.toString()
+            else getString(R.string.stats_no_data)
+
+        // 7 derniers jours
+        dialogView.findViewById<android.widget.TextView>(R.id.textScreenTime7Days).text =
+            if (stats.totalTimeLast7Days > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeLast7Days)
+            else getString(R.string.stats_no_data)
+        dialogView.findViewById<android.widget.TextView>(R.id.textLaunchCount7Days).text =
+            if (stats.launchCountLast7Days > 0) stats.launchCountLast7Days.toString()
+            else getString(R.string.stats_no_data)
+
+        // 30 derniers jours
+        dialogView.findViewById<android.widget.TextView>(R.id.textScreenTime30Days).text =
+            if (stats.totalTimeLast30Days > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeLast30Days)
+            else getString(R.string.stats_no_data)
+        dialogView.findViewById<android.widget.TextView>(R.id.textLaunchCount30Days).text =
+            if (stats.launchCountLast30Days > 0) stats.launchCountLast30Days.toString()
+            else getString(R.string.stats_no_data)
+
+        // Afficher
+        AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+            .setView(dialogView)
+            .setPositiveButton(android.R.string.ok, null)
             .show()
     }
 

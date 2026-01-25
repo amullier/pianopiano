@@ -11,7 +11,9 @@ import fr.antmu.pianopiano.databinding.ItemAppBinding
 
 class AppListAdapter(
     private val onToggleChanged: (AppRepository.InstalledApp, Boolean) -> Unit,
-    private val onSettingsClicked: (AppRepository.InstalledApp) -> Unit
+    private val onSettingsClicked: (AppRepository.InstalledApp) -> Unit,
+    private val onInfoClicked: (AppRepository.InstalledApp) -> Unit,
+    private val hasUsageStatsPermission: Boolean
 ) : ListAdapter<AppRepository.InstalledApp, AppListAdapter.AppViewHolder>(AppDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
@@ -37,7 +39,13 @@ class AppListAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val app = getItem(position)
-                    binding.buttonSettings.visibility = if (isChecked) View.VISIBLE else View.GONE
+                    if (isChecked) {
+                        binding.buttonSettings.visibility = View.VISIBLE
+                        binding.buttonInfo.visibility = View.GONE
+                    } else {
+                        binding.buttonSettings.visibility = View.GONE
+                        binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
+                    }
                     onToggleChanged(app, isChecked)
                 }
             }
@@ -49,6 +57,14 @@ class AppListAdapter(
                     onSettingsClicked(app)
                 }
             }
+
+            binding.buttonInfo.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val app = getItem(position)
+                    onInfoClicked(app)
+                }
+            }
         }
 
         fun bind(app: AppRepository.InstalledApp) {
@@ -57,8 +73,14 @@ class AppListAdapter(
             // Ne pas notifier le listener lors du bind initial
             binding.toggle.setChecked(app.isConfigured, animate = false, notifyListener = false)
 
-            // Afficher l'icône settings seulement si l'app est configurée
-            binding.buttonSettings.visibility = if (app.isConfigured) View.VISIBLE else View.GONE
+            // Visibilité mutuellement exclusive : settings si configuré, info sinon
+            if (app.isConfigured) {
+                binding.buttonSettings.visibility = View.VISIBLE
+                binding.buttonInfo.visibility = View.GONE
+            } else {
+                binding.buttonSettings.visibility = View.GONE
+                binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
+            }
         }
     }
 
