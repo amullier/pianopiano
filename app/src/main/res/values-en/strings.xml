@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">%d 🥜</string>
+
+    <!-- Main screen -->
+    <string name="section_service_status">Service Status</string>
+    <string name="section_apps">Applications</string>
+    <string name="search_hint">Search for an app…</string>
+    <string name="search_no_results">No apps found</string>
+    <string name="service_active">Service active</string>
+    <string name="service_inactive">Service inactive</string>
+    <string name="service_partial">Service partially enabled</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">Enable the service to start</string>
+    <string name="service_description_partial">Please check settings</string>
+    <string name="activate_service">Enable service</string>
+    <string name="no_apps_found">No apps found</string>
+    <string name="apps_subtitle">Select apps to monitor</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_permissions">Permissions</string>
+    <string name="settings_pause_duration">Pause duration</string>
+    <string name="settings_pause_duration_format">%d seconds</string>
+    <string name="settings_overlay_permission">Screen overlay</string>
+    <string name="settings_overlay_description">Allows displaying the pause screen</string>
+    <string name="settings_accessibility_permission">Accessibility service</string>
+    <string name="settings_accessibility_description">Allows detecting app launches</string>
+    <string name="settings_usage_stats_permission">Usage stats access</string>
+    <string name="settings_usage_stats_description">Allows accessing app statistics</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_not_granted">Not granted</string>
+    <string name="tap_to_grant">Tap to grant</string>
+    <string name="hint_select_pianopiano">Select PianoPiano from the list</string>
+    <string name="hint_enable_accessibility">Select PianoPiano and enable the service</string>
+    <string name="hint_enable_overlay">Allow overlay for PianoPiano</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">Take a breath…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">Cancel (+1🥜)</string>
+    <string name="pause_continue">Continue to %s</string>
+    <string name="default_quote">Take time to breathe.</string>
+    <string name="stats_title">Today</string>
+    <string name="stats_total_time">Total time</string>
+    <string name="stats_launch_count">Launches</string>
+    <string name="stats_average_session">Average duration</string>
+    <string name="stats_launch_count_format">%d times</string>
+    <string name="stats_screen_time">Screen time today</string>
+    <string name="stats_time_saved_total">Time saved (total)</string>
+    <string name="stats_time_saved_today">Time saved (today)</string>
+    <string name="stats_no_data">-</string>
+    <string name="stats_today">Today</string>
+    <string name="stats_total">Last 7 days</string>
+    <string name="stats_screen_time_label">Screen time</string>
+    <string name="stats_time_saved_label">Time saved</string>
+    <string name="stats_prevented_opens_label">Prevented launches</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">PianoPiano Pause</string>
+    <string name="notification_channel_description">Notifications during pause screen</string>
+    <string name="notification_title">PianoPiano active</string>
+    <string name="notification_text">Pause in progress…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPiano uses this service to detect when you open certain apps and display a relaxing pause screen.</string>
+
+    <!-- Timer configuration -->
+    <string name="timer_config_title">Periodic reminder</string>
+    <string name="timer_config_description">Get a pause at regular intervals while using this app</string>
+    <string name="timer_disabled">Disabled</string>
+    <string name="timer_30sec">30 seconds</string>
+    <string name="timer_5min">5 minutes</string>
+    <string name="timer_10min">10 minutes</string>
+    <string name="timer_15min">15 minutes</string>
+    <string name="timer_30min">30 minutes</string>
+    <string name="timer_1h">1 hour</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Welcome</string>
+    <string name="onboarding_subtitle">Take control of your screen time</string>
+    <string name="onboarding_permissions_needed">Required permissions</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_step_1">1</string>
+    <string name="onboarding_step_2">2</string>
+    <string name="onboarding_step_3">3</string>
+
+    <!-- App stats dialog -->
+    <string name="app_stats_title">Usage statistics</string>
+    <string name="app_stats_today_title">Today</string>
+    <string name="app_stats_7days_title">Last 7 days</string>
+    <string name="app_stats_30days_title">Last 30 days</string>
+    <string name="app_stats_screen_time">Screen time</string>
+    <string name="app_stats_launch_count">Launches</string>
+    <string name="app_stats_no_data">No data available</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">Settings</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_app_icon">App icon</string>
+    <string name="cd_status_indicator">Status indicator</string>
+    <string name="cd_info">Information</string>
+</resources>

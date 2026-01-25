@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">%d 🥜</string>
+
+    <!-- Main screen -->
+    <string name="section_service_status">Stato del servizio</string>
+    <string name="section_apps">Applicazioni</string>
+    <string name="search_hint">Cerca un\'app…</string>
+    <string name="search_no_results">Nessuna app trovata</string>
+    <string name="service_active">Servizio attivo</string>
+    <string name="service_inactive">Servizio inattivo</string>
+    <string name="service_partial">Servizio parzialmente attivato</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">Attiva il servizio per iniziare</string>
+    <string name="service_description_partial">Controlla le impostazioni</string>
+    <string name="activate_service">Attiva servizio</string>
+    <string name="no_apps_found">Nessuna app trovata</string>
+    <string name="apps_subtitle">Seleziona le app da monitorare</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_permissions">Permessi</string>
+    <string name="settings_pause_duration">Durata pausa</string>
+    <string name="settings_pause_duration_format">%d secondi</string>
+    <string name="settings_overlay_permission">Sovrapposizione schermo</string>
+    <string name="settings_overlay_description">Consente di visualizzare la schermata di pausa</string>
+    <string name="settings_accessibility_permission">Servizio di accessibilità</string>
+    <string name="settings_accessibility_description">Consente di rilevare l\'apertura delle app</string>
+    <string name="settings_usage_stats_permission">Accesso alle statistiche di utilizzo</string>
+    <string name="settings_usage_stats_description">Consente di accedere alle statistiche delle app</string>
+    <string name="permission_granted">Concesso</string>
+    <string name="permission_not_granted">Non concesso</string>
+    <string name="tap_to_grant">Tocca per concedere</string>
+    <string name="hint_select_pianopiano">Seleziona PianoPiano dall\'elenco</string>
+    <string name="hint_enable_accessibility">Seleziona PianoPiano e attiva il servizio</string>
+    <string name="hint_enable_overlay">Consenti la sovrapposizione per PianoPiano</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">Fai un respiro…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">Annulla (+1🥜)</string>
+    <string name="pause_continue">Continua su %s</string>
+    <string name="default_quote">Prenditi il tempo di respirare.</string>
+    <string name="stats_title">Oggi</string>
+    <string name="stats_total_time">Tempo totale</string>
+    <string name="stats_launch_count">Aperture</string>
+    <string name="stats_average_session">Durata media</string>
+    <string name="stats_launch_count_format">%d volte</string>
+    <string name="stats_screen_time">Tempo schermo oggi</string>
+    <string name="stats_time_saved_total">Tempo risparmiato (totale)</string>
+    <string name="stats_time_saved_today">Tempo risparmiato (oggi)</string>
+    <string name="stats_no_data">-</string>
+    <string name="stats_today">Oggi</string>
+    <string name="stats_total">Ultimi 7 giorni</string>
+    <string name="stats_screen_time_label">Tempo schermo</string>
+    <string name="stats_time_saved_label">Tempo risparmiato</string>
+    <string name="stats_prevented_opens_label">Aperture impedite</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">Pausa PianoPiano</string>
+    <string name="notification_channel_description">Notifiche durante la schermata di pausa</string>
+    <string name="notification_title">PianoPiano attivo</string>
+    <string name="notification_text">Pausa in corso…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPiano utilizza questo servizio per rilevare quando apri determinate app e visualizzare una schermata di pausa rilassante.</string>
+
+    <!-- Timer configuration -->
+    <string name="timer_config_title">Promemoria periodico</string>
+    <string name="timer_config_description">Ricevi una pausa a intervalli regolari mentre usi questa app</string>
+    <string name="timer_disabled">Disattivato</string>
+    <string name="timer_30sec">30 secondi</string>
+    <string name="timer_5min">5 minuti</string>
+    <string name="timer_10min">10 minuti</string>
+    <string name="timer_15min">15 minuti</string>
+    <string name="timer_30min">30 minuti</string>
+    <string name="timer_1h">1 ora</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Benvenuto</string>
+    <string name="onboarding_subtitle">Prendi il controllo del tuo tempo schermo</string>
+    <string name="onboarding_permissions_needed">Permessi richiesti</string>
+    <string name="onboarding_continue">Continua</string>
+    <string name="onboarding_step_1">1</string>
+    <string name="onboarding_step_2">2</string>
+    <string name="onboarding_step_3">3</string>
+
+    <!-- App stats dialog -->
+    <string name="app_stats_title">Statistiche di utilizzo</string>
+    <string name="app_stats_today_title">Oggi</string>
+    <string name="app_stats_7days_title">Ultimi 7 giorni</string>
+    <string name="app_stats_30days_title">Ultimi 30 giorni</string>
+    <string name="app_stats_screen_time">Tempo schermo</string>
+    <string name="app_stats_launch_count">Aperture</string>
+    <string name="app_stats_no_data">Nessun dato disponibile</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">Impostazioni</string>
+    <string name="cd_back">Indietro</string>
+    <string name="cd_search">Cerca</string>
+    <string name="cd_app_icon">Icona dell\'app</string>
+    <string name="cd_status_indicator">Indicatore di stato</string>
+    <string name="cd_info">Informazioni</string>
+</resources>

@@ -15,6 +15,9 @@ android {
         versionName = "0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Limiter aux locales supportées uniquement
+        resourceConfigurations += listOf("en", "fr", "it")
     }
 
     buildTypes {
