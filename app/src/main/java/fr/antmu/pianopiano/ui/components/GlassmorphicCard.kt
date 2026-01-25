@@ -3,15 +3,17 @@ package fr.antmu.pianopiano.ui.components
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import fr.antmu.pianopiano.R
 
 class GlassmorphicCard @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     init {
+        orientation = VERTICAL // Important !
         setBackgroundResource(R.drawable.bg_glassmorphic_card)
 
         context.theme.obtainStyledAttributes(
@@ -20,10 +22,11 @@ class GlassmorphicCard @JvmOverloads constructor(
             0, 0
         ).apply {
             try {
-                // Custom attributes can be handled here if needed
+                // Gérer les attributs custom si nécessaire
             } finally {
                 recycle()
             }
         }
     }
 }
+

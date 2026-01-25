@@ -39,12 +39,11 @@ class AppListAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val app = getItem(position)
+                    binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
                     if (isChecked) {
                         binding.buttonSettings.visibility = View.VISIBLE
-                        binding.buttonInfo.visibility = View.GONE
                     } else {
                         binding.buttonSettings.visibility = View.GONE
-                        binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
                     }
                     onToggleChanged(app, isChecked)
                 }
@@ -74,12 +73,11 @@ class AppListAdapter(
             binding.toggle.setChecked(app.isConfigured, animate = false, notifyListener = false)
 
             // Visibilité mutuellement exclusive : settings si configuré, info sinon
+            binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
             if (app.isConfigured) {
                 binding.buttonSettings.visibility = View.VISIBLE
-                binding.buttonInfo.visibility = View.GONE
             } else {
                 binding.buttonSettings.visibility = View.GONE
-                binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
             }
         }
     }

@@ -29,6 +29,18 @@
         tools:text="Application Name" />
 
     <ImageView
+        android:id="@+id/buttonInfo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_info"
+        android:padding="4dp"
+        android:src="@drawable/ic_info"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ImageView
         android:id="@+id/buttonSettings"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -39,18 +51,6 @@
         android:src="@drawable/ic_settings"
         android:visibility="gone"
         app:tint="@color/text_secondary"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/buttonInfo"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="@dimen/spacing_sm"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/cd_info"
-        android:padding="4dp"
-        android:src="@drawable/ic_info"
-        android:visibility="gone"
         tools:visibility="visible" />
 
     <fr.antmu.pianopiano.ui.components.NeumorphicToggle
