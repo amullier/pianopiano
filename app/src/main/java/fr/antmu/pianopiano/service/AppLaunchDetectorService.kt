@@ -35,10 +35,19 @@ class AppLaunchDetectorService : AccessibilityService() {
             return
         }
 
+        // Détecter les transitions internes AVANT de mettre à jour previousForegroundPackage
+        val isInternalTransition = previousForegroundPackage == packageName
+
         updateForegroundPackages(packageName)
 
         if (!isConfiguredApp(packageName)) {
             logAppNotConfigured(packageName)
+            return
+        }
+
+        // Transitions internes (changement d'onglet, etc.) : PAS de pause initiale
+        if (isInternalTransition) {
+            handleInternalTransition(packageName)
             return
         }
 
@@ -191,7 +200,15 @@ class AppLaunchDetectorService : AccessibilityService() {
         }
     }
 
-    // ==================== Gestion de la sortie d'app ====================
+    // ==================== Gestion des transitions ====================
+
+    private fun handleInternalTransition(packageName: String) {
+        android.util.Log.d("AppLaunchDetector", "[$packageName] 🔄 Transition interne détectée → PAS de pause")
+        // Mettre à jour le timestamp pour le tracking
+        appRepository.setLastActiveTimestamp(packageName, System.currentTimeMillis())
+        // Démarrer le timer périodique si nécessaire (et pas déjà actif)
+        startPeriodicTimerIfNeeded(packageName)
+    }
 
     private fun handleAppLeft(packageName: String?) {
         if (packageName == null) return
