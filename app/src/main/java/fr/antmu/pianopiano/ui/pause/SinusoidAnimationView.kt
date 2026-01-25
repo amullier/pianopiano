@@ -300,7 +300,7 @@ class SinusoidAnimationView @JvmOverloads constructor(
         canvas.drawPath(path, linePaint)
 
         // Calculer la position de la boule au centre
-        val ballY = centerY + amplitude * sin((centerX / wavelength * 2 * Math.PI + phase)).toFloat() - 12
+        val ballY = centerY + amplitude * sin((centerX / wavelength * 2 * Math.PI + phase)).toFloat() - 13
 
         // Dessiner la boule principale (couleur unie)
         canvas.drawCircle(centerX, ballY, circleRadius, circlePaint)

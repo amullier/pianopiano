@@ -253,6 +253,14 @@ class MainFragment : Fragment() {
         viewModel.aggregatedStats.observe(viewLifecycleOwner) { stats ->
             updateStatsDisplay(stats)
         }
+
+        viewModel.peanutsToday.observe(viewLifecycleOwner) {
+            updatePreventedOpensDisplay()
+        }
+
+        viewModel.peanutsLast7Days.observe(viewLifecycleOwner) {
+            updatePreventedOpensDisplay()
+        }
     }
 
     private fun setupStatsToggle() {
@@ -261,6 +269,7 @@ class MainFragment : Fragment() {
                 showToday = true
                 updateToggleUI()
                 viewModel.aggregatedStats.value?.let { updateStatsDisplay(it) }
+                updatePreventedOpensDisplay()
             }
         }
 
@@ -269,6 +278,7 @@ class MainFragment : Fragment() {
                 showToday = false
                 updateToggleUI()
                 viewModel.aggregatedStats.value?.let { updateStatsDisplay(it) }
+                updatePreventedOpensDisplay()
             }
         }
     }
@@ -306,15 +316,17 @@ class MainFragment : Fragment() {
         } else {
             binding.textScreenTime.text = getString(R.string.stats_no_data)
         }
+    }
 
-        // Temps gagné (selon le toggle)
-        val timeSaved = if (showToday) stats.timeSavedToday else stats.timeSaved7Days
-
-        if (timeSaved > 0) {
-            binding.textTimeSaved.text = UsageStatsHelper.formatShortDuration(timeSaved)
+    private fun updatePreventedOpensDisplay() {
+        // Ouvertures empêchées (selon le toggle)
+        val preventedOpens = if (showToday) {
+            viewModel.peanutsToday.value ?: 0
         } else {
-            binding.textTimeSaved.text = getString(R.string.stats_no_data)
+            viewModel.peanutsLast7Days.value ?: 0
         }
+
+        binding.textPreventedOpens.text = preventedOpens.toString()
     }
 
     override fun onDestroyView() {

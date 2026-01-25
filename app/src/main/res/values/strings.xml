@@ -58,6 +58,7 @@
     <string name="stats_total">7 derniers jours</string>
     <string name="stats_screen_time_label">Temps d\'écran</string>
     <string name="stats_time_saved_label">Temps gagné</string>
+    <string name="stats_prevented_opens_label">Ouvertures empêchées</string>
 
     <!-- Notification -->
     <string name="notification_channel_name">Pause PianoPiano</string>

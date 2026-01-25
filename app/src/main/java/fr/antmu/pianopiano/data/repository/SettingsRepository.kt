@@ -22,6 +22,9 @@ class SettingsRepository(context: Context) {
     val peanutsToday: Int
         get() = preferencesManager.peanutsToday
 
+    val peanutsLast7Days: Int
+        get() = preferencesManager.peanutsLast7Days
+
     var serviceEnabled: Boolean
         get() = preferencesManager.serviceEnabled
         set(value) {

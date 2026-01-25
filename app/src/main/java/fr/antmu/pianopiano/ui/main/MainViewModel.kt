@@ -31,6 +31,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _peanutCount = MutableLiveData<Int>()
     val peanutCount: LiveData<Int> = _peanutCount
 
+    private val _peanutsToday = MutableLiveData<Int>()
+    val peanutsToday: LiveData<Int> = _peanutsToday
+
+    private val _peanutsLast7Days = MutableLiveData<Int>()
+    val peanutsLast7Days: LiveData<Int> = _peanutsLast7Days
+
     private val _aggregatedStats = MutableLiveData<UsageStatsHelper.AggregatedStats>()
     val aggregatedStats: LiveData<UsageStatsHelper.AggregatedStats> = _aggregatedStats
 
@@ -84,7 +90,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val configuredPackages = appRepository.getConfiguredAppPackages()
                 val peanuts = settingsRepository.peanutCount
                 val peanutsToday = settingsRepository.peanutsToday
-                UsageStatsHelper.getAggregatedStats(context, configuredPackages, peanuts, peanutsToday)
+                val peanutsLast7Days = settingsRepository.peanutsLast7Days
+
+                // Mettre à jour les peanuts
+                _peanutsToday.postValue(peanutsToday)
+                _peanutsLast7Days.postValue(peanutsLast7Days)
+
+                UsageStatsHelper.getAggregatedStats(context, configuredPackages, peanuts, peanutsToday, peanutsLast7Days)
             }
             _aggregatedStats.value = stats
         }

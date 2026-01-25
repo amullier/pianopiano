@@ -150,7 +150,7 @@
             app:sinusoidAmplitude="40dp"
             app:sinusoidColor="@color/accent_peanut"
             app:sinusoidSpeed="0.3"
-            app:sinusoidStrokeWidth="1dp"
+            app:sinusoidStrokeWidth="1.5dp"
             app:sinusoidWavelength="180dp" />
 
         <!-- Quote -->

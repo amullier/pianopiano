@@ -98,35 +98,37 @@
                     tools:text="2h 30min" />
             </LinearLayout>
 
-            <!-- Ligne Temps gagné -->
+            <!-- Ligne Ouvertures empêchées -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <ImageView
+                <TextView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_trophy"
+                    android:text="🥜"
+                    android:textSize="16sp"
+                    android:gravity="center"
                     android:layout_marginEnd="@dimen/spacing_sm" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/stats_time_saved_label"
+                    android:text="@string/stats_prevented_opens_label"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@color/text_secondary" />
 
                 <TextView
-                    android:id="@+id/textTimeSaved"
+                    android:id="@+id/textPreventedOpens"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_title"
                     android:textColor="@color/status_active"
                     android:fontFamily="sans-serif-medium"
-                    tools:text="45min" />
+                    tools:text="42" />
             </LinearLayout>
         </LinearLayout>
 

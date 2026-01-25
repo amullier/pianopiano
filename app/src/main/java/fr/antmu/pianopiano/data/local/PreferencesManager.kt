@@ -72,12 +72,17 @@ class PreferencesManager(context: Context) {
     fun incrementPeanuts() {
         peanutCount++
         incrementPeanutsToday()
+        updatePeanutsHistory()
     }
 
     // --- Daily Peanuts Tracking ---
 
     private fun getTodayDateString(): String {
         val calendar = java.util.Calendar.getInstance()
+        return "${calendar.get(java.util.Calendar.YEAR)}-${calendar.get(java.util.Calendar.MONTH)}-${calendar.get(java.util.Calendar.DAY_OF_MONTH)}"
+    }
+
+    private fun getDateString(calendar: java.util.Calendar): String {
         return "${calendar.get(java.util.Calendar.YEAR)}-${calendar.get(java.util.Calendar.MONTH)}-${calendar.get(java.util.Calendar.DAY_OF_MONTH)}"
     }
 
@@ -107,6 +112,65 @@ class PreferencesManager(context: Context) {
             .putInt(PreferencesKeys.KEY_PEANUTS_TODAY, currentCount + 1)
             .apply()
     }
+
+    private fun getPeanutsHistory(): MutableMap<String, Int> {
+        val json = prefs.getString(PreferencesKeys.KEY_PEANUTS_HISTORY, null) ?: return mutableMapOf()
+        val type = object : TypeToken<MutableMap<String, Int>>() {}.type
+        return try {
+            gson.fromJson(json, type) ?: mutableMapOf()
+        } catch (e: Exception) {
+            mutableMapOf()
+        }
+    }
+
+    private fun savePeanutsHistory(history: Map<String, Int>) {
+        val json = gson.toJson(history)
+        prefs.edit().putString(PreferencesKeys.KEY_PEANUTS_HISTORY, json).apply()
+    }
+
+    private fun updatePeanutsHistory() {
+        val history = getPeanutsHistory()
+        val today = getTodayDateString()
+
+        // Incrémenter le compteur d'aujourd'hui
+        history[today] = (history[today] ?: 0) + 1
+
+        // Nettoyer les entrées de plus de 30 jours pour ne pas surcharger
+        val calendar = java.util.Calendar.getInstance()
+        calendar.add(java.util.Calendar.DAY_OF_MONTH, -30)
+        val cutoffDate = getDateString(calendar)
+
+        val cleanedHistory = history.filterKeys { date ->
+            date >= cutoffDate
+        }
+
+        savePeanutsHistory(cleanedHistory)
+    }
+
+    val peanutsLast7Days: Int
+        get() {
+            val history = getPeanutsHistory()
+            val calendar = java.util.Calendar.getInstance()
+            val today = getTodayDateString()
+            var total = 0
+
+            // Compter les peanuts des 7 derniers jours (y compris aujourd'hui)
+            for (i in 0..6) {
+                val dateString = getDateString(calendar)
+
+                // Pour aujourd'hui, utiliser peanutsToday au lieu de l'historique
+                // (au cas où l'historique n'est pas encore synchronisé)
+                if (dateString == today) {
+                    total += peanutsToday
+                } else {
+                    total += history[dateString] ?: 0
+                }
+
+                calendar.add(java.util.Calendar.DAY_OF_MONTH, -1)
+            }
+
+            return total
+        }
 
     // --- Periodic Timer Methods ---
 

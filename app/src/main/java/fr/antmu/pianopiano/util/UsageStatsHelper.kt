@@ -148,7 +148,8 @@ object UsageStatsHelper {
         context: Context,
         configuredPackages: List<String>,
         peanutCount: Int,
-        peanutsToday: Int
+        peanutsToday: Int,
+        peanutsLast7Days: Int
     ): AggregatedStats {
         if (!PermissionHelper.hasUsageStatsPermission(context) || configuredPackages.isEmpty()) {
             return AggregatedStats(0, 0, 0, 0, 0, 0, 0)
@@ -183,7 +184,7 @@ object UsageStatsHelper {
 
         val timeSavedTotal = peanutCount * averageSession
         val timeSavedToday = peanutsToday * averageSession
-        val timeSaved7Days = peanutCount * averageSession7Days
+        val timeSaved7Days = peanutsLast7Days * averageSession7Days
 
         return AggregatedStats(
             totalScreenTimeToday = totalTime,
