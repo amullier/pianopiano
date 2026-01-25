@@ -12,9 +12,11 @@ object PreferencesKeys {
     const val KEY_CONFIGURED_APPS = "configured_apps"
 
     // Periodic timer
-    const val KEY_LAST_ACTIVE_TIMESTAMPS = "last_active_timestamps"
     const val KEY_ACTIVE_TIMER_PACKAGE = "active_timer_package"
-    const val EXIT_THRESHOLD_MS = 5000L  // 5 secondes - tolérance pour retour sur l'app
+
+    // App state (enter/exit times)
+    const val KEY_APP_ENTER_TIMES = "app_enter_times"
+    const val KEY_APP_EXIT_TIMES = "app_exit_times"
 
     // Onboarding
     const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"

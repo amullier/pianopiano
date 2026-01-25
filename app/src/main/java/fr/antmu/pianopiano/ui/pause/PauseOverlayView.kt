@@ -7,7 +7,6 @@ import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import fr.antmu.pianopiano.R
 import fr.antmu.pianopiano.databinding.ViewPauseOverlayBinding
-import fr.antmu.pianopiano.service.ServiceHelper
 import fr.antmu.pianopiano.util.setVisible
 
 class PauseOverlayView(
@@ -49,9 +48,6 @@ class PauseOverlayView(
         }
 
         binding.buttonContinue.setOnClickListener {
-            // Exempter l'app pour permettre l'ouverture sans pause (1 seconde)
-            ServiceHelper.exemptPackage(viewModel.getTargetPackageName())
-
             viewModel.onContinueClicked()
             onDismiss()
         }

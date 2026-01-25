@@ -6,14 +6,6 @@ import fr.antmu.pianopiano.ui.pause.PauseActivity
 
 object ServiceHelper {
 
-    private val exemptedPackages = mutableMapOf<String, ExemptionInfo>()
-    private const val EXEMPTION_DURATION_MS = 1000L // 1 seconde pour "Continuer"
-
-    private data class ExemptionInfo(
-        val timestamp: Long,
-        val duration: Long
-    )
-
     /**
      * Lance la PauseActivity pour afficher l'écran de pause modal
      */
@@ -28,36 +20,9 @@ object ServiceHelper {
     }
 
     /**
-     * Lance une pause périodique (alias de startPauseOverlay avec isPeriodic=true)
+     * Lance une pause périodique
      */
     fun startPeriodicPause(context: Context, targetPackageName: String) {
         startPauseOverlay(context, targetPackageName, isPeriodic = true)
-    }
-
-    /**
-     * Ajoute une exemption temporaire pour un package
-     * (utilisé quand l'utilisateur clique sur Continuer)
-     */
-    fun exemptPackage(packageName: String) {
-        exemptedPackages[packageName] = ExemptionInfo(
-            timestamp = System.currentTimeMillis(),
-            duration = EXEMPTION_DURATION_MS
-        )
-    }
-
-    /**
-     * Vérifie si un package est actuellement exempté
-     */
-    fun isPackageExempted(packageName: String): Boolean {
-        val exemptionInfo = exemptedPackages[packageName] ?: return false
-        val currentTime = System.currentTimeMillis()
-
-        return if (currentTime - exemptionInfo.timestamp < exemptionInfo.duration) {
-            true
-        } else {
-            // Nettoyer l'ancienne exemption
-            exemptedPackages.remove(packageName)
-            false
-        }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.repository.SettingsRepository
 import fr.antmu.pianopiano.service.PeriodicTimerManager
 import fr.antmu.pianopiano.util.PackageHelper
@@ -14,6 +15,7 @@ import fr.antmu.pianopiano.util.UsageStatsHelper
 class PauseViewModel(context: Context) {
 
     private val settingsRepository = SettingsRepository(context)
+    private val preferencesManager = PreferencesManager(context)
     private val appContext = context.applicationContext
 
     private val _countdown = MutableLiveData<Int>()
@@ -76,15 +78,19 @@ class PauseViewModel(context: Context) {
     fun onCancelClicked() {
         countDownTimer?.cancel()
         settingsRepository.incrementPeanuts()
+        // Reset exit time to force pause on next access
+        preferencesManager.resetAppExitTime(targetPackageName)
     }
 
     fun onContinueClicked(): Boolean {
+        // Mettre à jour exitTime pour éviter une nouvelle pause immédiate
+        // (la tolérance de 5s recommence maintenant)
+        preferencesManager.setAppExitTime(targetPackageName, System.currentTimeMillis())
+
         // Gérer le timer périodique
         if (isPeriodic) {
-            // Après une pause périodique, mettre à jour le timestamp
             PeriodicTimerManager.onPeriodicPauseFinished(appContext, targetPackageName)
         } else {
-            // Après la pause initiale, démarrer le timer périodique si configuré
             PeriodicTimerManager.onInitialPauseFinished(appContext, targetPackageName)
         }
         return PackageHelper.launchApp(appContext, targetPackageName)

@@ -276,16 +276,4 @@ class AppRepository(private val context: Context) {
     fun setAppPeriodicTimer(packageName: String, seconds: Int) {
         preferencesManager.setAppPeriodicTimer(packageName, seconds)
     }
-
-    fun getLastActiveTimestamp(packageName: String): Long {
-        return preferencesManager.getLastActiveTimestamp(packageName)
-    }
-
-    fun setLastActiveTimestamp(packageName: String, timestamp: Long) {
-        preferencesManager.setLastActiveTimestamp(packageName, timestamp)
-    }
-
-    fun shouldResetTimer(packageName: String): Boolean {
-        return preferencesManager.shouldResetTimer(packageName)
-    }
 }

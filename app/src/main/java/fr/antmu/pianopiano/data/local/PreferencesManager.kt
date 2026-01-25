@@ -174,37 +174,6 @@ class PreferencesManager(context: Context) {
 
     // --- Periodic Timer Methods ---
 
-    private fun getLastActiveTimestamps(): MutableMap<String, Long> {
-        val json = prefs.getString(PreferencesKeys.KEY_LAST_ACTIVE_TIMESTAMPS, null) ?: return mutableMapOf()
-        val type = object : TypeToken<MutableMap<String, Long>>() {}.type
-        return try {
-            gson.fromJson(json, type) ?: mutableMapOf()
-        } catch (e: Exception) {
-            mutableMapOf()
-        }
-    }
-
-    private fun saveLastActiveTimestamps(timestamps: Map<String, Long>) {
-        val json = gson.toJson(timestamps)
-        prefs.edit().putString(PreferencesKeys.KEY_LAST_ACTIVE_TIMESTAMPS, json).apply()
-    }
-
-    fun getLastActiveTimestamp(packageName: String): Long {
-        return getLastActiveTimestamps()[packageName] ?: 0L
-    }
-
-    fun setLastActiveTimestamp(packageName: String, timestamp: Long) {
-        val timestamps = getLastActiveTimestamps()
-        timestamps[packageName] = timestamp
-        saveLastActiveTimestamps(timestamps)
-    }
-
-    fun shouldResetTimer(packageName: String): Boolean {
-        val lastActive = getLastActiveTimestamp(packageName)
-        if (lastActive == 0L) return true
-        return System.currentTimeMillis() - lastActive > PreferencesKeys.EXIT_THRESHOLD_MS
-    }
-
     fun getAppPeriodicTimer(packageName: String): Int {
         val apps = getConfiguredApps()
         return apps.find { it.packageName == packageName }?.periodicTimerSeconds ?: 0
@@ -230,4 +199,64 @@ class PreferencesManager(context: Context) {
                 prefs.edit().putString(PreferencesKeys.KEY_ACTIVE_TIMER_PACKAGE, value).apply()
             }
         }
+
+    // --- App Enter/Exit Times ---
+
+    private fun getAppEnterTimes(): MutableMap<String, Long> {
+        val json = prefs.getString(PreferencesKeys.KEY_APP_ENTER_TIMES, null) ?: return mutableMapOf()
+        val type = object : TypeToken<MutableMap<String, Long>>() {}.type
+        return try {
+            gson.fromJson(json, type) ?: mutableMapOf()
+        } catch (e: Exception) {
+            mutableMapOf()
+        }
+    }
+
+    private fun saveAppEnterTimes(times: Map<String, Long>) {
+        val json = gson.toJson(times)
+        prefs.edit().putString(PreferencesKeys.KEY_APP_ENTER_TIMES, json).apply()
+    }
+
+    fun getAppEnterTime(packageName: String): Long {
+        return getAppEnterTimes()[packageName] ?: 0L
+    }
+
+    fun setAppEnterTime(packageName: String, timestamp: Long) {
+        val times = getAppEnterTimes()
+        times[packageName] = timestamp
+        saveAppEnterTimes(times)
+    }
+
+    private fun getAppExitTimes(): MutableMap<String, Long> {
+        val json = prefs.getString(PreferencesKeys.KEY_APP_EXIT_TIMES, null) ?: return mutableMapOf()
+        val type = object : TypeToken<MutableMap<String, Long>>() {}.type
+        return try {
+            gson.fromJson(json, type) ?: mutableMapOf()
+        } catch (e: Exception) {
+            mutableMapOf()
+        }
+    }
+
+    private fun saveAppExitTimes(times: Map<String, Long>) {
+        val json = gson.toJson(times)
+        prefs.edit().putString(PreferencesKeys.KEY_APP_EXIT_TIMES, json).apply()
+    }
+
+    fun getAppExitTime(packageName: String): Long {
+        return getAppExitTimes()[packageName] ?: 0L
+    }
+
+    fun setAppExitTime(packageName: String, timestamp: Long) {
+        val times = getAppExitTimes()
+        times[packageName] = timestamp
+        saveAppExitTimes(times)
+    }
+
+    /**
+     * Reset exit time to 0 to force initial pause on next access
+     * (used when user clicks "Annuler")
+     */
+    fun resetAppExitTime(packageName: String) {
+        setAppExitTime(packageName, 0L)
+    }
 }
