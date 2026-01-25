@@ -61,7 +61,7 @@ class SettingsFragment : Fragment() {
             showPermissionHint(R.string.hint_select_pianopiano)
         }
 
-        binding.sliderDuration.setRange(10, 60, 10)
+        binding.sliderDuration.setValues(listOf(10, 15, 20, 30, 40, 50, 60))
         binding.sliderDuration.setValue(viewModel.pauseDuration.value ?: 10)
         binding.sliderDuration.setOnValueChangeListener { value ->
             viewModel.setPauseDuration(value)

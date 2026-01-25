@@ -88,6 +88,16 @@ class DiscreteSlider @JvmOverloads constructor(
         updateLabel()
     }
 
+    fun setValues(valuesList: List<Int>) {
+        values = valuesList
+        seekBar.max = values.size - 1
+        if (currentIndex >= values.size) {
+            currentIndex = values.size - 1
+        }
+        seekBar.progress = currentIndex
+        updateLabel()
+    }
+
     fun setValue(value: Int) {
         val index = values.indexOf(value)
         if (index >= 0) {

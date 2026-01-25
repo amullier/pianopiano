@@ -2,6 +2,7 @@ package fr.antmu.pianopiano.ui.pause
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import fr.antmu.pianopiano.R
@@ -28,7 +29,7 @@ class PauseOverlayView(
 
     fun show(packageName: String, isPeriodic: Boolean = false) {
         viewModel.initialize(packageName, isPeriodic)
-        binding.buttonContinue.setVisible(false)
+        binding.buttonContinue.visibility = View.INVISIBLE
     }
 
     private fun setupListeners() {

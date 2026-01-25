@@ -47,12 +47,35 @@ class AppLaunchDetectorService : AccessibilityService() {
         // Mettre à jour le package au premier plan
         PeriodicTimerManager.setCurrentForegroundPackage(packageName)
 
+        // Check if this app is configured for pause
+        if (!preferencesManager.isAppConfigured(packageName)) {
+            // Détecter si l'utilisateur a changé d'app configurée
+            if (previousForegroundPackage != null && previousForegroundPackage != packageName) {
+                handleAppLeft(previousForegroundPackage)
+            }
+            previousForegroundPackage = packageName
+            return
+        }
+
+        // Si on est déjà dans cette app (transition interne), mettre à jour le timestamp et ignorer
+        val isInternalTransition = packageName == previousForegroundPackage
+
         // Détecter si l'utilisateur a changé d'app configurée
         if (previousForegroundPackage != null && previousForegroundPackage != packageName) {
             handleAppLeft(previousForegroundPackage)
         }
 
+        // Mettre à jour le package actuel
         previousForegroundPackage = packageName
+
+        if (isInternalTransition) {
+            // Transition interne (feed -> messages dans Instagram, etc.)
+            // On met à jour le timestamp pour éviter que l'app soit considérée comme "quittée"
+            appRepository.setLastActiveTimestamp(packageName, System.currentTimeMillis())
+            return
+        }
+
+        // À partir d'ici, c'est un vrai lancement d'app (pas une transition interne)
 
         // Ignore if overlay is already showing
         if (ServiceHelper.isOverlayShowing()) {
@@ -67,21 +90,6 @@ class AppLaunchDetectorService : AccessibilityService() {
             }
             return
         }
-
-        // Check if this app is configured for pause
-        if (!preferencesManager.isAppConfigured(packageName)) {
-            return
-        }
-
-        // Si on est déjà dans cette app (transition interne), mettre à jour le timestamp et ignorer
-        if (packageName == previousForegroundPackage) {
-            // Transition interne (feed -> messages dans Instagram, etc.)
-            // On met à jour le timestamp pour éviter que l'app soit considérée comme "quittée"
-            appRepository.setLastActiveTimestamp(packageName, System.currentTimeMillis())
-            return
-        }
-
-        // À partir d'ici, c'est un vrai lancement d'app (pas une transition interne)
 
         // Apply cooldown to prevent multiple triggers
         val currentTime = System.currentTimeMillis()
