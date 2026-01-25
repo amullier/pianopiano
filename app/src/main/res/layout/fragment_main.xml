@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="@dimen/spacing_xs"
+                android:layout_marginBottom="@dimen/spacing_sm"
                 android:background="@drawable/bg_stats_toggle"
                 android:padding="4dp">
 
@@ -48,7 +48,7 @@
                     android:text="@string/stats_today"
                     android:textSize="@dimen/text_size_small"
                     android:textColor="@color/white"
-                    android:background="@drawable/bg_toggle_selected"
+                    android:background="@drawable/bg_button_gradient"
                     android:paddingVertical="8dp"
                     android:gravity="center"
                     android:fontFamily="sans-serif-medium" />

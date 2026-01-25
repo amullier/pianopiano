@@ -1,0 +1,44 @@
+<html>
+<head>
+    <style>
+        body {
+            height:100%;
+            width:100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .pause {
+            height: 2048px !important;
+            width: 2048px !important;
+            display: flex;
+            justify-content:center;
+            align-items:center;
+            gap: 3vw; /* espace entre les deux barres, proportionnel à la largeur de l'écran */
+            background: linear-gradient(
+                135deg,
+                oklch(17.68% 0.0512 273.2),
+                oklch(42.22% 0.0673 219.94)
+            );
+        }
+
+        .pause div {
+            width: 5vw;          /* largeur proportionnelle à l'écran */
+            height: 40vh;         /* hauteur proportionnelle à la hauteur de l'écran */
+            min-width: 20px;      /* limite minimale pour petits écrans */
+            min-height: 80px;     /* limite minimale pour petits écrans */
+            background-color: #F2AD37;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="pause">
+    <div></div>
+    <div></div>
+</div>
+</body>
+</html>

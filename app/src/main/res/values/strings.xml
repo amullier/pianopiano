@@ -22,7 +22,7 @@
     <string name="apps_subtitle">Sélectionnez les applications à surveiller</string>
 
     <!-- Settings screen -->
-    <string name="settings_title">Paramètres</string>
+    <string name="settings_title">Configuration</string>
     <string name="settings_permissions">Permissions</string>
     <string name="settings_pause_duration">Durée de pause</string>
     <string name="settings_pause_duration_format">%d secondes</string>

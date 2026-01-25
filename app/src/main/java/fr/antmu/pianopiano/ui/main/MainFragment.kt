@@ -335,7 +335,7 @@ class MainFragment : Fragment() {
     private fun updateToggleUI() {
         if (showToday) {
             // Style "Aujourd'hui" sélectionné
-            binding.toggleToday.setBackgroundResource(R.drawable.bg_toggle_selected)
+            binding.toggleToday.setBackgroundResource(R.drawable.bg_button_gradient)
             binding.toggleToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             binding.toggleToday.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
 
@@ -345,7 +345,7 @@ class MainFragment : Fragment() {
             binding.toggleTotal.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         } else {
             // Style "Total" sélectionné
-            binding.toggleTotal.setBackgroundResource(R.drawable.bg_toggle_selected)
+            binding.toggleTotal.setBackgroundResource(R.drawable.bg_button_gradient)
             binding.toggleTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             binding.toggleTotal.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
 

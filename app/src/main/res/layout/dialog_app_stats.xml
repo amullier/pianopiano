@@ -9,6 +9,7 @@
         android:id="@+id/textAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/black_han_sans"
         android:textColor="@color/text_primary"
         android:textSize="@dimen/text_size_title"
         android:textStyle="bold"
@@ -16,10 +17,13 @@
 
     <!-- Section: Aujourd'hui -->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_button_gradient"
+        android:gravity="center"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="@dimen/spacing_xs"
         android:text="@string/app_stats_today_title"
-        android:textColor="@color/accent_primary"
         android:textSize="@dimen/text_size_body"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/spacing_md"
@@ -72,10 +76,13 @@
 
     <!-- Section: 7 derniers jours -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/app_stats_7days_title"
-        android:textColor="@color/accent_primary"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_glassmorphic_card"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="@dimen/spacing_xs"
         android:textSize="@dimen/text_size_body"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/spacing_md"
@@ -128,10 +135,13 @@
 
     <!-- Section: 30 derniers jours -->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_glassmorphic_card"
+        android:gravity="center"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="@dimen/spacing_xs"
         android:text="@string/app_stats_30days_title"
-        android:textColor="@color/accent_primary"
         android:textSize="@dimen/text_size_body"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/spacing_md"
