@@ -6,8 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.model.ConfiguredApp
-import fr.antmu.pianopiano.util.PermissionHelper
-import fr.antmu.pianopiano.util.UsageStatsHelper
 
 class AppRepository(private val context: Context) {
 
@@ -18,8 +16,7 @@ class AppRepository(private val context: Context) {
         val packageName: String,
         val appName: String,
         val icon: Drawable,
-        val isConfigured: Boolean,
-        val screenTimeToday: Long = 0L // Temps d'écran aujourd'hui en ms
+        val isConfigured: Boolean
     )
 
     companion object {
@@ -95,7 +92,40 @@ class AppRepository(private val context: Context) {
             "com.google.android.documentsui",
             "com.android.carrierdefaultapp",
             "com.android.traceur",
-            "com.google.android.apps.restore"
+            "com.google.android.apps.restore",
+            "com.google.android.tts",                // Speech Services by Google
+            "com.google.android.marvin.talkback",    // Android Accessibility Suite / TalkBack
+            "com.google.android.accessibility.suite",
+            "com.android.providers.accessibility",
+            "com.google.android.apps.accessibility.voiceaccess", // Voice Access
+            "com.google.android.speech.pumpkin",     // Speech Recognition
+            "com.google.android.apps.speechservices",
+            "com.google.android.googlequicksearchbox", // Google App (souvent utilisé pour speech)
+            "com.android.soundpicker",               // Sound Picker
+            "com.android.deskclock",                 // Clock
+            "com.android.contacts",                  // Contacts (sauf si utilisé vraiment)
+            "com.android.mms",                       // Messaging
+            "com.android.camera2",                   // Camera
+            "com.android.gallery3d",                 // Gallery
+            "com.android.calculator2",               // Calculator
+            "com.google.android.apps.wellbeingpreload", // Digital Wellbeing
+            "com.android.egg",                       // Easter Egg
+            "com.android.emergency",                 // Emergency
+            "com.android.statementservice",
+            "com.google.android.nearby.halfsheet",   // Nearby Share
+            "com.google.android.apps.turbo",         // Device Health Services
+            "com.google.android.apps.scone",         // Personal Safety
+            "com.google.android.devicelockcontroller",
+            "com.google.android.apps.work.oobconfig",
+            "com.google.android.apps.subscription",
+            "com.google.android.euicc",              // eSIM Manager
+            "com.google.euicc",
+            "com.google.android.ims",                // RCS/IMS
+            "com.google.android.apps.restore",
+            "com.google.android.settings.intelligence", // Settings Suggestions
+            "com.google.android.apps.tips",          // Tips
+            "com.google.android.apps.cameralite",
+            "com.google.android.apps.nbu.files"      // Files by Google (si système)
         )
 
         // Préfixes de packages système à exclure
@@ -110,7 +140,20 @@ class AppRepository(private val context: Context) {
             "com.mediatek.",
             "com.google.mainline.",
             "com.android.systemui.",
-            "com.google.android.ext."
+            "com.google.android.ext.",
+            "com.google.android.accessibility.",
+            "com.google.android.tts.",
+            "com.google.android.speech.",
+            "com.android.launcher",        // Launchers système
+            "com.sec.android.",            // Samsung system apps
+            "com.samsung.android.",        // Samsung system apps
+            "com.miui.",                   // Xiaomi MIUI
+            "com.xiaomi.",                 // Xiaomi
+            "com.huawei.",                 // Huawei
+            "com.oppo.",                   // Oppo
+            "com.vivo.",                   // Vivo
+            "com.oneplus.",                // OnePlus
+            "com.coloros."                 // ColorOS
         )
 
         // Apps système populaires à toujours inclure (même si pré-installées)
@@ -149,7 +192,6 @@ class AppRepository(private val context: Context) {
         val installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         val configuredApps = preferencesManager.getConfiguredApps()
         val configuredPackages = configuredApps.filter { it.isEnabled }.map { it.packageName }.toSet()
-        val hasUsageStats = PermissionHelper.hasUsageStatsPermission(context)
 
         val apps = installedApps
             .filter { appInfo ->
@@ -173,26 +215,19 @@ class AppRepository(private val context: Context) {
                 !isSystemApp || isUpdatedSystemApp
             }
             .map { appInfo ->
-                val screenTime = if (hasUsageStats) {
-                    UsageStatsHelper.getAppUsageStats(context, appInfo.packageName)?.totalTimeToday ?: 0L
-                } else {
-                    0L
-                }
                 InstalledApp(
                     packageName = appInfo.packageName,
                     appName = packageManager.getApplicationLabel(appInfo).toString(),
                     icon = packageManager.getApplicationIcon(appInfo),
-                    isConfigured = configuredPackages.contains(appInfo.packageName),
-                    screenTimeToday = screenTime
+                    isConfigured = configuredPackages.contains(appInfo.packageName)
                 )
             }
 
-        // Trier par temps d'écran si disponible, sinon par nom
-        return if (hasUsageStats) {
-            apps.sortedByDescending { it.screenTimeToday }
-        } else {
-            apps.sortedBy { it.appName.lowercase() }
-        }
+        // Trier: apps configurées en premier, puis alphabétique
+        return apps.sortedWith(
+            compareByDescending<InstalledApp> { it.isConfigured }
+                .thenBy { it.appName.lowercase() }
+        )
     }
 
     fun setAppConfigured(packageName: String, appName: String, enabled: Boolean) {

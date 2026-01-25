@@ -248,14 +248,20 @@ class MainFragment : Fragment() {
         dialogView.findViewById<android.widget.TextView>(R.id.textLaunchCount7Days).text =
             if (stats.launchCountLast7Days > 0) stats.launchCountLast7Days.toString()
             else getString(R.string.stats_no_data)
+        dialogView.findViewById<android.widget.TextView>(R.id.textAvgPerDay7Days).text =
+            if (stats.totalTimeLast7Days > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeLast7Days / 7)
+            else getString(R.string.stats_no_data)
 
         // 30 derniers jours
-        dialogView.findViewById<android.widget.TextView>(R.id.textScreenTime30Days).text =
-            if (stats.totalTimeLast30Days > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeLast30Days)
-            else getString(R.string.stats_no_data)
-        dialogView.findViewById<android.widget.TextView>(R.id.textLaunchCount30Days).text =
-            if (stats.launchCountLast30Days > 0) stats.launchCountLast30Days.toString()
-            else getString(R.string.stats_no_data)
+//        dialogView.findViewById<android.widget.TextView>(R.id.textScreenTime30Days).text =
+//            if (stats.totalTimeLast30Days > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeLast30Days)
+//            else getString(R.string.stats_no_data)
+//        dialogView.findViewById<android.widget.TextView>(R.id.textLaunchCount30Days).text =
+//            if (stats.launchCountLast30Days > 0) stats.launchCountLast30Days.toString()
+//            else getString(R.string.stats_no_data)
+//        dialogView.findViewById<android.widget.TextView>(R.id.textAvgPerDay30Days).text =
+//            if (stats.totalTimeLast30Days > 0) UsageStatsHelper.formatShortDuration(stats.totalTimeLast30Days / 30)
+//            else getString(R.string.stats_no_data)
 
         // Afficher
         AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)

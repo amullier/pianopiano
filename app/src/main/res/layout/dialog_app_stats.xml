@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_gravity="center_vertical"
     android:padding="@dimen/spacing_lg">
 
     <TextView
@@ -121,7 +122,28 @@
                 android:textSize="@dimen/text_size_body"
                 android:textStyle="bold" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/spacing_xs"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_stats_avg_per_day"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_size_body" />
+
+            <TextView
+                android:id="@+id/textAvgPerDay7Days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_size_body"
+                android:textStyle="bold" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,70 +165,94 @@
                 android:textSize="@dimen/text_size_body"
                 android:textStyle="bold" />
         </LinearLayout>
+
+
     </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
     <!-- Section: 30 derniers jours -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:layout_weight="1"
-        android:letterSpacing="0.1"
-        android:padding="@dimen/spacing_xs"
-        android:text="@string/app_stats_30days_title"
-        android:textAllCaps="true"
-        android:textColor="@color/text_secondary"
-        android:textSize="@dimen/text_size_caption" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginTop="@dimen/spacing_xs"-->
+<!--        android:layout_weight="1"-->
+<!--        android:letterSpacing="0.1"-->
+<!--        android:padding="@dimen/spacing_xs"-->
+<!--        android:text="@string/app_stats_30days_title"-->
+<!--        android:textAllCaps="true"-->
+<!--        android:textColor="@color/text_secondary"-->
+<!--        android:textSize="@dimen/text_size_caption" />-->
 
-    <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_md">
+<!--    <fr.antmu.pianopiano.ui.components.GlassmorphicCard-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/spacing_md">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xs"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="@dimen/spacing_xs"-->
+<!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/app_stats_screen_time"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_size_body" />
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/app_stats_screen_time"-->
+<!--                android:textColor="@color/text_secondary"-->
+<!--                android:textSize="@dimen/text_size_body" />-->
 
-            <TextView
-                android:id="@+id/textScreenTime30Days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_size_body"
-                android:textStyle="bold" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/textScreenTime30Days"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/text_primary"-->
+<!--                android:textSize="@dimen/text_size_body"-->
+<!--                android:textStyle="bold" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/app_stats_avg_per_day"-->
+<!--                android:textColor="@color/text_secondary"-->
+<!--                android:textSize="@dimen/text_size_body" />-->
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/app_stats_launch_count"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_size_body" />
+<!--            <TextView-->
+<!--                android:id="@+id/textAvgPerDay30Days"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/text_primary"-->
+<!--                android:textSize="@dimen/text_size_body"-->
+<!--                android:textStyle="bold" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/textLaunchCount30Days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_size_body"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/app_stats_launch_count"-->
+<!--                android:textColor="@color/text_secondary"-->
+<!--                android:textSize="@dimen/text_size_body" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/textLaunchCount30Days"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/text_primary"-->
+<!--                android:textSize="@dimen/text_size_body"-->
+<!--                android:textStyle="bold" />-->
+<!--        </LinearLayout>-->
+
+
+<!--    </fr.antmu.pianopiano.ui.components.GlassmorphicCard>-->
 
 </LinearLayout>

@@ -96,6 +96,7 @@
     <string name="app_stats_30days_title">Ultimi 30 giorni</string>
     <string name="app_stats_screen_time">Tempo schermo</string>
     <string name="app_stats_launch_count">Aperture</string>
+    <string name="app_stats_avg_per_day">Media al giorno</string>
     <string name="app_stats_no_data">Nessun dato disponibile</string>
 
     <!-- Content descriptions -->

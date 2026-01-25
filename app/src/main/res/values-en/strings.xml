@@ -96,6 +96,7 @@
     <string name="app_stats_30days_title">Last 30 days</string>
     <string name="app_stats_screen_time">Screen time</string>
     <string name="app_stats_launch_count">Launches</string>
+    <string name="app_stats_avg_per_day">Avg. per day</string>
     <string name="app_stats_no_data">No data available</string>
 
     <!-- Content descriptions -->
