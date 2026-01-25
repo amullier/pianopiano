@@ -68,15 +68,6 @@ class OnboardingFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.cardOverlay.setOnClickListener {
-            PermissionHelper.requestOverlayPermission(requireContext())
-            Toast.makeText(
-                requireContext(),
-                R.string.hint_enable_overlay,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-
         binding.cardAccessibility.setOnClickListener {
             PermissionHelper.openAccessibilitySettings(requireContext())
             Toast.makeText(
@@ -106,16 +97,14 @@ class OnboardingFragment : Fragment() {
     }
 
     private fun updatePermissionStatus() {
-        val hasOverlay = PermissionHelper.hasOverlayPermission(requireContext())
         val hasAccessibility = PermissionHelper.isAccessibilityServiceEnabled(requireContext())
         val hasUsageStats = PermissionHelper.hasUsageStatsPermission(requireContext())
 
-        binding.iconOverlayStatus.visibility = if (hasOverlay) View.VISIBLE else View.GONE
         binding.iconAccessibilityStatus.visibility = if (hasAccessibility) View.VISIBLE else View.GONE
         binding.iconUsageStatsStatus.visibility = if (hasUsageStats) View.VISIBLE else View.GONE
 
         // Activer le bouton si toutes les permissions sont accordées
-        val allGranted = hasOverlay && hasAccessibility && hasUsageStats
+        val allGranted = hasAccessibility && hasUsageStats
         binding.buttonContinue.isEnabled = allGranted
     }
 

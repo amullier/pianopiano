@@ -14,7 +14,7 @@ object PreferencesKeys {
     // Periodic timer
     const val KEY_LAST_ACTIVE_TIMESTAMPS = "last_active_timestamps"
     const val KEY_ACTIVE_TIMER_PACKAGE = "active_timer_package"
-    const val EXIT_THRESHOLD_MS = 10000L  // 10 secondes - seuil pour éviter les transitions internes
+    const val EXIT_THRESHOLD_MS = 5000L  // 5 secondes - tolérance pour retour sur l'app
 
     // Onboarding
     const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
@@ -26,7 +26,7 @@ object PreferencesKeys {
     const val KEY_PEANUTS_HISTORY = "peanuts_history" // Historique des peanuts par jour (JSON map)
 
     // Default values
-    const val DEFAULT_PAUSE_DURATION = 12
+    const val DEFAULT_PAUSE_DURATION = 15
     const val DEFAULT_PEANUT_COUNT = 0
     const val DEFAULT_SERVICE_ENABLED = false
 }

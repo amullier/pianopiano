@@ -23,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         val preferencesManager = PreferencesManager(this)
         val currentVersionCode = packageManager.getPackageInfo(packageName, 0).longVersionCode.toInt()
 
-        val allPermissionsGranted = PermissionHelper.hasOverlayPermission(this) &&
-                PermissionHelper.isAccessibilityServiceEnabled(this) &&
+        val allPermissionsGranted = PermissionHelper.isAccessibilityServiceEnabled(this) &&
                 PermissionHelper.hasUsageStatsPermission(this)
 
         val isNewVersion = preferencesManager.lastOnboardingVersion < currentVersionCode

@@ -10,19 +10,6 @@ import fr.antmu.pianopiano.service.AppLaunchDetectorService
 
 object PermissionHelper {
 
-    fun hasOverlayPermission(context: Context): Boolean {
-        return Settings.canDrawOverlays(context)
-    }
-
-    fun requestOverlayPermission(context: Context) {
-        val intent = Intent(
-            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-            Uri.parse("package:${context.packageName}")
-        )
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
-    }
-
     fun isAccessibilityServiceEnabled(context: Context): Boolean {
         val accessibilityManager =
             context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
@@ -60,6 +47,6 @@ object PermissionHelper {
     }
 
     fun areAllPermissionsGranted(context: Context): Boolean {
-        return hasOverlayPermission(context) && isAccessibilityServiceEnabled(context)
+        return isAccessibilityServiceEnabled(context)
     }
 }

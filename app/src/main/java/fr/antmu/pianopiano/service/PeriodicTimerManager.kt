@@ -25,7 +25,8 @@ object PeriodicTimerManager {
         val runnable = object : Runnable {
             override fun run() {
                 // Vérifier si l'app est toujours au premier plan
-                if (currentForegroundPackage == packageName && !ServiceHelper.isOverlayShowing()) {
+                // Note: Pas de vérification isOverlayShowing() - launchMode="singleTask" empêche les instances multiples
+                if (currentForegroundPackage == packageName) {
                     // Déclencher la pause périodique
                     startPeriodicPause(context, packageName)
                 }

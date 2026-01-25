@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Permissions -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -57,15 +56,13 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <!-- Pause Overlay Service -->
-        <service
-            android:name=".service.PauseOverlayService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse">
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="display_overlay" />
-        </service>
+        <!-- Pause Activity - Modal blocking pause screen -->
+        <activity
+            android:name=".ui.pause.PauseActivity"
+            android:theme="@style/Theme.PauseActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:exported="false" />
 
         <!-- Boot Initialization Service -->
         <service

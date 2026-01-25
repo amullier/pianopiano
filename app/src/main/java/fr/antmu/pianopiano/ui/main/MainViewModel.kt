@@ -69,11 +69,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun refreshServiceStatus() {
         val context = getApplication<Application>()
         val hasAccessibility = PermissionHelper.isAccessibilityServiceEnabled(context)
-        val hasOverlay = PermissionHelper.hasOverlayPermission(context)
         val hasUsageStats = PermissionHelper.hasUsageStatsPermission(context)
 
         _serviceStatus.value = when {
-            !hasAccessibility || !hasOverlay -> ServiceStatusView.ServiceStatus.INACTIVE
+            !hasAccessibility -> ServiceStatusView.ServiceStatus.INACTIVE
             !hasUsageStats -> ServiceStatusView.ServiceStatus.PARTIAL
             else -> ServiceStatusView.ServiceStatus.ACTIVE
         }

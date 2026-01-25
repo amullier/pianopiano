@@ -37,4 +37,15 @@
     <style name="DialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/text_secondary</item>
     </style>
+
+    <!-- Theme for PauseActivity - Translucent fullscreen activity -->
+    <style name="Theme.PauseActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Translucide pour voir l'app en arrière-plan -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
 </resources>

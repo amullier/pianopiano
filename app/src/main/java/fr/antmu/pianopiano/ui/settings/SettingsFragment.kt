@@ -46,11 +46,6 @@ class SettingsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.cardOverlay.setOnClickListener {
-            viewModel.requestOverlayPermission()
-            showPermissionHint(R.string.hint_enable_overlay)
-        }
-
         binding.cardAccessibility.setOnClickListener {
             viewModel.openAccessibilitySettings()
             showPermissionHint(R.string.hint_enable_accessibility)
@@ -69,13 +64,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.hasOverlayPermission.observe(viewLifecycleOwner) { hasPermission ->
-            updatePermissionStatus(
-                binding.textOverlayStatus,
-                hasPermission
-            )
-        }
-
         viewModel.hasAccessibilityPermission.observe(viewLifecycleOwner) { hasPermission ->
             updatePermissionStatus(
                 binding.textAccessibilityStatus,

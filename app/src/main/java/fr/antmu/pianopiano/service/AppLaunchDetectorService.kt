@@ -26,102 +26,177 @@ class AppLaunchDetectorService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if (event == null) return
+        val packageName = extractPackageName(event) ?: return
 
-        if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+        logEventReceived(packageName)
 
-        val packageName = event.packageName?.toString() ?: return
-
-        // Ignore our own app and system UI
-        if (packageName == "fr.antmu.pianopiano" ||
-            packageName == "com.android.systemui" ||
-            packageName.startsWith("com.android.launcher")
-        ) {
-            // L'utilisateur a quitté l'app pour aller sur le launcher/système
-            handleAppLeft(previousForegroundPackage)
-            previousForegroundPackage = null
-            PeriodicTimerManager.setCurrentForegroundPackage(null)
+        if (isSystemOrLauncherPackage(packageName)) {
+            handleSystemPackageDetected()
             return
         }
 
-        // Mettre à jour le package au premier plan
+        updateForegroundPackages(packageName)
+
+        if (!isConfiguredApp(packageName)) {
+            logAppNotConfigured(packageName)
+            return
+        }
+
+        if (shouldSkipPauseCheck(packageName)) {
+            return
+        }
+
+        decidePauseAction(packageName)
+    }
+
+    // ==================== Extraction et validation ====================
+
+    private fun extractPackageName(event: AccessibilityEvent?): String? {
+        if (event == null) return null
+        if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return null
+        return event.packageName?.toString()
+    }
+
+    private fun logEventReceived(packageName: String) {
+        android.util.Log.d("AppLaunchDetector", "Event: $packageName (previous=$previousForegroundPackage)")
+    }
+
+    private fun logAppNotConfigured(packageName: String) {
+        android.util.Log.d("AppLaunchDetector", "[$packageName] App NON configurée → skip")
+    }
+
+    // ==================== Détection des packages système ====================
+
+    private fun isSystemOrLauncherPackage(packageName: String): Boolean {
+        return packageName == "fr.antmu.pianopiano" ||
+                packageName == "com.android.systemui" ||
+                packageName.startsWith("com.android.launcher")
+    }
+
+    private fun handleSystemPackageDetected() {
+        android.util.Log.d("AppLaunchDetector", "→ Système/Launcher détecté")
+        // L'utilisateur a quitté l'app pour aller sur le launcher/système
+        // On met à jour le timestamp AU MOMENT où l'utilisateur PART de l'app
+        handleAppLeft(previousForegroundPackage)
+        PeriodicTimerManager.setCurrentForegroundPackage(null)
+    }
+
+    // ==================== Gestion de l'état des packages au premier plan ====================
+
+    private fun updateForegroundPackages(packageName: String) {
         PeriodicTimerManager.setCurrentForegroundPackage(packageName)
 
-        // Check if this app is configured for pause
-        if (!preferencesManager.isAppConfigured(packageName)) {
-            // Détecter si l'utilisateur a changé d'app configurée
-            if (previousForegroundPackage != null && previousForegroundPackage != packageName) {
-                handleAppLeft(previousForegroundPackage)
-            }
-            previousForegroundPackage = packageName
-            return
-        }
-
-        // Si on est déjà dans cette app (transition interne), mettre à jour le timestamp et ignorer
-        val isInternalTransition = packageName == previousForegroundPackage
-
-        // Détecter si l'utilisateur a changé d'app configurée
+        // Si l'utilisateur a changé d'app, on enregistre qu'il a quitté l'ancienne
         if (previousForegroundPackage != null && previousForegroundPackage != packageName) {
             handleAppLeft(previousForegroundPackage)
         }
 
-        // Mettre à jour le package actuel
         previousForegroundPackage = packageName
+    }
 
-        if (isInternalTransition) {
-            // Transition interne (feed -> messages dans Instagram, etc.)
-            // On met à jour le timestamp pour éviter que l'app soit considérée comme "quittée"
-            appRepository.setLastActiveTimestamp(packageName, System.currentTimeMillis())
-            return
+    // ==================== Vérification de la configuration ====================
+
+    private fun isConfiguredApp(packageName: String): Boolean {
+        return preferencesManager.isAppConfigured(packageName)
+    }
+
+    // ==================== Vérifications pour skip ====================
+
+    private fun shouldSkipPauseCheck(packageName: String): Boolean {
+        if (isPackageExempted(packageName)) {
+            return true
         }
 
-        // À partir d'ici, c'est un vrai lancement d'app (pas une transition interne)
-
-        // Ignore if overlay is already showing
-        if (ServiceHelper.isOverlayShowing()) {
-            return
+        if (isCooldownActive(packageName)) {
+            return true
         }
 
-        // Ignore if package is currently exempted (user just clicked Cancel or Continue)
+        // Pas de skip, on continue
+        return false
+    }
+
+    private fun isPackageExempted(packageName: String): Boolean {
         if (ServiceHelper.isPackageExempted(packageName)) {
-            // Mettre à jour le timestamp d'activité si l'app a un timer périodique actif
-            if (PeriodicTimerManager.isTimerActive(packageName)) {
-                PeriodicTimerManager.updateLastActiveTime(applicationContext, packageName)
-            }
-            return
+            android.util.Log.d("AppLaunchDetector", "[$packageName] Package exempté → skip")
+            // Mettre à jour le timestamp pour suivre l'activité
+            appRepository.setLastActiveTimestamp(packageName, System.currentTimeMillis())
+            return true
         }
+        return false
+    }
 
-        // Apply cooldown to prevent multiple triggers
+    private fun isCooldownActive(packageName: String): Boolean {
         val currentTime = System.currentTimeMillis()
         if (packageName == lastDetectedPackage &&
             currentTime - lastDetectionTime < DETECTION_COOLDOWN_MS
         ) {
-            return
+            android.util.Log.d("AppLaunchDetector", "[$packageName] Cooldown actif → skip")
+            return true
         }
 
+        // Mettre à jour le dernier package détecté
         lastDetectedPackage = packageName
         lastDetectionTime = currentTime
+        return false
+    }
 
-        // Vérifier si on doit réinitialiser le timer (absent > 2 secondes)
-        val shouldReset = appRepository.shouldResetTimer(packageName)
+    // ==================== Décision de pause ====================
 
-        if (shouldReset) {
-            // Première visite ou retour après > 2 secondes : pause initiale
-            ServiceHelper.startPauseOverlay(applicationContext, packageName)
+    private fun decidePauseAction(packageName: String) {
+        val timeSinceLeft = calculateTimeSinceLeft(packageName)
+
+        android.util.Log.d("AppLaunchDetector",
+            "[$packageName] Temps depuis départ: ${timeSinceLeft.elapsedMs}ms, shouldReset=${timeSinceLeft.shouldReset}")
+
+        if (timeSinceLeft.shouldReset) {
+            showInitialPause(packageName)
         } else {
-            // Retour dans les 2 secondes : reprendre le timer si configuré
-            val timerSeconds = appRepository.getAppPeriodicTimer(packageName)
-            if (timerSeconds > 0 && !PeriodicTimerManager.isTimerActive(packageName)) {
-                // Relancer le timer périodique
-                PeriodicTimerManager.startTimer(applicationContext, packageName, timerSeconds)
-                PeriodicTimerManager.updateLastActiveTime(applicationContext, packageName)
-            }
+            resumeWithoutPause(packageName)
         }
     }
+
+    private data class TimeSinceLeft(
+        val elapsedMs: Long,
+        val shouldReset: Boolean
+    )
+
+    private fun calculateTimeSinceLeft(packageName: String): TimeSinceLeft {
+        val lastActive = appRepository.getLastActiveTimestamp(packageName)
+        val currentTime = System.currentTimeMillis()
+        val elapsed = if (lastActive == 0L) -1L else currentTime - lastActive
+        val shouldReset = appRepository.shouldResetTimer(packageName)
+
+        return TimeSinceLeft(elapsed, shouldReset)
+    }
+
+    private fun showInitialPause(packageName: String) {
+        android.util.Log.d("AppLaunchDetector", "[$packageName] 🔴 PAUSE INITIALE")
+        ServiceHelper.startPauseOverlay(applicationContext, packageName, isPeriodic = false)
+    }
+
+    private fun resumeWithoutPause(packageName: String) {
+        android.util.Log.d("AppLaunchDetector", "[$packageName] ✅ PAS DE PAUSE (tolérance 5s)")
+
+        val currentTime = System.currentTimeMillis()
+        appRepository.setLastActiveTimestamp(packageName, currentTime)
+
+        startPeriodicTimerIfNeeded(packageName)
+    }
+
+    private fun startPeriodicTimerIfNeeded(packageName: String) {
+        val timerSeconds = appRepository.getAppPeriodicTimer(packageName)
+        if (timerSeconds > 0 && !PeriodicTimerManager.isTimerActive(packageName)) {
+            android.util.Log.d("AppLaunchDetector", "[$packageName] ⏱️  Démarrage timer périodique ($timerSeconds secondes)")
+            PeriodicTimerManager.startTimer(applicationContext, packageName, timerSeconds)
+        }
+    }
+
+    // ==================== Gestion de la sortie d'app ====================
 
     private fun handleAppLeft(packageName: String?) {
         if (packageName == null) return
         if (preferencesManager.isAppConfigured(packageName)) {
+            android.util.Log.d("AppLaunchDetector", "[$packageName] handleAppLeft - MAJ timestamp")
             // Mettre à jour le timestamp quand l'utilisateur quitte
             PeriodicTimerManager.updateLastActiveTime(applicationContext, packageName)
             PeriodicTimerManager.onAppLeft(applicationContext, packageName)
@@ -135,6 +210,6 @@ class AppLaunchDetectorService : AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
         PeriodicTimerManager.stopAllTimers(applicationContext)
-        ServiceHelper.stopPauseOverlay(applicationContext)
+        // Plus besoin de stopPauseOverlay - l'Activity se gère elle-même
     }
 }
