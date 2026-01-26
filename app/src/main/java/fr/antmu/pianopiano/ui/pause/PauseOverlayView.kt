@@ -28,6 +28,7 @@ class PauseOverlayView(
 
     fun show(packageName: String, isPeriodic: Boolean = false) {
         viewModel.initialize(packageName, isPeriodic)
+        // INVISIBLE (pas GONE) pour réserver l'espace et éviter le "pop"
         binding.buttonContinue.visibility = View.INVISIBLE
     }
 
@@ -55,7 +56,8 @@ class PauseOverlayView(
 
     private fun observeViewModel() {
         viewModel.isCountdownFinished.observe(lifecycleOwner) { finished ->
-            binding.buttonContinue.setVisible(finished)
+            // Utiliser INVISIBLE au lieu de GONE pour éviter le "pop"
+            binding.buttonContinue.visibility = if (finished) View.VISIBLE else View.INVISIBLE
             if (finished) {
                 val appName = viewModel.appName.value ?: ""
                 binding.buttonContinue.text = context.getString(R.string.pause_continue, appName)
