@@ -64,17 +64,20 @@ class AppLaunchDetectorService : AccessibilityService() {
         val previousPkg = currentForegroundPackage
         Log.d(TAG, "📤 Package précédent: $previousPkg")
 
-        // 📱 Package système (launcher, systemui, notre app)
-        val isSystem = isSystemPackage(newPkg)
-        Log.d(TAG, "🔍 isSystemPackage($newPkg) = $isSystem")
-        if (isSystem) {
-            Log.d(TAG, "📱 Package système détecté, on ignore")
-            //
-//            currentForegroundPackage = null
-//            handleAppExit(previousPkg, now)
+        // 🎹 Overlay temporaire (clavier, systemui, notre app) → ignorer complètement
+        if (isTemporaryOverlay(newPkg)) {
+            Log.d(TAG, "🎹 Overlay temporaire détecté ($newPkg), on ignore complètement")
             return
         }
-        Log.d(TAG, "✅ Package non-système, on continue le traitement")
+
+        // 🏠 Launcher/Home → traiter comme sortie d'app
+        if (isLauncher(newPkg)) {
+            Log.d(TAG, "🏠 Launcher détecté ($newPkg), traitement comme sortie d'app")
+            currentForegroundPackage = null
+            handleAppExit(previousPkg, now)
+            return
+        }
+        Log.d(TAG, "✅ App normale détectée, on continue le traitement")
 
         currentForegroundPackage = newPkg
         Log.d(TAG, "📍 currentForegroundPackage mis à jour: $currentForegroundPackage")
@@ -138,21 +141,72 @@ class AppLaunchDetectorService : AccessibilityService() {
         Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     }
 
-    private fun isSystemPackage(packageName: String): Boolean {
+    /**
+     * Overlays temporaires à ignorer complètement (pas de pause, pas de changement d'état)
+     */
+    private fun isTemporaryOverlay(packageName: String): Boolean {
         return packageName == "fr.antmu.pianopiano" ||
+                // System UI (notifications, volume, quick settings, heads-up)
                 packageName == "com.android.systemui" ||
-                packageName.startsWith("com.android.launcher") ||
-                packageName.startsWith("com.google.android.launcher") ||
-                packageName.startsWith("com.sec.android.app.launcher") ||
-                packageName.startsWith("com.miui.home") ||
-                packageName.startsWith("com.huawei.android.launcher") ||
-                // Claviers - ne pas considérer comme changement d'app
+                packageName == "com.samsung.android.systemui" ||
+                packageName == "com.miui.securitycenter" ||
+                // Claviers
                 packageName.contains("inputmethod") ||
                 packageName.contains("keyboard") ||
                 packageName == "com.google.android.inputmethod.latin" ||  // Gboard
                 packageName == "com.samsung.android.honeyboard" ||         // Samsung Keyboard
                 packageName == "com.touchtype.swiftkey" ||                 // SwiftKey
-                packageName == "com.sec.android.inputmethod"               // Samsung ancien clavier
+                packageName == "com.sec.android.inputmethod" ||            // Samsung ancien clavier
+                // Assistants vocaux
+                packageName == "com.google.android.googlequicksearchbox" || // Google Assistant
+                packageName == "com.samsung.android.bixby.agent" ||
+                packageName == "com.samsung.android.visionintelligence" ||
+                // Popups système
+                packageName == "com.android.permissioncontroller" ||       // Demandes de permission
+                packageName == "com.google.android.permissioncontroller" ||
+                packageName == "com.android.packageinstaller" ||           // Installation d'apps
+                packageName == "com.google.android.packageinstaller" ||
+                packageName == "com.samsung.android.packageinstaller" ||
+                packageName == "com.miui.packageinstaller" ||
+                // Partage / Sélecteur
+                packageName == "android" ||                                // Intent chooser système
+                packageName == "com.android.intentresolver" ||
+                packageName == "com.samsung.android.app.sharelive" ||
+                // Appels / Communications
+                packageName.contains("incallui") ||                        // Écran d'appel
+                packageName.contains("dialer") ||
+                packageName == "com.samsung.android.incallui" ||
+                packageName == "com.google.android.dialer" ||
+                // Autres overlays
+                packageName == "com.android.settings" ||                   // Paramètres rapides
+                packageName == "com.android.documentsui" ||                // Sélecteur de fichiers
+                packageName == "com.google.android.documentsui"
+    }
+
+    /**
+     * Launchers/Home = sortie d'app (déclenche handleAppExit)
+     */
+    private fun isLauncher(packageName: String): Boolean {
+        return packageName.startsWith("com.android.launcher") ||
+                packageName.startsWith("com.google.android.launcher") ||
+                packageName.startsWith("com.sec.android.app.launcher") ||
+                packageName.startsWith("com.miui.home") ||
+                packageName.startsWith("com.huawei.android.launcher") ||
+                packageName.startsWith("com.oppo.launcher") ||
+                packageName.startsWith("com.vivo.launcher") ||
+                packageName.startsWith("com.oneplus.launcher") ||
+                packageName.startsWith("com.realme.launcher") ||
+                packageName.startsWith("com.asus.launcher") ||
+                packageName.startsWith("com.lge.launcher") ||
+                packageName.startsWith("com.sonyericsson.home") ||
+                packageName.startsWith("com.nothing.launcher") ||
+                packageName == "com.google.android.apps.nexuslauncher" ||  // Pixel Launcher
+                packageName == "com.teslacoilsw.launcher" ||               // Nova Launcher
+                packageName == "com.microsoft.launcher" ||                 // Microsoft Launcher
+                packageName == "com.niagara.launcher" ||                   // Niagara Launcher
+                packageName == "com.actionlauncher.playstore" ||           // Action Launcher
+                packageName == "com.smartlauncher.nexus" ||                // Smart Launcher
+                packageName == "bitpit.launcher"                           // AIO Launcher
     }
 
     private fun handleAppExit(packageName: String?, now: Long) {
