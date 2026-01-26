@@ -44,31 +44,52 @@ object UsageStatsHelper {
 
         val appStats = usageStatsList.find { it.packageName == packageName } ?: return null
 
-        // Get events to count sessions and calculate average
+        // Get events to count sessions and calculate ACTUAL time today from events
         val events = usageStatsManager.queryEvents(startTimeToday, endTime)
         var sessionCount = 0
         var lastForegroundPackage: String? = null
+        var totalTimeTodayFromEvents = 0L
+        var lastResumeTime: Long? = null
 
         while (events.hasNextEvent()) {
             val event = android.app.usage.UsageEvents.Event()
             events.getNextEvent(event)
 
             if (event.packageName == packageName) {
-                if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                    if (lastForegroundPackage != event.packageName) {
-                        sessionCount++
-                        lastForegroundPackage = event.packageName
+                when (event.eventType) {
+                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED -> {
+                        if (lastForegroundPackage != event.packageName) {
+                            sessionCount++
+                            lastForegroundPackage = event.packageName
+                        }
+                        lastResumeTime = event.timeStamp
+                    }
+                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED,
+                    android.app.usage.UsageEvents.Event.ACTIVITY_STOPPED -> {
+                        lastResumeTime?.let { resumeTime ->
+                            totalTimeTodayFromEvents += event.timeStamp - resumeTime
+                        }
+                        lastResumeTime = null
                     }
                 }
             } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                // Suivre les autres apps pour détecter les changements
+                // App switched away, count the time if we were tracking
+                lastResumeTime?.let { resumeTime ->
+                    totalTimeTodayFromEvents += event.timeStamp - resumeTime
+                }
+                lastResumeTime = null
                 lastForegroundPackage = event.packageName
             }
         }
 
+        // If app is still in foreground, add time until now
+        lastResumeTime?.let { resumeTime ->
+            totalTimeTodayFromEvents += endTime - resumeTime
+        }
+
         // Calculate average session time
-        val averageSessionTime = if (sessionCount > 0 && appStats.totalTimeInForeground > 0) {
-            appStats.totalTimeInForeground / sessionCount
+        val averageSessionTime = if (sessionCount > 0 && totalTimeTodayFromEvents > 0) {
+            totalTimeTodayFromEvents / sessionCount
         } else {
             0L
         }
@@ -150,7 +171,7 @@ object UsageStatsHelper {
         }
 
         return AppUsageStats(
-            totalTimeToday = appStats.totalTimeInForeground,
+            totalTimeToday = totalTimeTodayFromEvents,
             launchCountToday = sessionCount,
             averageSessionTime = averageSessionTime,
             lastUsedTime = appStats.lastTimeUsed,
