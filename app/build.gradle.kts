@@ -11,8 +11,8 @@ android {
         applicationId = "fr.antmu.pianopiano"
         minSdk = 26
         targetSdk = 35
-        versionCode = 36
-        versionName = "0.2.2"
+        versionCode = 37
+        versionName = "0.2.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

@@ -3,6 +3,7 @@ package fr.antmu.pianopiano.service
 import android.accessibilityservice.AccessibilityService
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityWindowInfo
 import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.repository.AppRepository
 
@@ -65,13 +66,13 @@ class AppLaunchDetectorService : AccessibilityService() {
         Log.d(TAG, "📤 Package précédent: $previousPkg")
 
         // 🎹 Overlay temporaire (clavier, systemui, notre app) → ignorer complètement
-        if (isTemporaryOverlay(newPkg)) {
+        if (isTemporaryOverlay(newPkg, event.source?.window)) {
             Log.d(TAG, "🎹 Overlay temporaire détecté ($newPkg), on ignore complètement")
             return
         }
 
         // 🏠 Launcher/Home → traiter comme sortie d'app
-        if (isLauncher(newPkg)) {
+        if (isSystemApp(newPkg)) {
             Log.d(TAG, "🏠 Launcher détecté ($newPkg), traitement comme sortie d'app")
             currentForegroundPackage = null
             handleAppExit(previousPkg, now)
@@ -144,8 +145,9 @@ class AppLaunchDetectorService : AccessibilityService() {
     /**
      * Overlays temporaires à ignorer complètement (pas de pause, pas de changement d'état)
      */
-    private fun isTemporaryOverlay(packageName: String): Boolean {
-        return packageName == "fr.antmu.pianopiano" ||
+    private fun isTemporaryOverlay(packageName: String, windowType: AccessibilityWindowInfo?): Boolean {
+
+        val isPackageDetectedAsAnOverlay = packageName == "fr.antmu.pianopiano" ||
                 // System UI (notifications, volume, quick settings, heads-up)
                 packageName == "com.android.systemui" ||
                 packageName == "com.samsung.android.systemui" ||
@@ -181,12 +183,19 @@ class AppLaunchDetectorService : AccessibilityService() {
                 packageName == "com.android.settings" ||                   // Paramètres rapides
                 packageName == "com.android.documentsui" ||                // Sélecteur de fichiers
                 packageName == "com.google.android.documentsui"
+
+        return isPackageDetectedAsAnOverlay || when (windowType?.type) {
+            AccessibilityWindowInfo.TYPE_ACCESSIBILITY_OVERLAY,
+            AccessibilityWindowInfo.TYPE_MAGNIFICATION_OVERLAY,
+            AccessibilityWindowInfo.TYPE_SYSTEM -> true
+            else -> false
+        }
     }
 
     /**
      * Launchers/Home = sortie d'app (déclenche handleAppExit)
      */
-    private fun isLauncher(packageName: String): Boolean {
+    private fun isSystemApp(packageName: String): Boolean {
         return packageName.startsWith("com.android.launcher") ||
                 packageName.startsWith("com.google.android.launcher") ||
                 packageName.startsWith("com.sec.android.app.launcher") ||
