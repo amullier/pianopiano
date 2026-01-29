@@ -68,7 +68,7 @@ object PeriodicTimerManager {
         // Vérifier si on est dans la fenêtre de 5 secondes
         val lastExitTime = preferencesManager.getAppExitTime(activePackage)
         val timeSinceExit = System.currentTimeMillis() - lastExitTime
-        if (lastExitTime == 0L || timeSinceExit > 5_000) {
+        if (lastExitTime == 0L || timeSinceExit > 10_000) {
             preferencesManager.activeTimerPackage = null
             return
         }

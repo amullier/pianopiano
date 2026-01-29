@@ -114,7 +114,7 @@ class AppLaunchDetectorService : AccessibilityService() {
                 Log.d(TAG, "   → shouldInitialPause=true (lastExitTime == 0L, forcé après Annuler)")
                 true
             }
-            (now - lastExitTime) > 5_000 -> {
+            (now - lastExitTime) > 10_000 -> {
                 Log.d(TAG, "   → shouldInitialPause=true ((now - lastExitTime) > 5000ms)")
                 true
             }
