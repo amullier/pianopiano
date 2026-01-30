@@ -40,4 +40,11 @@
         <attr name="sinusoidWavelength" format="dimension" />
         <attr name="sinusoidSpeed" format="float" />
     </declare-styleable>
+
+    <!-- Stair Animation -->
+    <declare-styleable name="StairAnimationView">
+        <attr name="stairColor" format="color" />
+        <attr name="ballColor" format="color" />
+        <attr name="stairStrokeWidth" format="dimension" />
+    </declare-styleable>
 </resources>

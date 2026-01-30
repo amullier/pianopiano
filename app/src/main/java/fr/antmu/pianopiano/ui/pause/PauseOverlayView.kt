@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import fr.antmu.pianopiano.R
 import fr.antmu.pianopiano.databinding.ViewPauseOverlayBinding
 import fr.antmu.pianopiano.util.setVisible
+import kotlin.random.Random
 
 class PauseOverlayView(
     context: Context,
@@ -27,6 +28,11 @@ class PauseOverlayView(
     }
 
     fun show(packageName: String, isPeriodic: Boolean = false) {
+        // Choix aléatoire de l'animation (50/50)
+        val showStairs = Random.nextBoolean()
+        binding.sinusoidView.visibility = if (showStairs) View.GONE else View.VISIBLE
+        binding.stairView.visibility = if (showStairs) View.VISIBLE else View.GONE
+
         viewModel.initialize(packageName, isPeriodic)
         // INVISIBLE (pas GONE) pour réserver l'espace et éviter le "pop"
         binding.buttonContinue.visibility = View.INVISIBLE
