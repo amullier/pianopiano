@@ -10,7 +10,7 @@
     <!-- Logo et titre -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="370dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
@@ -18,19 +18,19 @@
         <TextView
             android:id="@+id/textTitle"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/black_han_sans"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/black_han_sans"
             android:textColor="@color/text_primary"
-            android:textSize="32sp"/>
+            android:textSize="32sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_sm"
+            android:gravity="center"
             android:text="@string/onboarding_subtitle"
             android:textColor="@color/text_secondary"
-            android:textSize="@dimen/text_size_body"
-            android:gravity="center" />
+            android:textSize="@dimen/text_size_body" />
 
     </LinearLayout>
 
@@ -165,15 +165,18 @@
 
         </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
+        <fr.antmu.pianopiano.ui.components.NeumorphicButton
+            android:id="@+id/buttonContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/spacing_xxl"
+            android:text="@string/onboarding_continue"
+            android:enabled="false" />
+
     </LinearLayout>
 
     <!-- Bouton continuer -->
-    <fr.antmu.pianopiano.ui.components.NeumorphicButton
-        android:id="@+id/buttonContinue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_lg"
-        android:text="@string/onboarding_continue"
-        android:enabled="false" />
+
 
 </LinearLayout>
