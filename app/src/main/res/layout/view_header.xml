@@ -21,13 +21,21 @@
 
 
     <TextView
+        android:id="@+id/textSquirrel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_xs"
+        android:textColor="@color/accent_squirrel"
+        android:textSize="@dimen/text_size_subtitle"
+        tools:text="🐿️4" />
+    <TextView
         android:id="@+id/textPeanuts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_md"
         android:textColor="@color/accent_peanut"
         android:textSize="@dimen/text_size_subtitle"
-        tools:text="42 🥜" />
+        tools:text="🥜142" />
 
     <ImageButton
         android:id="@+id/buttonSettings"

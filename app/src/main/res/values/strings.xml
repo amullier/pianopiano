@@ -4,7 +4,8 @@
 
     <!-- Header -->
     <string name="peanut_emoji">🥜</string>
-    <string name="peanut_count_format">%d 🥜</string>
+    <string name="peanut_count_format">🥜 %d</string>
+    <string name="squirrel_count_format">🐿️ %d</string>
 
     <!-- Main screen -->
     <string name="section_service_status">Statut du service</string>

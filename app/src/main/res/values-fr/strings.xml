@@ -4,9 +4,10 @@
 
     <!-- Header -->
     <string name="peanut_emoji">🥜</string>
-    <string name="peanut_count_format">%d 🥜</string>
+    <string name="peanut_count_format">🥜 %d</string>
 
     <!-- Main screen -->
+    <string name="squirrel_count_format">🐿️ %d</string>
     <string name="section_service_status">Statut du service</string>
     <string name="section_apps">Applications</string>
     <string name="search_hint">Rechercher une application…</string>

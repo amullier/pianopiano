@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.Visibility
 import fr.antmu.pianopiano.R
 import fr.antmu.pianopiano.data.repository.AppRepository
 import fr.antmu.pianopiano.databinding.FragmentMainBinding
@@ -165,7 +166,9 @@ class MainFragment : Fragment() {
             onInfoClicked = { app ->
                 showAppStatsDialog(app)
             },
-            hasUsageStatsPermission = fr.antmu.pianopiano.util.PermissionHelper.hasUsageStatsPermission(requireContext())
+            hasUsageStatsPermission = fr.antmu.pianopiano.util.PermissionHelper.hasUsageStatsPermission(
+                requireContext()
+            )
         )
 
         binding.recyclerApps.layoutManager = LinearLayoutManager(requireContext())
@@ -231,7 +234,8 @@ class MainFragment : Fragment() {
         // Inflater et remplir la dialog
         val dialogView = layoutInflater.inflate(R.layout.dialog_app_stats, null)
 
-        dialogView.findViewById<android.widget.TextView>(R.id.textAppName).text = removeAccents(app.appName)
+        dialogView.findViewById<android.widget.TextView>(R.id.textAppName).text =
+            removeAccents(app.appName)
 
         // Aujourd'hui
         dialogView.findViewById<android.widget.TextView>(R.id.textScreenTimeToday).text =
@@ -298,11 +302,13 @@ class MainFragment : Fragment() {
                     binding.mainServiceEnabler.visibility = View.VISIBLE
                     binding.serviceStatusCard.visibility = View.GONE
                 }
+
                 fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.PARTIAL -> {
                     binding.mainServiceEnabler.visibility = View.GONE
                     binding.serviceStatusCard.visibility = View.VISIBLE
                     binding.serviceStatusCardView.setStatus(status)
                 }
+
                 fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.ACTIVE -> {
                     // Masquer les deux cartes quand le service est actif
                     binding.mainServiceEnabler.visibility = View.GONE
@@ -313,7 +319,17 @@ class MainFragment : Fragment() {
 
         viewModel.peanutCount.observe(viewLifecycleOwner) { count ->
             val headerBinding = ViewHeaderBinding.bind(binding.header.root)
-            headerBinding.textPeanuts.text = getString(R.string.peanut_count_format, count)
+            val squirrelFactor = 45
+            if (count < squirrelFactor) {
+                headerBinding.textPeanuts.text =
+                    getString(R.string.peanut_count_format, count)
+                headerBinding.textSquirrel.visibility = View.GONE
+            } else {
+                headerBinding.textPeanuts.text =
+                    getString(R.string.peanut_count_format, count % squirrelFactor)
+                headerBinding.textSquirrel.text =
+                    getString(R.string.peanut_count_format, count / squirrelFactor)
+            }
         }
 
         viewModel.aggregatedStats.observe(viewLifecycleOwner) { stats ->
@@ -353,22 +369,42 @@ class MainFragment : Fragment() {
         if (showToday) {
             // Style "Aujourd'hui" sélectionné
             binding.toggleToday.setBackgroundResource(R.drawable.bg_button_gradient)
-            binding.toggleToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.toggleToday.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
             binding.toggleToday.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
 
             // Style "Total" non sélectionné
             binding.toggleTotal.background = null
-            binding.toggleTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_tertiary))
+            binding.toggleTotal.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.text_tertiary
+                )
+            )
             binding.toggleTotal.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         } else {
             // Style "Total" sélectionné
             binding.toggleTotal.setBackgroundResource(R.drawable.bg_button_gradient)
-            binding.toggleTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.toggleTotal.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
             binding.toggleTotal.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
 
             // Style "Aujourd'hui" non sélectionné
             binding.toggleToday.background = null
-            binding.toggleToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_tertiary))
+            binding.toggleToday.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.text_tertiary
+                )
+            )
             binding.toggleToday.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
     }
