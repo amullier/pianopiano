@@ -78,8 +78,8 @@ class PauseViewModel(context: Context) {
     fun onCancelClicked() {
         countDownTimer?.cancel()
         settingsRepository.incrementPeanuts()
-        // Reset exit time to force pause on next access
-        preferencesManager.resetAppExitTime(targetPackageName)
+        // Set flag to force pause on next access (bypasses debounce)
+        preferencesManager.setForceNextPause(targetPackageName, true)
     }
 
     fun onContinueClicked(): Boolean {

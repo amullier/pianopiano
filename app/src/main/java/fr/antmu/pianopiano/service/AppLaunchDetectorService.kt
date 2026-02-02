@@ -18,6 +18,10 @@ class AppLaunchDetectorService : AccessibilityService() {
 
     private var currentForegroundPackage: String? = null
 
+    // Debounce pour ignorer les réentrées rapides (transition de fenêtre interne, ex: sortie plein écran)
+    private val recentExitTimes = mutableMapOf<String, Long>()
+    private val DEBOUNCE_DELAY_MS = 500L
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         preferencesManager = PreferencesManager(applicationContext)
@@ -96,6 +100,23 @@ class AppLaunchDetectorService : AccessibilityService() {
         }
         Log.d(TAG, "✅ App configurée, on continue")
 
+        // Check force pause (après "Annuler") - bypass le debounce
+        val forceNextPause = preferencesManager.shouldForceNextPause(newPkg)
+        if (forceNextPause) {
+            Log.d(TAG, "🎯 Force pause activé (après Annuler), bypass debounce")
+            preferencesManager.setForceNextPause(newPkg, false)  // Consommer le flag
+            preferencesManager.setAppEnterTime(newPkg, now)
+            ServiceHelper.startPauseOverlay(applicationContext, newPkg, isPeriodic = false)
+            return
+        }
+
+        // Check debounce : ignorer les réentrées rapides (transition de fenêtre interne, ex: sortie plein écran)
+        val recentExitTime = recentExitTimes[newPkg] ?: 0L
+        if ((now - recentExitTime) < DEBOUNCE_DELAY_MS) {
+            Log.d(TAG, "🔄 Réentrée rapide détectée (${now - recentExitTime}ms < ${DEBOUNCE_DELAY_MS}ms), transition interne ignorée")
+            return
+        }
+
         // 3️⃣ Décider si pause initiale
         val lastEnterTime = preferencesManager.getAppEnterTime(newPkg)
         val lastExitTime = preferencesManager.getAppExitTime(newPkg)
@@ -110,12 +131,8 @@ class AppLaunchDetectorService : AccessibilityService() {
                 Log.d(TAG, "   → shouldInitialPause=true (lastEnterTime == 0L, première fois)")
                 true
             }
-            lastExitTime == 0L -> {
-                Log.d(TAG, "   → shouldInitialPause=true (lastExitTime == 0L, forcé après Annuler)")
-                true
-            }
             (now - lastExitTime) > 10_000 -> {
-                Log.d(TAG, "   → shouldInitialPause=true ((now - lastExitTime) > 5000ms)")
+                Log.d(TAG, "   → shouldInitialPause=true ((now - lastExitTime) > 10000ms)")
                 true
             }
             else -> {
@@ -221,6 +238,9 @@ class AppLaunchDetectorService : AccessibilityService() {
     private fun handleAppExit(packageName: String?, now: Long) {
         if (packageName == null) return
         if (!preferencesManager.isAppConfigured(packageName)) return
+
+        // Sauvegarder le temps de sortie pour le debounce (réentrées rapides)
+        recentExitTimes[packageName] = now
 
         // Mettre à jour le temps de sortie
         preferencesManager.setAppExitTime(packageName, now)

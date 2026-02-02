@@ -33,10 +33,12 @@ class StairAnimationView @JvmOverloads constructor(
     private var ballRadius: Float = 5f * resources.displayMetrics.density
 
     private val stairPath = Path()
-    private var animProgress = 0f  // 0 to stepCount (continuous)
+    private var animProgress = 0f  // 0 to 1 for full cycle
     private var animator: ValueAnimator? = null
 
-    private val stepCount = 5  // Number of steps
+    private val stepsUp = 3      // Steps going up
+    private val stepsDown = 3    // Steps going down
+    private val totalSteps = stepsUp + stepsDown
     private var stepWidth = 0f
     private var stepHeight = 0f
 
@@ -62,8 +64,8 @@ class StairAnimationView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        stepWidth = w.toFloat() / (stepCount + 1)
-        stepHeight = (h.toFloat() - ballRadius * 4) / (stepCount + 1)
+        stepWidth = w.toFloat() / 4f
+        stepHeight = (h.toFloat() - ballRadius * 6) / (stepsUp + 1)
     }
 
     override fun onAttachedToWindow() {
@@ -78,8 +80,8 @@ class StairAnimationView @JvmOverloads constructor(
 
     private fun startAnimation() {
         animator?.cancel()
-        animator = ValueAnimator.ofFloat(0f, stepCount.toFloat()).apply {
-            duration = stepCount * 1200L  // 1200ms per step
+        animator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = totalSteps * 1000L  // 1s per step
             repeatCount = ValueAnimator.INFINITE
             interpolator = LinearInterpolator()
             addUpdateListener { animation ->
@@ -107,55 +109,82 @@ class StairAnimationView @JvmOverloads constructor(
     private fun drawStairs(canvas: Canvas) {
         stairPath.reset()
 
-        // Stairs go from bottom-left to top-right
-        // First step starts at left edge
-        val startX = 0f
+        // Total horizontal distance for one complete cycle
+        val cycleWidth = totalSteps * stepWidth
+
+        // Scroll offset: moves from 0 to cycleWidth over the animation
+        val scrollX = -animProgress * cycleWidth
+
+        // Base Y position (bottom level)
         val bottomY = height.toFloat() - stepHeight
 
-        // Draw ground line before first step
+        // Draw stairs pattern (repeated to fill screen + buffer)
+        // Pattern: flat -> up steps -> peak -> down steps -> flat (repeat)
+
+        val startX = scrollX - cycleWidth  // Start off-screen left
+
+        // Move to starting point
         stairPath.moveTo(startX, bottomY)
 
-        for (i in 0 until stepCount) {
-            val x = startX + i * stepWidth
-            val y = bottomY - i * stepHeight
+        // Draw multiple cycles to cover the screen
+        for (cycle in 0..2) {
+            val cycleStartX = startX + cycle * cycleWidth
 
-            // Horizontal tread (where ball lands)
-            stairPath.lineTo(x + stepWidth, y)
-            // Vertical riser (going up)
-            stairPath.lineTo(x + stepWidth, y - stepHeight)
+            // Initial flat section
+            stairPath.lineTo(cycleStartX + stepWidth * 0.5f, bottomY)
+
+            // Going up
+            for (i in 0 until stepsUp) {
+                val x = cycleStartX + stepWidth * 0.5f + i * stepWidth
+                val y = bottomY - i * stepHeight
+
+                // Vertical riser
+                stairPath.lineTo(x, y - stepHeight)
+                // Horizontal tread
+                stairPath.lineTo(x + stepWidth, y - stepHeight)
+            }
+
+            // Going down
+            for (i in 0 until stepsDown) {
+                val x = cycleStartX + stepWidth * 0.5f + stepsUp * stepWidth + i * stepWidth
+                val y = bottomY - (stepsUp - 1 - i) * stepHeight
+
+                // Vertical drop
+                stairPath.lineTo(x, y)
+                // Horizontal tread
+                stairPath.lineTo(x + stepWidth, y)
+            }
+
+            // Final flat to connect to next cycle
+            stairPath.lineTo(cycleStartX + cycleWidth + stepWidth * 0.5f, bottomY)
         }
-
-        // Final horizontal line at top
-        val topX = startX + stepCount * stepWidth
-        val topY = bottomY - stepCount * stepHeight
-        stairPath.lineTo(topX + stepWidth, topY)
 
         canvas.drawPath(stairPath, stairPaint)
     }
 
     private fun drawBall(canvas: Canvas) {
-        // Current step (0 = first step, 1 = second, etc.)
-        val currentStep = animProgress.toInt().coerceIn(0, stepCount - 1)
-        val progressInStep = animProgress - currentStep  // 0 to 1 within current jump
+        // Ball stays at center X
+        val ballX = width / 2f
 
-        // Starting position (on current step)
-        val startX = stepWidth / 2 + currentStep * stepWidth
-        val bottomY = height.toFloat() - stepHeight
-        val startY = bottomY - currentStep * stepHeight - ballRadius
+        // Calculate which step the ball is on based on animation progress
+        val stepIndex = (animProgress * totalSteps).toInt()
+        val progressInStep = (animProgress * totalSteps) - stepIndex
 
-        // Ending position (on next step)
-        val endX = startX + stepWidth
-        val endY = startY - stepHeight
+        // Calculate the Y position of the step under the ball
+        val currentStepY: Float = if (stepIndex < stepsUp) {
+            // Going up
+            height.toFloat() - stepHeight - stepIndex * stepHeight
+        } else {
+            // Going down
+            val downIndex = stepIndex - stepsUp
+            height.toFloat() - stepHeight - (stepsUp - 1 - downIndex) * stepHeight
+        }
 
-        // Interpolate X linearly
-        val ballX = startX + (endX - startX) * progressInStep
+        // Ball bounces on each step (small parabolic arc)
+        val bounceHeight = stepHeight * 0.4f
+        val bounceArc = -4 * bounceHeight * progressInStep * (progressInStep - 1)
 
-        // Interpolate Y with parabolic jump
-        val jumpHeight = stepHeight * 0.8f
-        // Parabola: goes up then down, peaks at t=0.5
-        val jumpArc = -4 * jumpHeight * progressInStep * (progressInStep - 1)
-        val linearY = startY + (endY - startY) * progressInStep
-        val ballY = linearY - jumpArc
+        val ballY = currentStepY - ballRadius - bounceArc
 
         canvas.drawCircle(ballX, ballY, ballRadius, ballPaint)
     }

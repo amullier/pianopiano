@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/glass_background"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_lg">
+
+        <!-- Left side: Stats + Quote -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingEnd="@dimen/spacing_lg">
+
+            <!-- Usage Stats Card -->
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/statsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_md"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/stats_title"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:layout_marginBottom="@dimen/spacing_sm" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <!-- Total Time -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textTotalTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_size_body"
+                                android:fontFamily="sans-serif"
+                                tools:text="2h 34min" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:text="@string/stats_total_time"
+                                android:textColor="@color/text_tertiary"
+                                android:textSize="@dimen/text_size_small" />
+                        </LinearLayout>
+
+                        <!-- Launch Count -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textLaunchCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_size_body"
+                                android:fontFamily="sans-serif"
+                                tools:text="12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:text="@string/stats_launch_count"
+                                android:textColor="@color/text_tertiary"
+                                android:textSize="@dimen/text_size_small" />
+                        </LinearLayout>
+
+                        <!-- Average Session -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textAverageSession"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_size_body"
+                                android:fontFamily="sans-serif"
+                                tools:text="13min" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:text="@string/stats_average_session"
+                                android:textColor="@color/text_tertiary"
+                                android:textSize="@dimen/text_size_small" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+            <!-- Quote -->
+            <TextView
+                android:id="@+id/textQuote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                style="@style/TextStyle.Quote"
+                tools:text="Respire profondément, tout va bien." />
+
+        </LinearLayout>
+
+        <!-- Right side: Icon + Animation + Buttons -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_lg">
+
+            <!-- Pause Icon -->
+            <ImageView
+                android:id="@+id/imagePauseIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="@dimen/spacing_md"
+                android:src="@drawable/ic_pause_large"
+                android:contentDescription="@string/app_name"
+                app:tint="@color/accent_peanut" />
+
+            <!-- Animation Container (randomly shows sinusoid or stairs) -->
+            <FrameLayout
+                android:id="@+id/animationContainer"
+                android:layout_width="300dp"
+                android:layout_height="80dp">
+
+                <fr.antmu.pianopiano.ui.pause.SinusoidAnimationView
+                    android:id="@+id/sinusoidView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:circleColor="@color/accent_peanut"
+                    app:sinusoidAmplitude="30dp"
+                    app:sinusoidColor="@color/accent_peanut"
+                    app:sinusoidSpeed="0.3"
+                    app:sinusoidStrokeWidth="1.5dp"
+                    app:sinusoidWavelength="150dp" />
+
+                <!-- StairAnimationView temporairement désactivée -->
+                <!--
+                <fr.antmu.pianopiano.ui.pause.StairAnimationView
+                    android:id="@+id/stairView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:stairColor="@color/accent_peanut"
+                    app:ballColor="@color/accent_peanut"
+                    app:stairStrokeWidth="1.5dp" />
+                -->
+            </FrameLayout>
+
+            <!-- Buttons container -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!-- Cancel button (always visible) - Prominent with gradient -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="180dp"
+                    android:background="@drawable/bg_button_gradient"
+                    android:text="@string/pause_cancel"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="28dp"
+                    android:elevation="4dp" />
+
+                <!-- Continue button (visible after countdown) - Subtle gray -->
+                <TextView
+                    android:id="@+id/buttonContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Continuer vers Chrome" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

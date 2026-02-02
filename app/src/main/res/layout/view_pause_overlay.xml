@@ -159,6 +159,8 @@
                 app:sinusoidStrokeWidth="1.5dp"
                 app:sinusoidWavelength="180dp" />
 
+            <!-- StairAnimationView temporairement désactivée -->
+            <!--
             <fr.antmu.pianopiano.ui.pause.StairAnimationView
                 android:id="@+id/stairView"
                 android:layout_width="match_parent"
@@ -167,6 +169,7 @@
                 app:stairColor="@color/accent_peanut"
                 app:ballColor="@color/accent_peanut"
                 app:stairStrokeWidth="1.5dp" />
+            -->
         </FrameLayout>
 
         <!-- Quote -->

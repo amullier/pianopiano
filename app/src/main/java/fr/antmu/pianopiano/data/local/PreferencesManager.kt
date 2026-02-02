@@ -252,11 +252,15 @@ class PreferencesManager(context: Context) {
         saveAppExitTimes(times)
     }
 
-    /**
-     * Reset exit time to 0 to force initial pause on next access
-     * (used when user clicks "Annuler")
-     */
-    fun resetAppExitTime(packageName: String) {
-        setAppExitTime(packageName, 0L)
+    // --- Force Next Pause Flag ---
+
+    fun setForceNextPause(packageName: String, force: Boolean) {
+        prefs.edit()
+            .putBoolean("force_next_pause_$packageName", force)
+            .apply()
+    }
+
+    fun shouldForceNextPause(packageName: String): Boolean {
+        return prefs.getBoolean("force_next_pause_$packageName", false)
     }
 }

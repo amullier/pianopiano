@@ -28,10 +28,9 @@ class PauseOverlayView(
     }
 
     fun show(packageName: String, isPeriodic: Boolean = false) {
-        // Choix aléatoire de l'animation (50/50)
-        val showStairs = Random.nextBoolean()
-        binding.sinusoidView.visibility = if (showStairs) View.GONE else View.VISIBLE
-        binding.stairView.visibility = if (showStairs) View.VISIBLE else View.GONE
+        // Afficher uniquement la sinusoïde pour le moment (escalier désactivé)
+        binding.sinusoidView.visibility = View.VISIBLE
+        // binding.stairView.visibility = View.GONE  // Commenté dans le layout
 
         viewModel.initialize(packageName, isPeriodic)
         // INVISIBLE (pas GONE) pour réserver l'espace et éviter le "pop"
