@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="relaxing_quotes">
+        <item>«  L\'acte ne réussit jamais si bien qu\'à rater. » — Jacques Lacan</item>
+        <item>« Voilà la grande erreur de toujours : s\'imaginer que les êtres pensent ce qu\'ils disent. » — Jacques Lacan</item>
         <item>Il faut prendre le temps comme il vient.</item>
         <item>« Mon passe‑temps favori, c’est laisser passer le temps… » — Françoise Sagan</item>
         <item>« Il faut savoir prendre son temps, ralentir… » — Pierre Desproges</item>

@@ -186,6 +186,33 @@
 
             </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
+            <!-- Tutorial Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/settings_tutorial"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_size_caption"
+                android:textAllCaps="true"
+                android:letterSpacing="0.1" />
+
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/buttonReplayTutorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tutorial_replay"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_size_body" />
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
             <!-- Version -->
             <TextView
                 android:id="@+id/textVersion"

@@ -100,6 +100,20 @@
     <string name="app_stats_avg_per_day">Media al giorno</string>
     <string name="app_stats_no_data">Nessun dato disponibile</string>
 
+    <!-- Tutorial -->
+    <string name="tutorial_next">Avanti</string>
+    <string name="tutorial_done">Capito!</string>
+    <string name="tutorial_recap_title">Benvenuto in PianoPiano!</string>
+    <string name="tutorial_recap_description">PianoPiano ti propone una pausa prima di aprire le app che ti fanno perdere tempo, dandoti la possibilità di usarle meno.</string>
+    <string name="tutorial_toggle_title">Attivare un\'app</string>
+    <string name="tutorial_toggle_description">Tocca il pulsante per attivare il monitoraggio di un\'app. Quando la aprirai, PianoPiano ti proporrà una pausa.</string>
+    <string name="tutorial_settings_title">Pause periodiche</string>
+    <string name="tutorial_settings_description">Quando un\'app è attivata, appare un\'icona di impostazioni. Permette di configurare pause a intervalli regolari durante l\'utilizzo.</string>
+    <string name="tutorial_peanuts_title">Contatore di arachidi</string>
+    <string name="tutorial_peanuts_description">Ogni volta che accetti una pausa invece di continuare verso l\'app, guadagni un\'arachide! Più ne hai, più riprendi il controllo.</string>
+    <string name="tutorial_replay">Rivedi il tutorial</string>
+    <string name="settings_tutorial">Tutorial</string>
+
     <!-- Content descriptions -->
     <string name="cd_settings">Impostazioni</string>
     <string name="cd_back">Indietro</string>

@@ -1,153 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootTutorialContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/glass_background"
-    android:orientation="vertical">
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/view_header" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/glass_card_border" />
-
-    <!-- Stats Section (nouvelle version unifiée) -->
-    <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-        android:id="@+id/statsCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_md"
-        android:layout_marginTop="@dimen/spacing_md"
-        android:padding="@dimen/spacing_md">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Toggle Aujourd'hui / Total -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/spacing_sm"
-                android:background="@drawable/bg_stats_toggle"
-                android:padding="4dp">
-
-                <TextView
-                    android:id="@+id/toggleToday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/stats_today"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/white"
-                    android:background="@drawable/bg_button_gradient"
-                    android:paddingVertical="8dp"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-medium" />
-
-                <TextView
-                    android:id="@+id/toggleTotal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/stats_total"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_tertiary"
-                    android:paddingVertical="8dp"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif" />
-            </LinearLayout>
-
-            <!-- Ligne Temps d'écran -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="@dimen/spacing_sm">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_screentime"
-                    android:layout_marginEnd="@dimen/spacing_sm" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/stats_screen_time_label"
-                    android:textSize="@dimen/text_size_body"
-                    android:textColor="@color/text_secondary" />
-
-                <TextView
-                    android:id="@+id/textScreenTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_title"
-                    android:textColor="@color/text_primary"
-                    android:fontFamily="sans-serif-medium"
-                    tools:text="2h 30min" />
-            </LinearLayout>
-
-            <!-- Ligne Ouvertures empêchées -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="@dimen/spacing_sm"
-                    android:gravity="center"
-                    android:text="🥜"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/stats_prevented_opens_label"
-                    android:textSize="@dimen/text_size_body"
-                    android:textColor="@color/text_secondary" />
-
-                <TextView
-                    android:id="@+id/textPreventedOpens"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_title"
-                    android:textColor="@color/status_active"
-                    android:fontFamily="sans-serif-medium"
-                    tools:text="42" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+    android:background="@color/glass_background">
 
     <LinearLayout
-        android:id="@+id/mainServiceEnabler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/spacing_md">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Service Status Section -->
+        <include
+            android:id="@+id/header"
+            layout="@layout/view_header" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/glass_card_border" />
+
+        <!-- Stats Section (nouvelle version unifiée) -->
         <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            android:id="@+id/statsCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginHorizontal="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_md"
             android:padding="@dimen/spacing_md">
 
             <LinearLayout
@@ -155,153 +35,278 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Activation Button -->
-                <fr.antmu.pianopiano.ui.components.ServiceStatusView
-                    android:id="@+id/serviceStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonActivateService"
+                <!-- Toggle Aujourd'hui / Total -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:background="@drawable/bg_button_gradient"
-                    android:elevation="4dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingVertical="14dp"
-                    android:text="@string/activate_service"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_body" />
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/spacing_sm"
+                    android:background="@drawable/bg_stats_toggle"
+                    android:padding="4dp">
 
+                    <TextView
+                        android:id="@+id/toggleToday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_today"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bg_button_gradient"
+                        android:paddingVertical="8dp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <TextView
+                        android:id="@+id/toggleTotal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_total"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/text_tertiary"
+                        android:paddingVertical="8dp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif" />
+                </LinearLayout>
+
+                <!-- Ligne Temps d'écran -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_sm">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_screentime"
+                        android:layout_marginEnd="@dimen/spacing_sm" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_screen_time_label"
+                        android:textSize="@dimen/text_size_body"
+                        android:textColor="@color/text_secondary" />
+
+                    <TextView
+                        android:id="@+id/textScreenTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_title"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        tools:text="2h 30min" />
+                </LinearLayout>
+
+                <!-- Ligne Ouvertures empêchées -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="@dimen/spacing_sm"
+                        android:gravity="center"
+                        android:text="🥜"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_prevented_opens_label"
+                        android:textSize="@dimen/text_size_body"
+                        android:textColor="@color/text_secondary" />
+
+                    <TextView
+                        android:id="@+id/textPreventedOpens"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_title"
+                        android:textColor="@color/status_active"
+                        android:fontFamily="sans-serif-medium"
+                        tools:text="42" />
+                </LinearLayout>
             </LinearLayout>
 
         </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
-        <!-- Compact Service Status Card (shown when active/partial) -->
-        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-            android:id="@+id/serviceStatusCard"
+        <LinearLayout
+            android:id="@+id/mainServiceEnabler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:padding="@dimen/spacing_md"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_md">
 
-            <fr.antmu.pianopiano.ui.components.ServiceStatusView
-                android:id="@+id/serviceStatusCardView"
+            <!-- Service Status Section -->
+
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md">
 
-        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/spacing_md">
+                    <!-- Activation Button -->
+                    <fr.antmu.pianopiano.ui.components.ServiceStatusView
+                        android:id="@+id/serviceStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonActivateService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:background="@drawable/bg_button_gradient"
+                        android:elevation="4dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingVertical="14dp"
+                        android:text="@string/activate_service"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_body" />
 
-        <!-- Apps Section Header -->
+                </LinearLayout>
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+
+            <!-- Compact Service Status Card (shown when active/partial) -->
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/serviceStatusCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_md"
+                android:visibility="gone">
+
+                <fr.antmu.pianopiano.ui.components.ServiceStatusView
+                    android:id="@+id/serviceStatusCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_md">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:letterSpacing="0.1"
-                android:text="@string/section_apps"
-                android:textAllCaps="true"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_size_caption" />
 
-            <ImageButton
-                android:id="@+id/buttonSearch"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/cd_search"
-                android:src="@drawable/ic_search"
-                android:padding="0dp"
-                app:tint="@color/text_secondary" />
-
-        </LinearLayout>
-
-        <!-- Search Bar (hidden by default) -->
-        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-            android:id="@+id/cardSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:padding="@dimen/spacing_sm"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/editSearch"
+            <!-- Apps Section Header -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="@dimen/spacing_sm"
-                android:drawableTint="@color/text_tertiary"
-                android:hint="@string/search_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingVertical="@dimen/spacing_xs"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_tertiary"
-                android:textSize="@dimen/text_size_body" />
-
-        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
-
-        <fr.antmu.pianopiano.ui.components.GlassmorphicCard
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:layout_marginBottom="@dimen/spacing_xxl"
-            android:overScrollMode="always">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="200dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerApps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingVertical="@dimen/spacing_sm"
-                    tools:listitem="@layout/item_app" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/textNoResults"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:letterSpacing="0.1"
+                    android:text="@string/section_apps"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_size_caption" />
+
+                <ImageButton
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/cd_search"
+                    android:src="@drawable/ic_search"
+                    android:padding="0dp"
+                    app:tint="@color/text_secondary" />
+
+            </LinearLayout>
+
+            <!-- Search Bar (hidden by default) -->
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:id="@+id/cardSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_sm"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_lg"
-                    android:text="@string/search_no_results"
-                    android:textColor="@color/text_tertiary"
-                    android:textSize="@dimen/text_size_body"
-                    android:visibility="gone" />
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/spacing_sm"
+                    android:drawableTint="@color/text_tertiary"
+                    android:hint="@string/search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingVertical="@dimen/spacing_xs"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="@dimen/text_size_body" />
 
-            </FrameLayout>
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
 
-        </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:layout_marginBottom="@dimen/spacing_xxl"
+                android:overScrollMode="always">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="200dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerApps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingVertical="@dimen/spacing_sm"
+                        tools:listitem="@layout/item_app" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/textNoResults"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_lg"
+                        android:text="@string/search_no_results"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="@dimen/text_size_body"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
-
+</FrameLayout>

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import fr.antmu.pianopiano.R
+import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -60,6 +61,11 @@ class SettingsFragment : Fragment() {
         binding.sliderDuration.setValue(viewModel.pauseDuration.value ?: 10)
         binding.sliderDuration.setOnValueChangeListener { value ->
             viewModel.setPauseDuration(value)
+        }
+
+        binding.buttonReplayTutorial.setOnClickListener {
+            PreferencesManager(requireContext()).tutorialCompleted = false
+            findNavController().navigateUp()
         }
     }
 

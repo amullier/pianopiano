@@ -22,6 +22,9 @@ object PreferencesKeys {
     const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
     const val KEY_LAST_ONBOARDING_VERSION = "last_onboarding_version"
 
+    // Tutorial
+    const val KEY_TUTORIAL_COMPLETED = "tutorial_completed"
+
     // Daily peanuts tracking
     const val KEY_PEANUTS_TODAY = "peanuts_today"
     const val KEY_PEANUTS_TODAY_DATE = "peanuts_today_date"

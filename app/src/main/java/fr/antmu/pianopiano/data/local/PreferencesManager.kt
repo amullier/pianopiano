@@ -34,6 +34,10 @@ class PreferencesManager(context: Context) {
         get() = prefs.getInt(PreferencesKeys.KEY_LAST_ONBOARDING_VERSION, 0)
         set(value) = prefs.edit().putInt(PreferencesKeys.KEY_LAST_ONBOARDING_VERSION, value).apply()
 
+    var tutorialCompleted: Boolean
+        get() = prefs.getBoolean(PreferencesKeys.KEY_TUTORIAL_COMPLETED, false)
+        set(value) = prefs.edit().putBoolean(PreferencesKeys.KEY_TUTORIAL_COMPLETED, value).apply()
+
     fun getConfiguredApps(): List<ConfiguredApp> {
         val json = prefs.getString(PreferencesKeys.KEY_CONFIGURED_APPS, null) ?: return emptyList()
         val type = object : TypeToken<List<ConfiguredApp>>() {}.type

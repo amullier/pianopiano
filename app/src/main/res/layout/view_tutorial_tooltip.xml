@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_tutorial_tooltip"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_lg"
+    android:paddingTop="@dimen/spacing_lg"
+    android:paddingBottom="@dimen/spacing_md">
+
+    <ImageView
+        android:id="@+id/imageTutorialLogo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textTutorialTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/black_han_sans"
+        android:textColor="@color/accent_peanut"
+        android:textSize="@dimen/text_size_subtitle"
+        tools:text="Bienvenue dans PianoPiano !" />
+
+    <TextView
+        android:id="@+id/textTutorialDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_size_body"
+        android:lineSpacingExtra="4dp"
+        tools:text="PianoPiano vous propose une pause avant d'ouvrir les applications." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layoutStepIndicator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonTutorialNext"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button_gradient"
+            android:fontFamily="sans-serif-medium"
+            android:minWidth="100dp"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:text="@string/tutorial_next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_caption" />
+    </LinearLayout>
+</LinearLayout>

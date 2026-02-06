@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background with subtle gradient at ~90% alpha -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="#E6072d36"
+                android:endColor="#E60f323b"
+                android:type="linear" />
+            <corners android:radius="@dimen/radius_lg" />
+        </shape>
+    </item>
+
+    <!-- Border -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/card_border_width"
+                android:color="@color/glass_card_border" />
+            <corners android:radius="@dimen/radius_lg" />
+        </shape>
+    </item>
+</layer-list>

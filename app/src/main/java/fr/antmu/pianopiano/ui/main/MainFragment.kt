@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,9 +21,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Visibility
 import fr.antmu.pianopiano.R
+import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.repository.AppRepository
 import fr.antmu.pianopiano.databinding.FragmentMainBinding
 import fr.antmu.pianopiano.databinding.ViewHeaderBinding
+import fr.antmu.pianopiano.ui.tutorial.TutorialManager
 import fr.antmu.pianopiano.util.UsageStatsHelper
 import fr.antmu.pianopiano.util.setVisible
 import java.text.Normalizer
@@ -38,6 +41,10 @@ class MainFragment : Fragment() {
     private var showToday = true // true = aujourd'hui, false = total
     private var isSearchVisible = false
 
+    private var tutorialManager: TutorialManager? = null
+    private var tutorialTriggered = false
+    private lateinit var preferencesManager: PreferencesManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,11 +57,14 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        preferencesManager = PreferencesManager(requireContext())
+
         setupHeader()
         setupSearch()
         setupRecyclerView()
         setupActivationButton()
         setupStatsToggle()
+        setupTutorialBackHandler()
         observeViewModel()
 
         // Afficher le loader au début
@@ -292,6 +302,11 @@ class MainFragment : Fragment() {
             val hasResults = apps.isNotEmpty()
             binding.recyclerApps.visibility = if (hasResults) View.VISIBLE else View.GONE
             binding.textNoResults.visibility = if (hasResults) View.GONE else View.VISIBLE
+
+            if (apps.isNotEmpty() && !tutorialTriggered && !preferencesManager.tutorialCompleted) {
+                tutorialTriggered = true
+                binding.recyclerApps.post { startTutorial() }
+            }
         }
 
         viewModel.serviceStatus.observe(viewLifecycleOwner) { status ->
@@ -328,7 +343,7 @@ class MainFragment : Fragment() {
                 headerBinding.textPeanuts.text =
                     getString(R.string.peanut_count_format, count % squirrelFactor)
                 headerBinding.textSquirrel.text =
-                    getString(R.string.peanut_count_format, count / squirrelFactor)
+                    getString(R.string.squirrel_count_format, count / squirrelFactor)
             }
         }
 
@@ -431,8 +446,39 @@ class MainFragment : Fragment() {
         binding.textPreventedOpens.text = preventedOpens.toString()
     }
 
+    private fun startTutorial() {
+        if (tutorialManager?.isActive == true) return
+        tutorialManager = TutorialManager(
+            rootView = binding.rootTutorialContainer,
+            onComplete = {
+                preferencesManager.tutorialCompleted = true
+                tutorialManager = null
+            }
+        )
+        tutorialManager?.start()
+    }
+
+    private fun setupTutorialBackHandler() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (tutorialManager?.isActive == true) {
+                        tutorialManager?.dismiss()
+                        tutorialManager = null
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        )
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        tutorialManager?.dismiss()
+        tutorialManager = null
         _binding = null
     }
 }

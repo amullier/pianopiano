@@ -100,6 +100,20 @@
     <string name="app_stats_avg_per_day">Moy. par jour</string>
     <string name="app_stats_no_data">Aucune donnée disponible</string>
 
+    <!-- Tutorial -->
+    <string name="tutorial_next">Suivant</string>
+    <string name="tutorial_done">Compris !</string>
+    <string name="tutorial_recap_title">Bienvenue dans PianoPiano !</string>
+    <string name="tutorial_recap_description">PianoPiano vous propose une pause avant d\'ouvrir les applications qui vous font perdre du temps, pour vous donner une chance de moins les utiliser.</string>
+    <string name="tutorial_toggle_title">Activer une application</string>
+    <string name="tutorial_toggle_description">Appuyez sur le bouton pour activer la surveillance d\'une application. Quand vous l\'ouvrirez, PianoPiano vous proposera une pause.</string>
+    <string name="tutorial_settings_title">Pauses périodiques</string>
+    <string name="tutorial_settings_description">Quand une application est activée, une icône de réglages apparaît. Elle permet de configurer des pauses à intervalles réguliers pendant l\'utilisation.</string>
+    <string name="tutorial_peanuts_title">Compteur de cacahuètes</string>
+    <string name="tutorial_peanuts_description">Chaque fois que vous acceptez une pause au lieu de continuer vers l\'application, vous gagnez une cacahuète ! Plus vous en avez, plus vous reprenez le contrôle.</string>
+    <string name="tutorial_replay">Revoir le tutoriel</string>
+    <string name="settings_tutorial">Tutoriel</string>
+
     <!-- Content descriptions -->
     <string name="cd_settings">Paramètres</string>
     <string name="cd_back">Retour</string>
