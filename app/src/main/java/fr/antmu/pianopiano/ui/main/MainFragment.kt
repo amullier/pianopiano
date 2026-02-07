@@ -135,7 +135,12 @@ class MainFragment : Fragment() {
         viewModel.refreshServiceStatus()
         viewModel.refreshPeanutCount()
         viewModel.refreshStats()
-        // Ne pas réafficher le loader si on a déjà des données
+
+        // Relancer le tutoriel si "Revoir le tutoriel" a été cliqué dans les settings
+        if (tutorialTriggered && !preferencesManager.tutorialCompleted) {
+            tutorialTriggered = false
+            binding.recyclerApps.post { startTutorial() }
+        }
     }
 
     private fun setupHeader() {
@@ -195,7 +200,6 @@ class MainFragment : Fragment() {
         // Sélectionner le bon radio button
         val radioId = when (currentTimer) {
             0 -> R.id.radioDisabled
-            30 -> R.id.radio30sec
             300 -> R.id.radio5min
             600 -> R.id.radio10min
             900 -> R.id.radio15min
@@ -210,7 +214,6 @@ class MainFragment : Fragment() {
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val selectedTimer = when (radioGroup.checkedRadioButtonId) {
                     R.id.radioDisabled -> 0
-                    R.id.radio30sec -> 30
                     R.id.radio5min -> 300
                     R.id.radio10min -> 600
                     R.id.radio15min -> 900
