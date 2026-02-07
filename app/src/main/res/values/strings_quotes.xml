@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="relaxing_quotes">
-        <item>«  L\'acte ne réussit jamais si bien qu\'à rater. » — Jacques Lacan</item>
-        <item>« Voilà la grande erreur de toujours : s\'imaginer que les êtres pensent ce qu\'ils disent. » — Jacques Lacan</item>
+        <item>« - Je pense donc je suis ? Voila la grande erreur de toujours : s’imaginer que les êtres pensent ce qu’ils disent  » — Jacques Lacan</item>
+        <item>« Aimer, c’est donner ce qu’on n’a pas à quelqu’un qui n’en veut pas. » — Jacques Lacan</item>
+        <item>«  L’acte ne réussit jamais si bien qu’à rater. »  — Jacques Lacan</item>
+        <item>« La liberté c’est de savoir danser avec ses chaines.» — Friedrich Nietzsche</item>
+        <item>« Ce qui m’importe, ce n’est pas la vie éternelle, c’est l’éternelle vivacité.» — Friedrich Nietzsche</item>
+        <item>« Voilà la grande erreur de toujours : s’imaginer que les êtres pensent ce qu’ils disent. » — Jacques Lacan</item>
         <item>Il faut prendre le temps comme il vient.</item>
         <item>« Mon passe‑temps favori, c’est laisser passer le temps… » — Françoise Sagan</item>
         <item>« Il faut savoir prendre son temps, ralentir… » — Pierre Desproges</item>
@@ -28,7 +32,7 @@
         <item>« L’homme qui a le plus vécu… est celui qui a le plus senti la vie. » — Jean‑Jacques Rousseau</item>
         <item>« Une heure, une minute suffit pour que le destin agisse… » — Émile Zola</item>
         <item>« Le bonheur lui aussi est une longue patience. » — Albert Camus</item>
-        <item>« Hier est derrière, demain est un mystère mais aujourd\'hui est un cadeau » — Maître Oogway</item>
+        <item>« Hier est derrière, demain est un mystère mais aujourd’hui est un cadeau » — Maître Oogway</item>
         <item>« Ce que nous pensons, nous le devenons. » — Bouddha</item>
         <item>Apprends à écouter ton souffle.</item>
         <item>« L’essentiel est invisible pour les yeux. » — Antoine de Saint‑Exupéry</item>

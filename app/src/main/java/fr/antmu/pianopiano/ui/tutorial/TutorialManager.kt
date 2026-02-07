@@ -81,6 +81,8 @@ class TutorialManager(
         tooltipView.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.buttonTutorialNext)
             .setOnClickListener { nextStep() }
 
+        overlay.onSwipeLeft = { nextStep() }
+
         currentStepIndex = -1
         nextStep()
     }

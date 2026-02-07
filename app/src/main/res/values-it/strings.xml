@@ -59,6 +59,7 @@
     <string name="stats_total">Ultimi 7 giorni</string>
     <string name="stats_screen_time_label">Tempo schermo</string>
     <string name="stats_time_saved_label">Tempo risparmiato</string>
+    <string name="stats_screen_time_scope">in app selezionate</string>
     <string name="stats_prevented_opens_label">Aperture impedite</string>
 
     <!-- Notification -->

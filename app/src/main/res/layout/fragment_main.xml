@@ -85,13 +85,26 @@
                         android:src="@drawable/ic_screentime"
                         android:layout_marginEnd="@dimen/spacing_sm" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/stats_screen_time_label"
-                        android:textSize="@dimen/text_size_body"
-                        android:textColor="@color/text_secondary" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_screen_time_label"
+                            android:textSize="@dimen/text_size_body"
+                            android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_screen_time_scope"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/text_tertiary" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textScreenTime"

@@ -197,21 +197,12 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.1" />
 
-            <fr.antmu.pianopiano.ui.components.GlassmorphicCard
+            <fr.antmu.pianopiano.ui.components.NeumorphicButton
                 android:id="@+id/buttonReplayTutorial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_sm"
-                android:padding="@dimen/spacing_md">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tutorial_replay"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/text_size_body" />
-
-            </fr.antmu.pianopiano.ui.components.GlassmorphicCard>
+                android:text="@string/tutorial_replay" />
 
             <!-- Version -->
             <TextView

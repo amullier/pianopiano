@@ -4,11 +4,14 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import fr.antmu.pianopiano.R
+import kotlin.math.abs
 
 class TutorialOverlayView @JvmOverloads constructor(
     context: Context,
@@ -37,6 +40,28 @@ class TutorialOverlayView @JvmOverloads constructor(
     private val cornerRadius = 16f * resources.displayMetrics.density
 
     private var tooltipView: View? = null
+
+    var onSwipeLeft: (() -> Unit)? = null
+
+    private val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+        private val SWIPE_THRESHOLD = 100
+        private val SWIPE_VELOCITY_THRESHOLD = 100
+
+        override fun onDown(e: MotionEvent): Boolean = true
+
+        override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+            if (e1 == null) return false
+            val diffX = e2.x - e1.x
+            val diffY = e2.y - e1.y
+            if (abs(diffX) > abs(diffY) && abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffX < 0) {
+                    onSwipeLeft?.invoke()
+                    return true
+                }
+            }
+            return false
+        }
+    })
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -157,6 +182,11 @@ class TutorialOverlayView @JvmOverloads constructor(
             }
             tooltip.layoutParams = lp
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (gestureDetector.onTouchEvent(event)) return true
+        return super.onTouchEvent(event)
     }
 
     override fun dispatchDraw(canvas: Canvas) {
