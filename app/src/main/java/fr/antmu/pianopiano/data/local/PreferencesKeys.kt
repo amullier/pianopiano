@@ -30,6 +30,9 @@ object PreferencesKeys {
     const val KEY_PEANUTS_TODAY_DATE = "peanuts_today_date"
     const val KEY_PEANUTS_HISTORY = "peanuts_history" // Historique des peanuts par jour (JSON map)
 
+    // Update dismissed
+    const val KEY_UPDATE_DISMISSED_AT = "update_dismissed_at"
+
     // Default values
     const val DEFAULT_PAUSE_DURATION = 15
     const val DEFAULT_PEANUT_COUNT = 0

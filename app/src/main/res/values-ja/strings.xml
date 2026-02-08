@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">🥜 %d</string>
+
+    <!-- Main screen -->
+    <string name="squirrel_count_format">🐿️ %d</string>
+    <string name="section_service_status">サービスの状態</string>
+    <string name="section_apps">アプリケーション</string>
+    <string name="search_hint">アプリを検索…</string>
+    <string name="search_no_results">アプリが見つかりません</string>
+    <string name="service_active">サービス有効</string>
+    <string name="service_inactive">サービス無効</string>
+    <string name="service_partial">サービス一部有効</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">開始するにはサービスを有効にしてください</string>
+    <string name="service_description_partial">設定を確認してください</string>
+    <string name="activate_service">サービスを有効にする</string>
+    <string name="no_apps_found">アプリが見つかりません</string>
+    <string name="apps_subtitle">監視するアプリを選択</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">設定</string>
+    <string name="settings_permissions">権限</string>
+    <string name="settings_pause_duration">一時停止の長さ</string>
+    <string name="settings_pause_duration_format">%d秒</string>
+    <string name="settings_overlay_permission">画面オーバーレイ</string>
+    <string name="settings_overlay_description">一時停止画面の表示を許可します</string>
+    <string name="settings_accessibility_permission">ユーザー補助サービス</string>
+    <string name="settings_accessibility_description">アプリの起動を検知できます</string>
+    <string name="settings_usage_stats_permission">使用状況へのアクセス</string>
+    <string name="settings_usage_stats_description">アプリの統計情報にアクセスできます</string>
+    <string name="permission_granted">許可済み</string>
+    <string name="permission_not_granted">未許可</string>
+    <string name="tap_to_grant">タップして許可</string>
+    <string name="hint_select_pianopiano">リストからPianoPianoを選択してください</string>
+    <string name="hint_enable_accessibility">PianoPianoを選択してサービスを有効にしてください</string>
+    <string name="hint_enable_overlay">PianoPianoのオーバーレイを許可してください</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">ひと呼吸しましょう…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">キャンセル (+1🥜)</string>
+    <string name="pause_continue">%sを開く</string>
+    <string name="default_quote">少し立ち止まって深呼吸を。</string>
+    <string name="stats_title">今日</string>
+    <string name="stats_total_time">合計時間</string>
+    <string name="stats_launch_count">起動回数</string>
+    <string name="stats_average_session">平均時間</string>
+    <string name="stats_launch_count_format">%d回</string>
+    <string name="stats_screen_time">今日のスクリーン時間</string>
+    <string name="stats_time_saved_total">節約した時間（合計）</string>
+    <string name="stats_time_saved_today">節約した時間（今日）</string>
+    <string name="stats_no_data">-</string>
+    <string name="stats_today">今日</string>
+    <string name="stats_total">過去7日間</string>
+    <string name="stats_screen_time_label">スクリーン時間</string>
+    <string name="stats_time_saved_label">節約した時間</string>
+    <string name="stats_screen_time_scope">選択したアプリ</string>
+    <string name="stats_prevented_opens_label">阻止した起動</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">PianoPiano 一時停止</string>
+    <string name="notification_channel_description">一時停止画面中の通知</string>
+    <string name="notification_title">PianoPiano 有効</string>
+    <string name="notification_text">一時停止中…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPianoはこのサービスを使用して、特定のアプリを開くタイミングを検知し、リラックスできる一時停止画面を表示します。</string>
+
+    <!-- Timer configuration -->
+    <string name="timer_config_title">定期リマインダー</string>
+    <string name="timer_config_description">このアプリの使用中に定期的に一時停止を受け取ります</string>
+    <string name="timer_disabled">無効</string>
+    <string name="timer_30sec">30秒</string>
+    <string name="timer_5min">5分</string>
+    <string name="timer_10min">10分</string>
+    <string name="timer_15min">15分</string>
+    <string name="timer_30min">30分</string>
+    <string name="timer_1h">1時間</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">ようこそ</string>
+    <string name="onboarding_subtitle">スクリーン時間をコントロールしましょう</string>
+    <string name="onboarding_permissions_needed">必要な権限</string>
+    <string name="onboarding_continue">続ける</string>
+    <string name="onboarding_step_1">1</string>
+    <string name="onboarding_step_2">2</string>
+    <string name="onboarding_step_3">3</string>
+
+    <!-- App stats dialog -->
+    <string name="app_stats_title">使用統計</string>
+    <string name="app_stats_today_title">今日</string>
+    <string name="app_stats_7days_title">過去7日間</string>
+    <string name="app_stats_30days_title">過去30日間</string>
+    <string name="app_stats_screen_time">スクリーン時間</string>
+    <string name="app_stats_launch_count">起動回数</string>
+    <string name="app_stats_avg_per_day">1日の平均</string>
+    <string name="app_stats_no_data">データなし</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_next">次へ</string>
+    <string name="tutorial_done">了解！</string>
+    <string name="tutorial_recap_title">PianoPianoへようこそ！</string>
+    <string name="tutorial_recap_description">PianoPianoは時間を浪費するアプリを開く前に一時停止を提案し、アプリの使用を減らすきっかけを作ります。</string>
+    <string name="tutorial_toggle_title">アプリを有効にする</string>
+    <string name="tutorial_toggle_description">ボタンをタップしてアプリの監視を有効にします。アプリを開くと、PianoPianoが一時停止を提案します。</string>
+    <string name="tutorial_settings_title">定期的な一時停止</string>
+    <string name="tutorial_settings_description">アプリが有効になると、設定アイコンが表示されます。使用中に定期的な一時停止を設定できます。</string>
+    <string name="tutorial_peanuts_title">ピーナツカウンター</string>
+    <string name="tutorial_peanuts_description">アプリに進む代わりに一時停止を受け入れるたびに、ピーナツを獲得します！たくさん集めるほど、自制心を取り戻せます。</string>
+    <string name="tutorial_replay">チュートリアルを再表示</string>
+    <string name="settings_tutorial">チュートリアル</string>
+
+    <!-- Update -->
+    <string name="update_title">アップデートあり</string>
+    <string name="update_description">PianoPianoの新しいバージョンが利用可能です。最新の改善をお楽しみいただくためにアップデートしてください。</string>
+    <string name="update_button">アップデート</string>
+    <string name="update_later">後で</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">設定</string>
+    <string name="cd_back">戻る</string>
+    <string name="cd_search">検索</string>
+    <string name="cd_app_icon">アプリアイコン</string>
+    <string name="cd_status_indicator">ステータス表示</string>
+    <string name="cd_info">情報</string>
+</resources>

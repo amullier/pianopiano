@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#99000000"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:background="@drawable/bg_tutorial_tooltip"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_md">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/spacing_md"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/black_han_sans"
+            android:gravity="center"
+            android:text="@string/update_title"
+            android:textColor="@color/accent_peanut"
+            android:textSize="@dimen/text_size_subtitle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/update_description"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_size_body" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:background="@drawable/bg_button_gradient"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/update_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_body" />
+
+        <TextView
+            android:id="@+id/buttonUpdateLater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:paddingVertical="@dimen/spacing_sm"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:text="@string/update_later"
+            android:textColor="@color/text_tertiary"
+            android:textSize="@dimen/text_size_caption" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -11,13 +11,13 @@ android {
         applicationId = "fr.antmu.pianopiano"
         minSdk = 26
         targetSdk = 35
-        versionCode = 42
-        versionName = "0.2.8"
+        versionCode = 44
+        versionName = "0.2.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Limiter aux locales supportées uniquement
-        resourceConfigurations += listOf("en", "fr", "it")
+        resourceConfigurations += listOf("en", "fr", "it", "es", "pt", "de", "hi", "ko", "ja")
     }
 
     buildTypes {
@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.gson)
+    implementation(libs.play.app.update.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

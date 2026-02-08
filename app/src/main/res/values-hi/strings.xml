@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">🥜 %d</string>
+
+    <!-- Main screen -->
+    <string name="squirrel_count_format">🐿️ %d</string>
+    <string name="section_service_status">सेवा की स्थिति</string>
+    <string name="section_apps">ऐप्लिकेशन</string>
+    <string name="search_hint">ऐप खोजें…</string>
+    <string name="search_no_results">कोई ऐप नहीं मिला</string>
+    <string name="service_active">सेवा सक्रिय</string>
+    <string name="service_inactive">सेवा निष्क्रिय</string>
+    <string name="service_partial">सेवा आंशिक रूप से सक्रिय</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">शुरू करने के लिए सेवा सक्रिय करें</string>
+    <string name="service_description_partial">कृपया सेटिंग्स जांचें</string>
+    <string name="activate_service">सेवा सक्रिय करें</string>
+    <string name="no_apps_found">कोई ऐप नहीं मिला</string>
+    <string name="apps_subtitle">निगरानी के लिए ऐप्स चुनें</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_permissions">अनुमतियाँ</string>
+    <string name="settings_pause_duration">विराम की अवधि</string>
+    <string name="settings_pause_duration_format">%d सेकंड</string>
+    <string name="settings_overlay_permission">स्क्रीन ओवरले</string>
+    <string name="settings_overlay_description">विराम स्क्रीन दिखाने की अनुमति देता है</string>
+    <string name="settings_accessibility_permission">एक्सेसिबिलिटी सेवा</string>
+    <string name="settings_accessibility_description">ऐप खुलने का पता लगाने की अनुमति देता है</string>
+    <string name="settings_usage_stats_permission">उपयोग आँकड़ों तक पहुँच</string>
+    <string name="settings_usage_stats_description">ऐप आँकड़ों तक पहुँचने की अनुमति देता है</string>
+    <string name="permission_granted">प्रदान की गई</string>
+    <string name="permission_not_granted">प्रदान नहीं की गई</string>
+    <string name="tap_to_grant">अनुमति देने के लिए टैप करें</string>
+    <string name="hint_select_pianopiano">सूची से PianoPiano चुनें</string>
+    <string name="hint_enable_accessibility">PianoPiano चुनें और सेवा सक्रिय करें</string>
+    <string name="hint_enable_overlay">PianoPiano के लिए ओवरले की अनुमति दें</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">एक पल साँस लें…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">रद्द करें (+1🥜)</string>
+    <string name="pause_continue">%s पर जारी रखें</string>
+    <string name="default_quote">साँस लेने के लिए एक पल रुकें।</string>
+    <string name="stats_title">आज</string>
+    <string name="stats_total_time">कुल समय</string>
+    <string name="stats_launch_count">खोले गए</string>
+    <string name="stats_average_session">औसत अवधि</string>
+    <string name="stats_launch_count_format">%d बार</string>
+    <string name="stats_screen_time">आज का स्क्रीन समय</string>
+    <string name="stats_time_saved_total">बचाया गया समय (कुल)</string>
+    <string name="stats_time_saved_today">बचाया गया समय (आज)</string>
+    <string name="stats_no_data">-</string>
+    <string name="stats_today">आज</string>
+    <string name="stats_total">पिछले 7 दिन</string>
+    <string name="stats_screen_time_label">स्क्रीन समय</string>
+    <string name="stats_time_saved_label">बचाया गया समय</string>
+    <string name="stats_screen_time_scope">चयनित ऐप्स पर</string>
+    <string name="stats_prevented_opens_label">रोके गए ऐप खुलना</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">PianoPiano विराम</string>
+    <string name="notification_channel_description">विराम स्क्रीन के दौरान सूचनाएँ</string>
+    <string name="notification_title">PianoPiano सक्रिय</string>
+    <string name="notification_text">विराम जारी…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPiano इस सेवा का उपयोग यह पता लगाने के लिए करता है कि आप कब कुछ ऐप्स खोलते हैं और एक आरामदायक विराम स्क्रीन दिखाता है।</string>
+
+    <!-- Timer configuration -->
+    <string name="timer_config_title">समय-समय पर अनुस्मारक</string>
+    <string name="timer_config_description">इस ऐप का उपयोग करते समय नियमित अंतराल पर विराम प्राप्त करें</string>
+    <string name="timer_disabled">निष्क्रिय</string>
+    <string name="timer_30sec">30 सेकंड</string>
+    <string name="timer_5min">5 मिनट</string>
+    <string name="timer_10min">10 मिनट</string>
+    <string name="timer_15min">15 मिनट</string>
+    <string name="timer_30min">30 मिनट</string>
+    <string name="timer_1h">1 घंटा</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">स्वागत है</string>
+    <string name="onboarding_subtitle">अपने स्क्रीन समय पर नियंत्रण रखें</string>
+    <string name="onboarding_permissions_needed">आवश्यक अनुमतियाँ</string>
+    <string name="onboarding_continue">जारी रखें</string>
+    <string name="onboarding_step_1">1</string>
+    <string name="onboarding_step_2">2</string>
+    <string name="onboarding_step_3">3</string>
+
+    <!-- App stats dialog -->
+    <string name="app_stats_title">उपयोग आँकड़े</string>
+    <string name="app_stats_today_title">आज</string>
+    <string name="app_stats_7days_title">पिछले 7 दिन</string>
+    <string name="app_stats_30days_title">पिछले 30 दिन</string>
+    <string name="app_stats_screen_time">स्क्रीन समय</string>
+    <string name="app_stats_launch_count">खोले गए</string>
+    <string name="app_stats_avg_per_day">प्रतिदिन औसत</string>
+    <string name="app_stats_no_data">कोई डेटा उपलब्ध नहीं</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_next">अगला</string>
+    <string name="tutorial_done">समझ गए!</string>
+    <string name="tutorial_recap_title">PianoPiano में आपका स्वागत है!</string>
+    <string name="tutorial_recap_description">PianoPiano आपको उन ऐप्स को खोलने से पहले एक विराम देता है जो आपका समय बर्बाद करते हैं, ताकि आप उन्हें कम इस्तेमाल कर सकें।</string>
+    <string name="tutorial_toggle_title">एक ऐप सक्रिय करें</string>
+    <string name="tutorial_toggle_description">किसी ऐप की निगरानी सक्रिय करने के लिए बटन पर टैप करें। जब आप उसे खोलेंगे, PianoPiano आपको एक विराम प्रस्तावित करेगा।</string>
+    <string name="tutorial_settings_title">समय-समय पर विराम</string>
+    <string name="tutorial_settings_description">जब कोई ऐप सक्रिय होता है, तो एक सेटिंग्स आइकन दिखाई देता है। यह उपयोग के दौरान नियमित अंतराल पर विराम सेट करने की अनुमति देता है।</string>
+    <string name="tutorial_peanuts_title">मूँगफली काउंटर</string>
+    <string name="tutorial_peanuts_description">हर बार जब आप ऐप पर जाने के बजाय विराम स्वीकार करते हैं, तो आप एक मूँगफली कमाते हैं! जितनी अधिक होंगी, उतना अधिक आप नियंत्रण वापस पाएँगे।</string>
+    <string name="tutorial_replay">ट्यूटोरियल दोबारा देखें</string>
+    <string name="settings_tutorial">ट्यूटोरियल</string>
+
+    <!-- Update -->
+    <string name="update_title">अपडेट उपलब्ध</string>
+    <string name="update_description">PianoPiano का एक नया संस्करण उपलब्ध है। नवीनतम सुधारों का आनंद लेने के लिए अपडेट करें।</string>
+    <string name="update_button">अपडेट करें</string>
+    <string name="update_later">बाद में</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">सेटिंग्स</string>
+    <string name="cd_back">वापस</string>
+    <string name="cd_search">खोजें</string>
+    <string name="cd_app_icon">ऐप आइकन</string>
+    <string name="cd_status_indicator">स्थिति सूचक</string>
+    <string name="cd_info">जानकारी</string>
+</resources>

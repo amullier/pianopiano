@@ -13,6 +13,9 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,6 +23,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Visibility
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import fr.antmu.pianopiano.R
 import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.repository.AppRepository
@@ -44,6 +51,16 @@ class MainFragment : Fragment() {
     private var tutorialManager: TutorialManager? = null
     private var tutorialTriggered = false
     private lateinit var preferencesManager: PreferencesManager
+
+    private var updateOverlay: View? = null
+    private lateinit var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        updateResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartIntentSenderForResult()
+        ) { /* result handled by Play Core */ }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,6 +90,7 @@ class MainFragment : Fragment() {
         binding.textNoResults.visibility = View.GONE
 
         viewModel.loadApps()
+        checkForUpdate()
     }
 
     private fun setupSearch() {
@@ -480,8 +498,52 @@ class MainFragment : Fragment() {
         )
     }
 
+    private fun checkForUpdate() {
+        val context = context ?: return
+        if (preferencesManager.isUpdateDismissed()) return
+        val appUpdateManager = AppUpdateManagerFactory.create(context)
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+            ) {
+                showUpdateOverlay(appUpdateManager, appUpdateInfo)
+            }
+        }
+    }
+
+    private fun showUpdateOverlay(
+        appUpdateManager: com.google.android.play.core.appupdate.AppUpdateManager,
+        appUpdateInfo: com.google.android.play.core.appupdate.AppUpdateInfo
+    ) {
+        if (updateOverlay != null || _binding == null) return
+
+        val overlay = layoutInflater.inflate(R.layout.view_update_card, binding.rootTutorialContainer, false)
+        binding.rootTutorialContainer.addView(overlay)
+        updateOverlay = overlay
+
+        overlay.findViewById<View>(R.id.buttonUpdate).setOnClickListener {
+            appUpdateManager.startUpdateFlowForResult(
+                appUpdateInfo,
+                updateResultLauncher,
+                AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build()
+            )
+            dismissUpdateOverlay()
+        }
+
+        overlay.findViewById<View>(R.id.buttonUpdateLater).setOnClickListener {
+            preferencesManager.dismissUpdate()
+            dismissUpdateOverlay()
+        }
+    }
+
+    private fun dismissUpdateOverlay() {
+        updateOverlay?.let { binding.rootTutorialContainer.removeView(it) }
+        updateOverlay = null
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        dismissUpdateOverlay()
         tutorialManager?.dismiss()
         tutorialManager = null
         _binding = null

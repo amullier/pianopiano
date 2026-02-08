@@ -267,4 +267,17 @@ class PreferencesManager(context: Context) {
     fun shouldForceNextPause(packageName: String): Boolean {
         return prefs.getBoolean("force_next_pause_$packageName", false)
     }
+
+    // --- Update Dismissed ---
+
+    fun dismissUpdate() {
+        prefs.edit().putLong(PreferencesKeys.KEY_UPDATE_DISMISSED_AT, System.currentTimeMillis()).apply()
+    }
+
+    fun isUpdateDismissed(): Boolean {
+        val dismissedAt = prefs.getLong(PreferencesKeys.KEY_UPDATE_DISMISSED_AT, 0L)
+        if (dismissedAt == 0L) return false
+        val threeDaysMs = 3L * 24 * 60 * 60 * 1000
+        return System.currentTimeMillis() - dismissedAt < threeDaysMs
+    }
 }

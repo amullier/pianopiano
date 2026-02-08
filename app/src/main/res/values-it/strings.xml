@@ -115,6 +115,12 @@
     <string name="tutorial_replay">Rivedi il tutorial</string>
     <string name="settings_tutorial">Tutorial</string>
 
+    <!-- Update -->
+    <string name="update_title">Aggiornamento disponibile</string>
+    <string name="update_description">Una nuova versione di PianoPiano è disponibile. Aggiorna per goderti gli ultimi miglioramenti.</string>
+    <string name="update_button">Aggiorna</string>
+    <string name="update_later">Più tardi</string>
+
     <!-- Content descriptions -->
     <string name="cd_settings">Impostazioni</string>
     <string name="cd_back">Indietro</string>

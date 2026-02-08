@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">🥜 %d</string>
+
+    <!-- Main screen -->
+    <string name="squirrel_count_format">🐿️ %d</string>
+    <string name="section_service_status">Estado del servicio</string>
+    <string name="section_apps">Aplicaciones</string>
+    <string name="search_hint">Buscar una app…</string>
+    <string name="search_no_results">No se encontraron apps</string>
+    <string name="service_active">Servicio activo</string>
+    <string name="service_inactive">Servicio inactivo</string>
+    <string name="service_partial">Servicio parcialmente activado</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">Activa el servicio para comenzar</string>
+    <string name="service_description_partial">Revisa los ajustes</string>
+    <string name="activate_service">Activar servicio</string>
+    <string name="no_apps_found">No se encontraron apps</string>
+    <string name="apps_subtitle">Selecciona las apps a vigilar</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_permissions">Permisos</string>
+    <string name="settings_pause_duration">Duración de la pausa</string>
+    <string name="settings_pause_duration_format">%d segundos</string>
+    <string name="settings_overlay_permission">Superposición de pantalla</string>
+    <string name="settings_overlay_description">Permite mostrar la pantalla de pausa</string>
+    <string name="settings_accessibility_permission">Servicio de accesibilidad</string>
+    <string name="settings_accessibility_description">Permite detectar la apertura de apps</string>
+    <string name="settings_usage_stats_permission">Acceso a estadísticas de uso</string>
+    <string name="settings_usage_stats_description">Permite acceder a las estadísticas de las apps</string>
+    <string name="permission_granted">Concedido</string>
+    <string name="permission_not_granted">No concedido</string>
+    <string name="tap_to_grant">Toca para conceder</string>
+    <string name="hint_select_pianopiano">Selecciona PianoPiano de la lista</string>
+    <string name="hint_enable_accessibility">Selecciona PianoPiano y activa el servicio</string>
+    <string name="hint_enable_overlay">Permite la superposición para PianoPiano</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">Respira un momento…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">Cancelar (+1🥜)</string>
+    <string name="pause_continue">Continuar a %s</string>
+    <string name="default_quote">Tómate un momento para respirar.</string>
+    <string name="stats_title">Hoy</string>
+    <string name="stats_total_time">Tiempo total</string>
+    <string name="stats_launch_count">Aperturas</string>
+    <string name="stats_average_session">Duración media</string>
+    <string name="stats_launch_count_format">%d veces</string>
+    <string name="stats_screen_time">Tiempo de pantalla hoy</string>
+    <string name="stats_time_saved_total">Tiempo ahorrado (total)</string>
+    <string name="stats_time_saved_today">Tiempo ahorrado (hoy)</string>
+    <string name="stats_no_data">-</string>
+    <string name="stats_today">Hoy</string>
+    <string name="stats_total">Últimos 7 días</string>
+    <string name="stats_screen_time_label">Tiempo de pantalla</string>
+    <string name="stats_time_saved_label">Tiempo ahorrado</string>
+    <string name="stats_screen_time_scope">en apps seleccionadas</string>
+    <string name="stats_prevented_opens_label">Aperturas evitadas</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">Pausa PianoPiano</string>
+    <string name="notification_channel_description">Notificaciones durante la pantalla de pausa</string>
+    <string name="notification_title">PianoPiano activo</string>
+    <string name="notification_text">Pausa en curso…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPiano usa este servicio para detectar cuándo abres ciertas apps y mostrar una pantalla de pausa relajante.</string>
+
+    <!-- Timer configuration -->
+    <string name="timer_config_title">Recordatorio periódico</string>
+    <string name="timer_config_description">Recibe una pausa a intervalos regulares mientras usas esta app</string>
+    <string name="timer_disabled">Desactivado</string>
+    <string name="timer_30sec">30 segundos</string>
+    <string name="timer_5min">5 minutos</string>
+    <string name="timer_10min">10 minutos</string>
+    <string name="timer_15min">15 minutos</string>
+    <string name="timer_30min">30 minutos</string>
+    <string name="timer_1h">1 hora</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Bienvenido</string>
+    <string name="onboarding_subtitle">Toma el control de tu tiempo de pantalla</string>
+    <string name="onboarding_permissions_needed">Permisos necesarios</string>
+    <string name="onboarding_continue">Continuar</string>
+    <string name="onboarding_step_1">1</string>
+    <string name="onboarding_step_2">2</string>
+    <string name="onboarding_step_3">3</string>
+
+    <!-- App stats dialog -->
+    <string name="app_stats_title">Estadísticas de uso</string>
+    <string name="app_stats_today_title">Hoy</string>
+    <string name="app_stats_7days_title">Últimos 7 días</string>
+    <string name="app_stats_30days_title">Últimos 30 días</string>
+    <string name="app_stats_screen_time">Tiempo de pantalla</string>
+    <string name="app_stats_launch_count">Aperturas</string>
+    <string name="app_stats_avg_per_day">Media por día</string>
+    <string name="app_stats_no_data">No hay datos disponibles</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_next">Siguiente</string>
+    <string name="tutorial_done">¡Entendido!</string>
+    <string name="tutorial_recap_title">¡Bienvenido a PianoPiano!</string>
+    <string name="tutorial_recap_description">PianoPiano te propone una pausa antes de abrir las apps que te hacen perder tiempo, dándote la oportunidad de usarlas menos.</string>
+    <string name="tutorial_toggle_title">Activar una app</string>
+    <string name="tutorial_toggle_description">Toca el botón para activar la vigilancia de una app. Cuando la abras, PianoPiano te propondrá una pausa.</string>
+    <string name="tutorial_settings_title">Pausas periódicas</string>
+    <string name="tutorial_settings_description">Cuando una app está activada, aparece un icono de ajustes. Permite configurar pausas a intervalos regulares durante el uso.</string>
+    <string name="tutorial_peanuts_title">Contador de cacahuetes</string>
+    <string name="tutorial_peanuts_description">Cada vez que aceptas una pausa en lugar de continuar a la app, ¡ganas un cacahuete! Cuantos más tengas, más recuperas el control.</string>
+    <string name="tutorial_replay">Repetir tutorial</string>
+    <string name="settings_tutorial">Tutorial</string>
+
+    <!-- Update -->
+    <string name="update_title">Actualización disponible</string>
+    <string name="update_description">Una nueva versión de PianoPiano está disponible. Actualiza para disfrutar de las últimas mejoras.</string>
+    <string name="update_button">Actualizar</string>
+    <string name="update_later">Más tarde</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">Ajustes</string>
+    <string name="cd_back">Atrás</string>
+    <string name="cd_search">Buscar</string>
+    <string name="cd_app_icon">Icono de la app</string>
+    <string name="cd_status_indicator">Indicador de estado</string>
+    <string name="cd_info">Información</string>
+</resources>

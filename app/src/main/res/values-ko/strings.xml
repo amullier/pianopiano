@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PianoPiano</string>
+
+    <!-- Header -->
+    <string name="peanut_emoji">🥜</string>
+    <string name="peanut_count_format">🥜 %d</string>
+
+    <!-- Main screen -->
+    <string name="squirrel_count_format">🐿️ %d</string>
+    <string name="section_service_status">서비스 상태</string>
+    <string name="section_apps">애플리케이션</string>
+    <string name="search_hint">앱 검색…</string>
+    <string name="search_no_results">앱을 찾을 수 없습니다</string>
+    <string name="service_active">서비스 활성</string>
+    <string name="service_inactive">서비스 비활성</string>
+    <string name="service_partial">서비스 부분 활성화</string>
+    <string name="service_description_active"></string>
+    <string name="service_description_inactive">시작하려면 서비스를 활성화하세요</string>
+    <string name="service_description_partial">설정을 확인해 주세요</string>
+    <string name="activate_service">서비스 활성화</string>
+    <string name="no_apps_found">앱을 찾을 수 없습니다</string>
+    <string name="apps_subtitle">모니터링할 앱을 선택하세요</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">설정</string>
+    <string name="settings_permissions">권한</string>
+    <string name="settings_pause_duration">일시정지 시간</string>
+    <string name="settings_pause_duration_format">%d초</string>
+    <string name="settings_overlay_permission">화면 오버레이</string>
+    <string name="settings_overlay_description">일시정지 화면을 표시할 수 있습니다</string>
+    <string name="settings_accessibility_permission">접근성 서비스</string>
+    <string name="settings_accessibility_description">앱 실행을 감지할 수 있습니다</string>
+    <string name="settings_usage_stats_permission">사용 통계 접근</string>
+    <string name="settings_usage_stats_description">앱 통계에 접근할 수 있습니다</string>
+    <string name="permission_granted">허용됨</string>
+    <string name="permission_not_granted">허용되지 않음</string>
+    <string name="tap_to_grant">탭하여 허용</string>
+    <string name="hint_select_pianopiano">목록에서 PianoPiano를 선택하세요</string>
+    <string name="hint_enable_accessibility">PianoPiano를 선택하고 서비스를 활성화하세요</string>
+    <string name="hint_enable_overlay">PianoPiano의 오버레이를 허용하세요</string>
+
+    <!-- Pause overlay -->
+    <string name="pause_title">잠시 숨을 쉬세요…</string>
+    <string name="pause_countdown_format">%d</string>
+    <string name="pause_cancel">취소 (+1🥜)</string>
+    <string name="pause_continue">%s(으)로 계속</string>
+    <string name="default_quote">잠시 멈추고 숨을 쉬세요.</string>
+    <string name="stats_title">오늘</string>
+    <string name="stats_total_time">총 시간</string>
+    <string name="stats_launch_count">실행 횟수</string>
+    <string name="stats_average_session">평균 시간</string>
+    <string name="stats_launch_count_format">%d회</string>
+    <string name="stats_screen_time">오늘 화면 사용 시간</string>
+    <string name="stats_time_saved_total">절약한 시간 (전체)</string>
+    <string name="stats_time_saved_today">절약한 시간 (오늘)</string>
+    <string name="stats_no_data">-</string>
+    <string name="stats_today">오늘</string>
+    <string name="stats_total">최근 7일</string>
+    <string name="stats_screen_time_label">화면 사용 시간</string>
+    <string name="stats_time_saved_label">절약한 시간</string>
+    <string name="stats_screen_time_scope">선택된 앱 기준</string>
+    <string name="stats_prevented_opens_label">차단된 실행</string>
+
+    <!-- Notification -->
+    <string name="notification_channel_name">PianoPiano 일시정지</string>
+    <string name="notification_channel_description">일시정지 화면 중 알림</string>
+    <string name="notification_title">PianoPiano 활성</string>
+    <string name="notification_text">일시정지 중…</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">PianoPiano는 이 서비스를 사용하여 특정 앱을 열 때를 감지하고 편안한 일시정지 화면을 표시합니다.</string>
+
+    <!-- Timer configuration -->
+    <string name="timer_config_title">주기적 알림</string>
+    <string name="timer_config_description">이 앱을 사용하는 동안 일정 간격으로 일시정지를 받으세요</string>
+    <string name="timer_disabled">비활성</string>
+    <string name="timer_30sec">30초</string>
+    <string name="timer_5min">5분</string>
+    <string name="timer_10min">10분</string>
+    <string name="timer_15min">15분</string>
+    <string name="timer_30min">30분</string>
+    <string name="timer_1h">1시간</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">환영합니다</string>
+    <string name="onboarding_subtitle">화면 사용 시간을 관리하세요</string>
+    <string name="onboarding_permissions_needed">필요한 권한</string>
+    <string name="onboarding_continue">계속</string>
+    <string name="onboarding_step_1">1</string>
+    <string name="onboarding_step_2">2</string>
+    <string name="onboarding_step_3">3</string>
+
+    <!-- App stats dialog -->
+    <string name="app_stats_title">사용 통계</string>
+    <string name="app_stats_today_title">오늘</string>
+    <string name="app_stats_7days_title">최근 7일</string>
+    <string name="app_stats_30days_title">최근 30일</string>
+    <string name="app_stats_screen_time">화면 사용 시간</string>
+    <string name="app_stats_launch_count">실행 횟수</string>
+    <string name="app_stats_avg_per_day">일일 평균</string>
+    <string name="app_stats_no_data">데이터 없음</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_next">다음</string>
+    <string name="tutorial_done">알겠습니다!</string>
+    <string name="tutorial_recap_title">PianoPiano에 오신 것을 환영합니다!</string>
+    <string name="tutorial_recap_description">PianoPiano는 시간을 낭비하는 앱을 열기 전에 일시정지를 제안하여 앱 사용을 줄일 수 있도록 도와줍니다.</string>
+    <string name="tutorial_toggle_title">앱 활성화</string>
+    <string name="tutorial_toggle_description">버튼을 탭하여 앱 모니터링을 활성화하세요. 앱을 열면 PianoPiano가 일시정지를 제안합니다.</string>
+    <string name="tutorial_settings_title">주기적 일시정지</string>
+    <string name="tutorial_settings_description">앱이 활성화되면 설정 아이콘이 나타납니다. 사용 중 일정 간격으로 일시정지를 설정할 수 있습니다.</string>
+    <string name="tutorial_peanuts_title">땅콩 카운터</string>
+    <string name="tutorial_peanuts_description">앱으로 계속하는 대신 일시정지를 받아들일 때마다 땅콩을 얻습니다! 많이 모을수록 더 많은 통제력을 되찾습니다.</string>
+    <string name="tutorial_replay">튜토리얼 다시 보기</string>
+    <string name="settings_tutorial">튜토리얼</string>
+
+    <!-- Update -->
+    <string name="update_title">업데이트 가능</string>
+    <string name="update_description">PianoPiano의 새 버전을 사용할 수 있습니다. 최신 개선 사항을 즐기려면 업데이트하세요.</string>
+    <string name="update_button">업데이트</string>
+    <string name="update_later">나중에</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_settings">설정</string>
+    <string name="cd_back">뒤로</string>
+    <string name="cd_search">검색</string>
+    <string name="cd_app_icon">앱 아이콘</string>
+    <string name="cd_status_indicator">상태 표시</string>
+    <string name="cd_info">정보</string>
+</resources>
