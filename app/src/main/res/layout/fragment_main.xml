@@ -233,6 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:letterSpacing="0.1"
+                    android:rotationX="6"
                     android:text="@string/section_apps"
                     android:textAllCaps="true"
                     android:textColor="@color/text_secondary"

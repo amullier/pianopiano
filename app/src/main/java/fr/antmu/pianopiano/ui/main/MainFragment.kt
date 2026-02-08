@@ -109,12 +109,17 @@ class MainFragment : Fragment() {
                 .setInterpolator(android.view.animation.DecelerateInterpolator())
                 .withEndAction {
                     binding.editSearch.requestFocus()
+                    val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                    imm.showSoftInput(binding.editSearch, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
                 }
                 .start()
         }
     }
 
     private fun hideSearchBar() {
+        val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+        imm.hideSoftInputFromWindow(binding.editSearch.windowToken, 0)
+
         binding.cardSearch.animate()
             .alpha(0f)
             .translationY(-binding.cardSearch.height.toFloat().coerceAtLeast(40f))
@@ -136,11 +141,6 @@ class MainFragment : Fragment() {
         viewModel.refreshPeanutCount()
         viewModel.refreshStats()
 
-        // Relancer le tutoriel si "Revoir le tutoriel" a été cliqué dans les settings
-        if (tutorialTriggered && !preferencesManager.tutorialCompleted) {
-            tutorialTriggered = false
-            binding.recyclerApps.post { startTutorial() }
-        }
     }
 
     private fun setupHeader() {
@@ -317,18 +317,20 @@ class MainFragment : Fragment() {
 
             when (status) {
                 fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.INACTIVE -> {
+                    binding.statsCard.visibility = View.GONE
                     binding.mainServiceEnabler.visibility = View.VISIBLE
                     binding.serviceStatusCard.visibility = View.GONE
                 }
 
                 fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.PARTIAL -> {
+                    binding.statsCard.visibility = View.VISIBLE
                     binding.mainServiceEnabler.visibility = View.GONE
                     binding.serviceStatusCard.visibility = View.VISIBLE
                     binding.serviceStatusCardView.setStatus(status)
                 }
 
                 fr.antmu.pianopiano.ui.components.ServiceStatusView.ServiceStatus.ACTIVE -> {
-                    // Masquer les deux cartes quand le service est actif
+                    binding.statsCard.visibility = View.VISIBLE
                     binding.mainServiceEnabler.visibility = View.GONE
                     binding.serviceStatusCard.visibility = View.GONE
                 }

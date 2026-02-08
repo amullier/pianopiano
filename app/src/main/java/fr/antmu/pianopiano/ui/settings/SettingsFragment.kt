@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import fr.antmu.pianopiano.R
-import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -63,10 +62,6 @@ class SettingsFragment : Fragment() {
             viewModel.setPauseDuration(value)
         }
 
-        binding.buttonReplayTutorial.setOnClickListener {
-            PreferencesManager(requireContext()).tutorialCompleted = false
-            findNavController().navigateUp()
-        }
     }
 
     private fun observeViewModel() {
