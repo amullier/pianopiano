@@ -115,7 +115,7 @@
     <string name="settings_tutorial">Tutoriel</string>
 
     <!-- Update -->
-    <string name="update_title">Mise à jour disponible</string>
+    <string name="update_title">Nouvelle version disponible</string>
     <string name="update_description">Une nouvelle version de PianoPiano est disponible. Mettez à jour pour profiter des dernières améliorations.</string>
     <string name="update_button">Mettre à jour</string>
     <string name="update_later">Plus tard</string>
