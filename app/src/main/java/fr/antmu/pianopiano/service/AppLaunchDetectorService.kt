@@ -11,6 +11,14 @@ class AppLaunchDetectorService : AccessibilityService() {
 
     companion object {
         private const val TAG = "AppLaunchDetector"
+
+        /**
+         * Package pour lequel une PauseActivity est actuellement affichée.
+         * Mis à jour par le service (quand il lance la pause) et par PauseActivity (quand l'user fait un choix).
+         * Volatile car accédé depuis le main thread par PauseActivity et le thread du service.
+         */
+        @Volatile
+        var activePauseForPackage: String? = null
     }
 
     private lateinit var preferencesManager: PreferencesManager
@@ -58,8 +66,27 @@ class AppLaunchDetectorService : AccessibilityService() {
         Log.d(TAG, "⏱️ Timestamp actuel: $now")
         Log.d(TAG, "📍 currentForegroundPackage: $currentForegroundPackage")
 
-        // 🔒 Transition interne → IGNORER COMPLÈTEMENT
+        // 🛡️ Détection : l'utilisateur a quitté PauseActivity sans faire de choix
+        val pausePkg = activePauseForPackage
+        if (pausePkg != null && newPkg != "fr.antmu.pianopiano"
+            && !isTemporaryOverlay(newPkg, event.source?.window)) {
+            // Une vraie app (ou launcher) est apparue pendant que la pause était active
+            // → l'utilisateur a quitté sans cliquer Cancel ni Continue
+            Log.d(TAG, "⚠️ PauseActivity quittée sans choix (pause pour $pausePkg, event=$newPkg)")
+            preferencesManager.setForceNextPause(pausePkg, true)
+            activePauseForPackage = null
+        }
+
+        // 🔒 Transition interne → IGNORER sauf si forceNextPause est actif
         if (newPkg == currentForegroundPackage) {
+            // Vérifier si forceNextPause a été posé (par la détection ci-dessus ou par PauseActivity.onStop)
+            if (preferencesManager.isAppConfigured(newPkg) && preferencesManager.shouldForceNextPause(newPkg)) {
+                Log.d(TAG, "🔒 Transition interne MAIS forceNextPause actif → relance pause")
+                preferencesManager.setForceNextPause(newPkg, false)
+                activePauseForPackage = newPkg
+                ServiceHelper.startPauseOverlay(applicationContext, newPkg, isPeriodic = false)
+                return
+            }
             Log.d(TAG, "🔒 Transition interne détectée (même package), on ignore")
             return
         }
@@ -100,12 +127,13 @@ class AppLaunchDetectorService : AccessibilityService() {
         }
         Log.d(TAG, "✅ App configurée, on continue")
 
-        // Check force pause (après "Annuler") - bypass le debounce
+        // Check force pause (après "Annuler" ou quand l'user a quitté PauseActivity sans choix)
         val forceNextPause = preferencesManager.shouldForceNextPause(newPkg)
         if (forceNextPause) {
-            Log.d(TAG, "🎯 Force pause activé (après Annuler), bypass debounce")
+            Log.d(TAG, "🎯 Force pause activé, bypass debounce")
             preferencesManager.setForceNextPause(newPkg, false)  // Consommer le flag
             preferencesManager.setAppEnterTime(newPkg, now)
+            activePauseForPackage = newPkg
             ServiceHelper.startPauseOverlay(applicationContext, newPkg, isPeriodic = false)
             return
         }
@@ -150,6 +178,7 @@ class AppLaunchDetectorService : AccessibilityService() {
         Log.d(TAG, "5️⃣ Action finale:")
         if (shouldInitialPause) {
             Log.d(TAG, "   🎯 Démarrage PauseOverlay (isPeriodic=false)")
+            activePauseForPackage = newPkg
             ServiceHelper.startPauseOverlay(applicationContext, newPkg, isPeriodic = false)
         } else {
             Log.d(TAG, "   ⏰ Pas de pause initiale, vérification timer périodique")

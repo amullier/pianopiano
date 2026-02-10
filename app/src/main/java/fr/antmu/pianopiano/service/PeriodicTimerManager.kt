@@ -21,6 +21,7 @@ object PeriodicTimerManager {
 
         val runnable = object : Runnable {
             override fun run() {
+                AppLaunchDetectorService.activePauseForPackage = packageName
                 ServiceHelper.startPeriodicPause(context, packageName)
                 handler.postDelayed(this, intervalSeconds * 1000L)
             }

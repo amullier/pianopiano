@@ -3,11 +3,12 @@ package fr.antmu.pianopiano.ui.pause
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import fr.antmu.pianopiano.service.ServiceHelper
+import fr.antmu.pianopiano.service.AppLaunchDetectorService
 
 class PauseActivity : AppCompatActivity() {
 
     private lateinit var pauseView: PauseOverlayView
+    private var userMadeChoice = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +19,9 @@ class PauseActivity : AppCompatActivity() {
 
         // Créer et afficher la vue de pause
         pauseView = PauseOverlayView(this, this) {
-            // onDismiss callback
+            // onDismiss callback — l'utilisateur a fait un choix (Cancel ou Continue)
+            userMadeChoice = true
+            AppLaunchDetectorService.activePauseForPackage = null
             finish()
         }
 
@@ -31,11 +34,21 @@ class PauseActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        userMadeChoice = false
 
         val packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: ""
         val isPeriodic = intent.getBooleanExtra(EXTRA_IS_PERIODIC, false)
 
         pauseView.show(packageName, isPeriodic)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (!userMadeChoice) {
+            // L'utilisateur a quitté sans faire de choix → finir l'activité
+            // (le service détecte le départ via activePauseForPackage et pose forceNextPause)
+            finish()
+        }
     }
 
     override fun onBackPressed() {
