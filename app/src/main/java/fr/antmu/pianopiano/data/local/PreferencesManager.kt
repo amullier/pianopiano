@@ -176,6 +176,38 @@ class PreferencesManager(context: Context) {
             return total
         }
 
+    // --- Per-App Daily Peanuts Tracking ---
+
+    fun getPeanutsForAppToday(packageName: String): Int {
+        val savedDate = prefs.getString(PreferencesKeys.KEY_PEANUTS_PER_APP_TODAY_DATE, null)
+        if (savedDate != getTodayDateString()) return 0
+        val json = prefs.getString(PreferencesKeys.KEY_PEANUTS_PER_APP_TODAY, null) ?: return 0
+        val type = object : TypeToken<Map<String, Int>>() {}.type
+        val map: Map<String, Int> = try { gson.fromJson(json, type) ?: emptyMap() } catch (e: Exception) { emptyMap() }
+        return map[packageName] ?: 0
+    }
+
+    fun incrementPeanutsForApp(packageName: String) {
+        val today = getTodayDateString()
+        val savedDate = prefs.getString(PreferencesKeys.KEY_PEANUTS_PER_APP_TODAY_DATE, null)
+        val currentMap: MutableMap<String, Int> = if (savedDate == today) {
+            val json = prefs.getString(PreferencesKeys.KEY_PEANUTS_PER_APP_TODAY, null)
+            if (json != null) {
+                val type = object : TypeToken<MutableMap<String, Int>>() {}.type
+                try { gson.fromJson(json, type) ?: mutableMapOf() } catch (e: Exception) { mutableMapOf() }
+            } else {
+                mutableMapOf()
+            }
+        } else {
+            mutableMapOf()
+        }
+        currentMap[packageName] = (currentMap[packageName] ?: 0) + 1
+        prefs.edit()
+            .putString(PreferencesKeys.KEY_PEANUTS_PER_APP_TODAY_DATE, today)
+            .putString(PreferencesKeys.KEY_PEANUTS_PER_APP_TODAY, gson.toJson(currentMap))
+            .apply()
+    }
+
     // --- Periodic Timer Methods ---
 
     fun getAppPeriodicTimer(packageName: String): Int {

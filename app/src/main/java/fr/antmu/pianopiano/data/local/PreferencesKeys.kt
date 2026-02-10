@@ -30,6 +30,10 @@ object PreferencesKeys {
     const val KEY_PEANUTS_TODAY_DATE = "peanuts_today_date"
     const val KEY_PEANUTS_HISTORY = "peanuts_history" // Historique des peanuts par jour (JSON map)
 
+    // Per-app daily peanuts tracking
+    const val KEY_PEANUTS_PER_APP_TODAY = "peanuts_per_app_today"        // JSON Map<packageName, count>
+    const val KEY_PEANUTS_PER_APP_TODAY_DATE = "peanuts_per_app_today_date"
+
     // Update dismissed
     const val KEY_UPDATE_DISMISSED_AT = "update_dismissed_at"
 

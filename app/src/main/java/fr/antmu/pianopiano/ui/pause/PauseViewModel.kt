@@ -50,7 +50,18 @@ class PauseViewModel(context: Context) {
         // Check permission and load usage stats
         _hasUsageStatsPermission.value = PermissionHelper.hasUsageStatsPermission(appContext)
         if (_hasUsageStatsPermission.value == true) {
-            _usageStats.value = UsageStatsHelper.getAppUsageStats(appContext, packageName)
+            val rawStats = UsageStatsHelper.getAppUsageStats(appContext, packageName)
+            if (rawStats != null) {
+                val blockedCount = preferencesManager.getPeanutsForAppToday(packageName)
+                val realLaunchCount = maxOf(0, rawStats.launchCountToday - blockedCount)
+                val realAverageSession = if (realLaunchCount > 0) rawStats.totalTimeToday / realLaunchCount else 0L
+                _usageStats.value = rawStats.copy(
+                    launchCountToday = realLaunchCount,
+                    averageSessionTime = realAverageSession
+                )
+            } else {
+                _usageStats.value = null
+            }
         }
 
         startCountdown()
@@ -78,6 +89,7 @@ class PauseViewModel(context: Context) {
     fun onCancelClicked() {
         countDownTimer?.cancel()
         settingsRepository.incrementPeanuts()
+        preferencesManager.incrementPeanutsForApp(targetPackageName)
         // Set flag to force pause on next access (bypasses debounce)
         preferencesManager.setForceNextPause(targetPackageName, true)
     }

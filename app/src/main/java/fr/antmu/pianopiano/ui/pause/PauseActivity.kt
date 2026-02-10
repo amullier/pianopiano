@@ -28,6 +28,16 @@ class PauseActivity : AppCompatActivity() {
         pauseView.show(packageName, isPeriodic)
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+
+        val packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: ""
+        val isPeriodic = intent.getBooleanExtra(EXTRA_IS_PERIODIC, false)
+
+        pauseView.show(packageName, isPeriodic)
+    }
+
     override fun onBackPressed() {
         // BLOQUER le bouton retour - ne rien faire
         // L'utilisateur DOIT cliquer Cancel ou Continue
