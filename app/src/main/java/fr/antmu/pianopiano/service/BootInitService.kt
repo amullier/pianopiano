@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import fr.antmu.pianopiano.BuildConfig
 import fr.antmu.pianopiano.util.PermissionHelper
 
 /**
@@ -16,11 +17,11 @@ class BootInitService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("BootInitService", "Service started - Initializing app")
+        if (BuildConfig.DEBUG) Log.d("BootInitService", "Service started - Initializing app")
 
         // Vérifier que les permissions sont toujours actives
         val hasPermissions = PermissionHelper.areAllPermissionsGranted(this)
-        Log.d("BootInitService", "Permissions granted: $hasPermissions")
+        if (BuildConfig.DEBUG) Log.d("BootInitService", "Permissions granted: $hasPermissions")
 
         // L'Application.onCreate() sera appelé automatiquement,
         // ce qui initialise PreferencesManager, AppRepository, etc.

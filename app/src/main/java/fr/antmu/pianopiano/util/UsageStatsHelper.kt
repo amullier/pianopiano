@@ -50,6 +50,7 @@ object UsageStatsHelper {
         var lastForegroundPackage: String? = null
         var totalTimeTodayFromEvents = 0L
         var lastResumeTime: Long? = null
+        val ownPackageName = context.packageName
 
         while (events.hasNextEvent()) {
             val event = android.app.usage.UsageEvents.Event()
@@ -78,7 +79,10 @@ object UsageStatsHelper {
                     totalTimeTodayFromEvents += event.timeStamp - resumeTime
                 }
                 lastResumeTime = null
-                lastForegroundPackage = event.packageName
+                // Ignore our own pause screen so it doesn't inflate the launch count
+                if (event.packageName != ownPackageName) {
+                    lastForegroundPackage = event.packageName
+                }
             }
         }
 
@@ -127,8 +131,10 @@ object UsageStatsHelper {
                     }
                 }
             } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                // Suivre les autres apps pour détecter les changements
-                lastForegroundPackage7Days = event.packageName
+                // Ignore our own pause screen so it doesn't inflate the launch count
+                if (event.packageName != ownPackageName) {
+                    lastForegroundPackage7Days = event.packageName
+                }
             }
         }
 
@@ -165,8 +171,10 @@ object UsageStatsHelper {
                     }
                 }
             } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                // Suivre les autres apps pour détecter les changements
-                lastForegroundPackage30Days = event.packageName
+                // Ignore our own pause screen so it doesn't inflate the launch count
+                if (event.packageName != ownPackageName) {
+                    lastForegroundPackage30Days = event.packageName
+                }
             }
         }
 

@@ -11,8 +11,8 @@ android {
         applicationId = "fr.antmu.pianopiano"
         minSdk = 26
         targetSdk = 35
-        versionCode = 47
-        versionName = "0.2.13"
+        versionCode = 48
+        versionName = "0.2.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -22,7 +22,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -32,6 +32,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {

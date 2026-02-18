@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityWindowInfo
+import fr.antmu.pianopiano.BuildConfig
 import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.data.repository.AppRepository
 
@@ -19,6 +20,10 @@ class AppLaunchDetectorService : AccessibilityService() {
          */
         @Volatile
         var activePauseForPackage: String? = null
+    }
+
+    private fun logd(msg: String) {
+        if (BuildConfig.DEBUG) Log.d(TAG, msg)
     }
 
     private lateinit var preferencesManager: PreferencesManager
@@ -38,41 +43,42 @@ class AppLaunchDetectorService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        Log.d(TAG, "onAccessibilityEvent() appelé")
-        Log.d(TAG, "Event reçu: $event")
-        Log.d(TAG, "Event type: ${event?.eventType}")
-        Log.d(TAG, "Event type name: ${event?.eventType?.let { AccessibilityEvent.eventTypeToString(it) }}")
-        Log.d(TAG, "Package name: ${event?.packageName}")
-        Log.d(TAG, "Class name: ${event?.className}")
-        Log.d(TAG, "Content description: ${event?.contentDescription}")
-        Log.d(TAG, "Text: ${event?.text}")
-        Log.d(TAG, "Source: ${event?.source}")
+        logd("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        logd("onAccessibilityEvent() appelé")
+        logd("Event reçu: $event")
+        logd("Event type: ${event?.eventType}")
+        logd("Event type name: ${event?.eventType?.let { AccessibilityEvent.eventTypeToString(it) }}")
+        logd("Package name: ${event?.packageName}")
+        logd("Class name: ${event?.className}")
+        logd("Content description: ${event?.contentDescription}")
+        logd("Text: ${event?.text}")
+        logd("Source: ${event?.source}")
 
         if (event?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            Log.d(TAG, "❌ Event ignoré: pas TYPE_WINDOW_STATE_CHANGED (type=${event?.eventType})")
+            logd("❌ Event ignoré: pas TYPE_WINDOW_STATE_CHANGED (type=${event?.eventType})")
             return
         }
-        Log.d(TAG, "✅ Event TYPE_WINDOW_STATE_CHANGED accepté")
+        logd("✅ Event TYPE_WINDOW_STATE_CHANGED accepté")
 
         val newPkg = event.packageName?.toString()
         if (newPkg == null) {
-            Log.d(TAG, "❌ Package name est null, on ignore")
+            logd("❌ Package name est null, on ignore")
             return
         }
-        Log.d(TAG, "📦 Nouveau package: $newPkg")
+        logd("📦 Nouveau package: $newPkg")
 
         val now = System.currentTimeMillis()
-        Log.d(TAG, "⏱️ Timestamp actuel: $now")
-        Log.d(TAG, "📍 currentForegroundPackage: $currentForegroundPackage")
+        logd("⏱️ Timestamp actuel: $now")
+        logd("📍 currentForegroundPackage: $currentForegroundPackage")
 
         // 🛡️ Détection : l'utilisateur a quitté PauseActivity sans faire de choix
         val pausePkg = activePauseForPackage
         if (pausePkg != null && newPkg != "fr.antmu.pianopiano"
+            && newPkg != pausePkg
             && !isTemporaryOverlay(newPkg, event.source?.window)) {
             // Une vraie app (ou launcher) est apparue pendant que la pause était active
             // → l'utilisateur a quitté sans cliquer Cancel ni Continue
-            Log.d(TAG, "⚠️ PauseActivity quittée sans choix (pause pour $pausePkg, event=$newPkg)")
+            logd("⚠️ PauseActivity quittée sans choix (pause pour $pausePkg, event=$newPkg)")
             preferencesManager.setForceNextPause(pausePkg, true)
             activePauseForPackage = null
         }
@@ -81,56 +87,56 @@ class AppLaunchDetectorService : AccessibilityService() {
         if (newPkg == currentForegroundPackage) {
             // Vérifier si forceNextPause a été posé (par la détection ci-dessus ou par PauseActivity.onStop)
             if (preferencesManager.isAppConfigured(newPkg) && preferencesManager.shouldForceNextPause(newPkg)) {
-                Log.d(TAG, "🔒 Transition interne MAIS forceNextPause actif → relance pause")
+                logd("🔒 Transition interne MAIS forceNextPause actif → relance pause")
                 preferencesManager.setForceNextPause(newPkg, false)
                 activePauseForPackage = newPkg
                 ServiceHelper.startPauseOverlay(applicationContext, newPkg, isPeriodic = false)
                 return
             }
-            Log.d(TAG, "🔒 Transition interne détectée (même package), on ignore")
+            logd("🔒 Transition interne détectée (même package), on ignore")
             return
         }
-        Log.d(TAG, "✅ Changement d'app détecté: $currentForegroundPackage → $newPkg")
+        logd("✅ Changement d'app détecté: $currentForegroundPackage → $newPkg")
 
         // 👉 C'est un vrai changement d'application
         val previousPkg = currentForegroundPackage
-        Log.d(TAG, "📤 Package précédent: $previousPkg")
+        logd("📤 Package précédent: $previousPkg")
 
         // 🎹 Overlay temporaire (clavier, systemui, notre app) → ignorer complètement
         if (isTemporaryOverlay(newPkg, event.source?.window)) {
-            Log.d(TAG, "🎹 Overlay temporaire détecté ($newPkg), on ignore complètement")
+            logd("🎹 Overlay temporaire détecté ($newPkg), on ignore complètement")
             return
         }
 
         // 🏠 Launcher/Home → traiter comme sortie d'app
         if (isSystemApp(newPkg)) {
-            Log.d(TAG, "🏠 Launcher détecté ($newPkg), traitement comme sortie d'app")
+            logd("🏠 Launcher détecté ($newPkg), traitement comme sortie d'app")
             currentForegroundPackage = null
             handleAppExit(previousPkg, now)
             return
         }
-        Log.d(TAG, "✅ App normale détectée, on continue le traitement")
+        logd("✅ App normale détectée, on continue le traitement")
 
         currentForegroundPackage = newPkg
-        Log.d(TAG, "📍 currentForegroundPackage mis à jour: $currentForegroundPackage")
+        logd("📍 currentForegroundPackage mis à jour: $currentForegroundPackage")
 
         // 1️⃣ Gérer la sortie de l'app précédente
-        Log.d(TAG, "1️⃣ Appel handleAppExit($previousPkg, $now)")
+        logd("1️⃣ Appel handleAppExit($previousPkg, $now)")
         handleAppExit(previousPkg, now)
 
         // 2️⃣ Si app non configurée → rien
         val isConfigured = preferencesManager.isAppConfigured(newPkg)
-        Log.d(TAG, "2️⃣ isAppConfigured($newPkg) = $isConfigured")
+        logd("2️⃣ isAppConfigured($newPkg) = $isConfigured")
         if (!isConfigured) {
-            Log.d(TAG, "❌ App non configurée, on s'arrête là")
+            logd("❌ App non configurée, on s'arrête là")
             return
         }
-        Log.d(TAG, "✅ App configurée, on continue")
+        logd("✅ App configurée, on continue")
 
         // Check force pause (après "Annuler" ou quand l'user a quitté PauseActivity sans choix)
         val forceNextPause = preferencesManager.shouldForceNextPause(newPkg)
         if (forceNextPause) {
-            Log.d(TAG, "🎯 Force pause activé, bypass debounce")
+            logd("🎯 Force pause activé, bypass debounce")
             preferencesManager.setForceNextPause(newPkg, false)  // Consommer le flag
             preferencesManager.setAppEnterTime(newPkg, now)
             activePauseForPackage = newPkg
@@ -141,51 +147,51 @@ class AppLaunchDetectorService : AccessibilityService() {
         // Check debounce : ignorer les réentrées rapides (transition de fenêtre interne, ex: sortie plein écran)
         val recentExitTime = recentExitTimes[newPkg] ?: 0L
         if ((now - recentExitTime) < DEBOUNCE_DELAY_MS) {
-            Log.d(TAG, "🔄 Réentrée rapide détectée (${now - recentExitTime}ms < ${DEBOUNCE_DELAY_MS}ms), transition interne ignorée")
+            logd("🔄 Réentrée rapide détectée (${now - recentExitTime}ms < ${DEBOUNCE_DELAY_MS}ms), transition interne ignorée")
             return
         }
 
         // 3️⃣ Décider si pause initiale
         val lastEnterTime = preferencesManager.getAppEnterTime(newPkg)
         val lastExitTime = preferencesManager.getAppExitTime(newPkg)
-        Log.d(TAG, "3️⃣ Récupération des temps:")
-        Log.d(TAG, "   lastEnterTime: $lastEnterTime")
-        Log.d(TAG, "   lastExitTime: $lastExitTime")
-        Log.d(TAG, "   now: $now")
-        Log.d(TAG, "   (now - lastExitTime): ${now - lastExitTime}ms")
+        logd("3️⃣ Récupération des temps:")
+        logd("   lastEnterTime: $lastEnterTime")
+        logd("   lastExitTime: $lastExitTime")
+        logd("   now: $now")
+        logd("   (now - lastExitTime): ${now - lastExitTime}ms")
 
         val shouldInitialPause = when {
             lastEnterTime == 0L -> {
-                Log.d(TAG, "   → shouldInitialPause=true (lastEnterTime == 0L, première fois)")
+                logd("   → shouldInitialPause=true (lastEnterTime == 0L, première fois)")
                 true
             }
             (now - lastExitTime) > 10_000 -> {
-                Log.d(TAG, "   → shouldInitialPause=true ((now - lastExitTime) > 10000ms)")
+                logd("   → shouldInitialPause=true ((now - lastExitTime) > 10000ms)")
                 true
             }
             else -> {
-                Log.d(TAG, "   → shouldInitialPause=false (retour rapide dans l'app)")
+                logd("   → shouldInitialPause=false (retour rapide dans l'app)")
                 false
             }
         }
-        Log.d(TAG, "   Décision finale: shouldInitialPause = $shouldInitialPause")
+        logd("   Décision finale: shouldInitialPause = $shouldInitialPause")
 
         // 4️⃣ Mettre à jour le temps d'entrée
-        Log.d(TAG, "4️⃣ setAppEnterTime($newPkg, $now)")
+        logd("4️⃣ setAppEnterTime($newPkg, $now)")
         preferencesManager.setAppEnterTime(newPkg, now)
 
         // 5️⃣ Afficher pause si nécessaire
-        Log.d(TAG, "5️⃣ Action finale:")
+        logd("5️⃣ Action finale:")
         if (shouldInitialPause) {
-            Log.d(TAG, "   🎯 Démarrage PauseOverlay (isPeriodic=false)")
+            logd("   🎯 Démarrage PauseOverlay (isPeriodic=false)")
             activePauseForPackage = newPkg
             ServiceHelper.startPauseOverlay(applicationContext, newPkg, isPeriodic = false)
         } else {
-            Log.d(TAG, "   ⏰ Pas de pause initiale, vérification timer périodique")
+            logd("   ⏰ Pas de pause initiale, vérification timer périodique")
             // Pas de pause initiale, démarrer le timer périodique si configuré
             startPeriodicTimerIfNeeded(newPkg)
         }
-        Log.d(TAG, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        logd("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     }
 
     /**
