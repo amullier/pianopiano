@@ -3,6 +3,7 @@ package fr.antmu.pianopiano.ui.pause
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import fr.antmu.pianopiano.data.local.PreferencesManager
 import fr.antmu.pianopiano.service.AppLaunchDetectorService
 
 class PauseActivity : AppCompatActivity() {
@@ -45,8 +46,13 @@ class PauseActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         if (!userMadeChoice) {
-            // L'utilisateur a quitté sans faire de choix → finir l'activité
-            // (le service détecte le départ via activePauseForPackage et pose forceNextPause)
+            // L'utilisateur a quitté sans faire de choix (swipe, autre app...)
+            // Poser forceNextPause pour que la prochaine ouverture relance la pause
+            val pkg = intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: ""
+            if (pkg.isNotEmpty()) {
+                PreferencesManager(this).setForceNextPause(pkg, true)
+            }
+            AppLaunchDetectorService.activePauseForPackage = null
             finish()
         }
     }

@@ -71,21 +71,9 @@ class AppLaunchDetectorService : AccessibilityService() {
         logd("⏱️ Timestamp actuel: $now")
         logd("📍 currentForegroundPackage: $currentForegroundPackage")
 
-        // 🛡️ Détection : l'utilisateur a quitté PauseActivity sans faire de choix
-        val pausePkg = activePauseForPackage
-        if (pausePkg != null && newPkg != "fr.antmu.pianopiano"
-            && newPkg != pausePkg
-            && !isTemporaryOverlay(newPkg, event.source?.window)) {
-            // Une vraie app (ou launcher) est apparue pendant que la pause était active
-            // → l'utilisateur a quitté sans cliquer Cancel ni Continue
-            logd("⚠️ PauseActivity quittée sans choix (pause pour $pausePkg, event=$newPkg)")
-            preferencesManager.setForceNextPause(pausePkg, true)
-            activePauseForPackage = null
-        }
-
         // 🔒 Transition interne → IGNORER sauf si forceNextPause est actif
         if (newPkg == currentForegroundPackage) {
-            // Vérifier si forceNextPause a été posé (par la détection ci-dessus ou par PauseActivity.onStop)
+            // Vérifier si forceNextPause a été posé (par PauseActivity.onStop ou onCancelClicked)
             if (preferencesManager.isAppConfigured(newPkg) && preferencesManager.shouldForceNextPause(newPkg)) {
                 logd("🔒 Transition interne MAIS forceNextPause actif → relance pause")
                 preferencesManager.setForceNextPause(newPkg, false)

@@ -37,7 +37,7 @@ class AppListAdapter(
             // Définir le listener UNE SEULE FOIS lors de la création du ViewHolder
             binding.toggle.setOnCheckedChangeListener { isChecked ->
                 val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
+                if (position != RecyclerView.NO_POSITION && position < itemCount) {
                     val app = getItem(position)
                     binding.buttonInfo.visibility = if (hasUsageStatsPermission) View.VISIBLE else View.GONE
                     if (isChecked) {
@@ -94,7 +94,11 @@ class AppListAdapter(
             oldItem: AppRepository.InstalledApp,
             newItem: AppRepository.InstalledApp
         ): Boolean {
-            return oldItem == newItem
+            // Comparer les champs explicitement (Drawable.equals compare par référence,
+            // ce qui causerait des rebinds inutiles après chaque loadApps)
+            return oldItem.packageName == newItem.packageName
+                    && oldItem.appName == newItem.appName
+                    && oldItem.isConfigured == newItem.isConfigured
         }
     }
 }

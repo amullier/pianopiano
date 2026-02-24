@@ -50,7 +50,7 @@ class PreferencesManager(context: Context) {
 
     fun saveConfiguredApps(apps: List<ConfiguredApp>) {
         val json = gson.toJson(apps)
-        prefs.edit().putString(PreferencesKeys.KEY_CONFIGURED_APPS, json).apply()
+        prefs.edit().putString(PreferencesKeys.KEY_CONFIGURED_APPS, json).commit()
     }
 
     fun addConfiguredApp(app: ConfiguredApp) {

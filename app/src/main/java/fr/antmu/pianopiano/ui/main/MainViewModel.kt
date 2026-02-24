@@ -102,23 +102,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setAppConfigured(app: AppRepository.InstalledApp, enabled: Boolean) {
+        // Mettre à jour le cache en mémoire immédiatement (Main thread, pas de race avec loadApps)
+        allApps = allApps.map { installedApp ->
+            if (installedApp.packageName == app.packageName) {
+                installedApp.copy(isConfigured = enabled)
+            } else {
+                installedApp
+            }
+        }
+        filterApps(currentSearchQuery)
+
+        // Persister sur disque en arrière-plan
         viewModelScope.launch(Dispatchers.IO) {
-            // Sauvegarder la configuration
             appRepository.setAppConfigured(app.packageName, app.appName, enabled)
-
-            // Mettre à jour le cache en mémoire
-            allApps = allApps.map { installedApp ->
-                if (installedApp.packageName == app.packageName) {
-                    installedApp.copy(isConfigured = enabled)
-                } else {
-                    installedApp
-                }
-            }
-
-            // Rafraîchir la liste filtrée sur le thread principal
-            withContext(Dispatchers.Main) {
-                filterApps(currentSearchQuery)
-            }
         }
     }
 

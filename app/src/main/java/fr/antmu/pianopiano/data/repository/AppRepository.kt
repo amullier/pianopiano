@@ -214,13 +214,18 @@ class AppRepository(private val context: Context) {
                 // Garder : apps non-système OU apps système qui ont été mises à jour
                 !isSystemApp || isUpdatedSystemApp
             }
-            .map { appInfo ->
-                InstalledApp(
-                    packageName = appInfo.packageName,
-                    appName = packageManager.getApplicationLabel(appInfo).toString(),
-                    icon = packageManager.getApplicationIcon(appInfo),
-                    isConfigured = configuredPackages.contains(appInfo.packageName)
-                )
+            .mapNotNull { appInfo ->
+                try {
+                    InstalledApp(
+                        packageName = appInfo.packageName,
+                        appName = packageManager.getApplicationLabel(appInfo).toString(),
+                        icon = packageManager.getApplicationIcon(appInfo),
+                        isConfigured = configuredPackages.contains(appInfo.packageName)
+                    )
+                } catch (_: Exception) {
+                    // App désinstallée entre le listing et le chargement de l'icône/label
+                    null
+                }
             }
 
         // Trier: apps configurées en premier, puis alphabétique

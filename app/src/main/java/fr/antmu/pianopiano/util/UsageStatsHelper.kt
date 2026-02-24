@@ -65,24 +65,22 @@ object UsageStatsHelper {
                         }
                         lastResumeTime = event.timeStamp
                     }
-                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED,
-                    android.app.usage.UsageEvents.Event.ACTIVITY_STOPPED -> {
+                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED -> {
                         lastResumeTime?.let { resumeTime ->
                             totalTimeTodayFromEvents += event.timeStamp - resumeTime
                         }
                         lastResumeTime = null
+                        // Marquer la sortie pour que le prochain RESUMED soit compté comme nouvelle session
+                        lastForegroundPackage = null
                     }
                 }
             } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                // App switched away, count the time if we were tracking
-                lastResumeTime?.let { resumeTime ->
-                    totalTimeTodayFromEvents += event.timeStamp - resumeTime
+                // Une autre app passe au premier plan → comptabiliser le temps restant de l'app cible
+                if (lastResumeTime != null) {
+                    totalTimeTodayFromEvents += event.timeStamp - lastResumeTime!!
+                    lastResumeTime = null
                 }
-                lastResumeTime = null
-                // Ignore our own pause screen so it doesn't inflate the launch count
-                if (event.packageName != ownPackageName) {
-                    lastForegroundPackage = event.packageName
-                }
+                lastForegroundPackage = event.packageName
             }
         }
 
@@ -124,17 +122,19 @@ object UsageStatsHelper {
             events7Days.getNextEvent(event)
 
             if (event.packageName == packageName) {
-                if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                    if (lastForegroundPackage7Days != event.packageName) {
-                        launchCount7Days++
-                        lastForegroundPackage7Days = event.packageName
+                when (event.eventType) {
+                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED -> {
+                        if (lastForegroundPackage7Days != event.packageName) {
+                            launchCount7Days++
+                            lastForegroundPackage7Days = event.packageName
+                        }
+                    }
+                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED -> {
+                        lastForegroundPackage7Days = null
                     }
                 }
             } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                // Ignore our own pause screen so it doesn't inflate the launch count
-                if (event.packageName != ownPackageName) {
-                    lastForegroundPackage7Days = event.packageName
-                }
+                lastForegroundPackage7Days = event.packageName
             }
         }
 
@@ -164,17 +164,19 @@ object UsageStatsHelper {
             events30Days.getNextEvent(event)
 
             if (event.packageName == packageName) {
-                if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                    if (lastForegroundPackage30Days != event.packageName) {
-                        launchCount30Days++
-                        lastForegroundPackage30Days = event.packageName
+                when (event.eventType) {
+                    android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED -> {
+                        if (lastForegroundPackage30Days != event.packageName) {
+                            launchCount30Days++
+                            lastForegroundPackage30Days = event.packageName
+                        }
+                    }
+                    android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED -> {
+                        lastForegroundPackage30Days = null
                     }
                 }
             } else if (event.eventType == android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED) {
-                // Ignore our own pause screen so it doesn't inflate the launch count
-                if (event.packageName != ownPackageName) {
-                    lastForegroundPackage30Days = event.packageName
-                }
+                lastForegroundPackage30Days = event.packageName
             }
         }
 
