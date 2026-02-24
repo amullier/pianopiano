@@ -110,11 +110,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 installedApp
             }
         }
-        filterApps(currentSearchQuery)
 
-        // Persister sur disque en arrière-plan
+        // Persister sur disque puis rafraîchir la liste
+        // (déféré via withContext pour ne pas appeler submitList pendant un callback RecyclerView)
         viewModelScope.launch(Dispatchers.IO) {
             appRepository.setAppConfigured(app.packageName, app.appName, enabled)
+            withContext(Dispatchers.Main) {
+                filterApps(currentSearchQuery)
+            }
         }
     }
 

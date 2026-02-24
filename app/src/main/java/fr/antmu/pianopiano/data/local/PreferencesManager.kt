@@ -40,9 +40,21 @@ class PreferencesManager(context: Context) {
 
     fun getConfiguredApps(): List<ConfiguredApp> {
         val json = prefs.getString(PreferencesKeys.KEY_CONFIGURED_APPS, null) ?: return emptyList()
-        val type = object : TypeToken<List<ConfiguredApp>>() {}.type
         return try {
-            gson.fromJson(json, type) ?: emptyList()
+            // TypeToken nullable : Gson peut injecter des null malgré les types Kotlin
+            val type = object : TypeToken<List<ConfiguredApp?>>() {}.type
+            val rawList: List<ConfiguredApp?> = gson.fromJson(json, type) ?: return emptyList()
+
+            // Filtrer les entrées null ou corrompues (Gson ignore les types non-null Kotlin)
+            @Suppress("SENSELESS_COMPARISON")
+            val cleanList = rawList.filterNotNull().filter { it.packageName != null && it.appName != null }
+
+            // Auto-fix : ré-écrire le JSON si des entrées corrompues ont été supprimées
+            if (cleanList.size < rawList.size) {
+                saveConfiguredApps(cleanList)
+            }
+
+            cleanList
         } catch (e: Exception) {
             emptyList()
         }
